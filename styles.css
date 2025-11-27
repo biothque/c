@@ -1,0 +1,120 @@
+/* Page A4 container */
+:root{
+  --page-width:210mm;
+  --page-height:297mm;
+}
+body{
+  font-family: 'Arial', sans-serif;
+  background:#eee;
+  padding:20px;
+}
+.a4{
+  position:relative;
+  background-image:url('logo.png');
+  background-repeat:no-repeat;
+  background-position:center;
+  background-size:120mm;
+  opacity:1;
+  /* Filigrane léger */
+  --wm-opacity:0.08;
+  background-color:rgba(255,255,255,1);
+}
+.a4::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:url('COP.png') center/120mm no-repeat;
+  opacity:var(--wm-opacity);
+  pointer-events:none;
+}
+
+  width:var(--page-width);
+  min-height:var(--page-height);
+  background:#fff;
+  margin:10px auto;
+  padding:18mm 15mm; /* margins in mm */
+  box-shadow:0 0 0.5mm rgba(0,0,0,0.1);
+  box-sizing:border-box;
+}
+.header{
+  display:flex;
+  align-items:center;
+  gap:8mm;
+}
+.logo{
+  width:30mm;
+  height:auto;
+}
+.org-name{font-weight:700}
+.abbr{font-size:18px; font-weight:800}
+
+/* Effet clignotant multicolore */
+.rainbow-blink{
+  animation: rainbow 2s infinite;
+}
+@keyframes rainbow{
+  0%{color:red}
+  15%{color:orange}
+  30%{color:yellow}
+  45%{color:green}
+  60%{color:cyan}
+  75%{color:blue}
+  90%{color:purple}
+  100%{color:red}
+}
+{font-size:18px; font-weight:800}
+.title{
+  text-align:center;
+  margin-top:6mm;
+  margin-bottom:6mm;
+  font-size:16pt;
+}
+.section{margin-top:4mm}
+.field{display:block;margin-bottom:4mm}
+.field.small{margin-bottom:2mm}
+.label-text{display:block;font-size:10pt;margin-bottom:2mm}
+.line-input{width:100%;padding:2mm;border:0;border-bottom:0.5mm dotted #333;outline:none}
+.short-input{width:60mm;padding:1.5mm;border:0;border-bottom:0.5mm dotted #333}
+.row{display:flex;gap:8mm;flex-wrap:wrap;margin-bottom:4mm}
+.small-field{display:flex;flex-direction:column;min-width:60mm}
+textarea{width:100%;box-sizing:border-box;padding:2mm;border:0;border:1px solid #ccc}
+.footer{position:absolute;bottom:12mm;left:18mm;font-size:9pt}
+.sign-block{display:flex;justify-content:space-between;margin-top:8mm}
+.sign-line{min-height:12mm;border-bottom:1px solid #000;margin-top:6mm}
+.form-actions{display:flex;gap:8mm;margin-top:10mm}
+button{padding:6px 12px;border-radius:4px;border:1px solid #333;background:#f3f3f3}
+
+/* Responsive Design */
+@media screen and (max-width: 900px){
+  .a4{
+    width: 100%;
+    min-height: auto;
+    padding: 20px;
+    box-shadow: none;
+    background-size: 60%;
+  }
+  .row{
+    flex-direction: column;
+    gap: 4mm;
+  }
+  .short-input, .line-input, select, textarea{
+    width: 100% !important;
+  }
+  .logo{
+    width: 60px;
+  }
+  .title{
+    font-size: 14pt;
+  }
+  .footer{
+    position: relative;
+    bottom: auto;
+    margin-top: 20px;
+  }
+}
+
+/* Print adjustments */ */
+@media print{
+  body{background:#fff}
+  .a4{box-shadow:none;margin:0;padding:12mm}
+}
