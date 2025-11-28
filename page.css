@@ -1,0 +1,105 @@
+/* Réinitialisation de base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* -------------------------------------- */
+/* 1. Style du Contenu Principal */
+/* -------------------------------------- */
+#main-content {
+    /* Cache le contenu principal au début */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease-in-out;
+}
+
+/* Style de base (peut être remplacé par le design FEC) */
+header {
+    background-color: #f8f8f8;
+    padding: 20px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 3px solid #ffd700; /* Jaune COPEMECO */
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #333;
+    padding: 10px 15px;
+    font-weight: bold;
+}
+
+.hero {
+    padding: 100px 5%;
+    text-align: center;
+    background-color: #ffffff;
+    min-height: 80vh;
+}
+
+.hero h2 {
+    font-size: 2.5em;
+    color: #007bff; /* Bleu (Exemple) */
+    margin-bottom: 20px;
+}
+
+/* -------------------------------------- */
+/* 2. Style du Splash Screen */
+/* -------------------------------------- */
+#splash-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* Toujours au-dessus */
+}
+
+#splash-screen p {
+    margin-top: 20px;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #333;
+}
+
+/* -------------------------------------- */
+/* 3. LOGO et ANIMATION (Battement de Cœur) */
+/* -------------------------------------- */
+.logo-heartbeat {
+    width: 150px; /* Taille du logo */
+    height: 150px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    
+    /* Intégration du logo via Base64 pour un chargement instantané */
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOQAAADdCAMAAACc/C7aAAABm1BMVEX/////5gD/AAANg68AGH/XAA//5wD/6QD/7AD/5AD/7QAAgbEAgLIAf7MAercAebgAfLb/8QAAAHb76OnurrD/swB0pof/+90AAHPY2ebcQUUqiqT/+Mf//esADHyxwGRCkpzKzU335Qf/7Wb/61D//vX/+9//zgCkum27xVvByFf/86D/9bKJrn5poI+Dq4L/8IOctnNxpIsAdrvhAABPlprl2y7/+c7/6TT/8ZKSsnjibG9TWprX1D6rvmf/2wD/7m//61j/6j//3d1hnZMahqv/lwD/KQDb1juPsHvt3yL/977/9Kr/vQD/Rkb/eXn/ycn/gAD/SQDR0Eb/VFT/pAA3jqP/WgD/mZn/mMD/5eX/paX/LCz/ior/NzcAcMDbMTbCxNmcoML/q6v/YmKIjbdgZ6I8RZB3EVrhYGPeT1P/nwD/hwD/dAD/HBzmgIPm6PCTlrzGydx0eqwSIYJ7AEjHBSAkMIi5CC5VFGmrCjs+FXGaAEGXdZpeAFiSDky/bIN8EFiKNWlETJX/Z3L/0E1Td6UsAAAgAElEQVR4nO19+38bRbp... [VOTRE CHAÎNE COMPLÈTE] ...'); 
+
+    /* Lancement de l'animation */
+    animation: heartbeat 1s ease-in-out infinite alternate;
+}
+
+/* Définition de l'animation du battement de cœur */
+@keyframes heartbeat {
+    0% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(1.1); /* Grossissement de 10% */
+        opacity: 1;
+    }
+}
