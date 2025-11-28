@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rapport Étudiant</title>
+    
+    <script src="https://unpkg.com/backendless@latest/dist/backendless.min.js"></script>
+
+    <style>
+        /* ... votre style CSS ... */
+        .notes-grid { 
+            display: grid; 
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 10px; 
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="rapport-conteneur" id="rapport-conteneur">
+        <h1>Chargement des données...</h1>
+        <div id="details-etudiant">
+             </div>
+    </div>
+    <script>
+        // 1. Fonction pour extraire le paramètre 'objectId' de l'URL
+        function getObjectIdFromUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('objectId');
+        }
+
+        const objectId = getObjectIdFromUrl();
+        
+        // ⭐ AJOUT 2 : Renseigner les clés d'initialisation de Backendless
+        // VOUS TROUVEZ CES CLÉS dans le tableau de bord de votre application Backendless.
+        const APPLICATION_ID = "D1C42DB1-49EE-47FD-AC45-7FE8CB9BBBAF"; // REMPLACER
+        const JAVASCRIPT_API_KEY = "72B5D4D5-2CDA-4F02-A5AB-DAACA9661180"; // REMPLACER
+        const TABLE_NAME = "resultats_etudiants"; // REMPLACER par le nom exact (ex: EtudiantsResultats)
+
+        if (objectId) {
+            // Initialisation du SDK
+            Backendless.initApp(APPLICATION_ID, JAVASCRIPT_API_KEY);
+
+            // ⭐ AJOUT 3 : Utilisation de la méthode SDK (plus simple)
+            const dataStore = Backendless.Data.of(TABLE_NAME);
+
+            dataStore.findById(objectId)
+                .then(etudiant => {
+                    // 3. Succès : Afficher les données de l'étudiant
+                    let htmlContent = `
+                        <h2>Rapport de Notes pour ${etudiant.Nom}</h2>
+                        <div class="detail"><strong>N° d'Inscription:</strong> ${etudiant.N}</div>
+                        <div class="detail"><strong>Total Points:</strong> ${etudiant.Total} / 300</div>
+                        <div class="detail"><strong>Pourcentage:</strong> ${etudiant.Pourcentage}%</div>
+                        <div class="detail"><strong>Mention:</strong> ${etudiant.Mention}</div>
+                        <div class="detail"><strong>Frais Payés:</strong> ${etudiant.Frais_Payes}</div>
+
+                        <h3>Détails des Cotes (15 Cours)</h3>
+                        <div class="notes-grid">
+                            </div>
+                        <p style="font-size: 0.8em; color: #777; margin-top: 20px;">ID Unique (Backendless): ${etudiant.objectId}</p>
+                    `;
+                    document.getElementById('details-etudiant').innerHTML = htmlContent;
+                    document.querySelector('.rapport-conteneur h1').textContent = "Fiche Étudiant";
+
+                    // ⭐ AJOUT 4 : Boucle pour afficher les 15 notes (C1 à C15)
+                    const notesGrid = document.querySelector('.notes-grid');
+                    let notesHtml = '';
+                    for (let i = 1; i <= 15; i++) {
+                        const courseKey = 'C' + i; // Construit 'C1', 'C2', etc.
+                        // On vérifie que la clé existe dans l'objet retourné par Backendless
+                        if (etudiant[courseKey] !== undefined) {
+                            notesHtml += `<p><strong>C${i}:</strong> ${etudiant[courseKey]}/20</p>`;
+                        }
+                    }
+                    notesGrid.innerHTML = notesHtml;
+
+                })
+                .catch(error => {
+                    // 4. Échec
+                    document.getElementById('details-etudiant').innerHTML = `<p style="color: red;">Données non trouvées ou erreur de requête.</p><p>Détail: ${error.message}</p>`;
+                    document.querySelector('.rapport-conteneur h1').textContent = "Erreur";
+                });
+
+        } else {
+            document.getElementById('details-etudiant').innerHTML = `<p style="color: red;">Veuillez scanner un Code QR valide. L'ID de l'objet est manquant.</p>`;
+            document.querySelector('.rapport-conteneur h1').textContent = "Erreur de Scan";
+        }
+    </script>
+</body>
+</html>

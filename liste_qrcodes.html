@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des QR Codes Étudiants</title>
+    
+    <script src="https://unpkg.com/backendless@latest/dist/backendless.min.js"></script>
+
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        table { width: 80%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ccc; padding: 10px; text-align: left; }
+        th { background-color: #f0f0f0; }
+        img { display: block; margin: auto; }
+    </style>
+</head>
+<body>
+
+    <h1>Codes QR des Étudiants</h1>
+
+    <table id="tableau-etudiants">
+        <thead>
+            <tr>
+                <th>N°</th>
+                <th>Nom</th>
+                <th>Mention</th>
+                <th>Statut Frais</th>
+                <th>Code QR</th>
+            </tr>
+        </thead>
+        <tbody id="corps-tableau">
+            <tr><td colspan="5">Chargement des données Backendless...</td></tr>
+        </tbody>
+    </table>
+
+    <script>
+        // 2. Clés d'initialisation de Backendless (À REMPLACER !)
+        const APPLICATION_ID = "D1C42DB1-49EE-47FD-AC45-7FE8CB9BBBAF"; // REMPLACER
+        const JAVASCRIPT_API_KEY = "72B5D4D5-2CDA-4F02-A5AB-DAACA9661180"; // REMPLACER
+        const TABLE_NAME = "resultats_etudiants"; // REMPLACER (ex: EtudiantsResultats)
+
+        // 3. URL de la page de destination (À REMPLACER PAR VOTRE VRAIE URL !)
+        const URL_DE_BASE_DU_RAPPORT = "file:///C:/Users/DELL/Downloads/rapport.html?objectId="; 
+        
+        // Initialisation du SDK
+        Backendless.initApp(APPLICATION_ID, JAVASCRIPT_API_KEY);
+
+        /**
+         * Fonction pour générer la ligne de tableau et insérer le QR Code
+         */
+        function genererLigneEtQRCodes(etudiant) {
+            const tbody = document.getElementById('corps-tableau');
+            const tr = tbody.insertRow();
+            
+            // Affichage des données de l'étudiant
+            tr.insertCell().textContent = etudiant.N;
+            tr.insertCell().textContent = etudiant.Nom;
+            tr.insertCell().textContent = etudiant.Mention;
+            tr.insertCell().textContent = etudiant.Frais_Payes;
+            
+            // Génération du QR Code
+            const qrCell = tr.insertCell();
+            
+            // Le contenu : L'URL complète avec l'ID de l'objet (l'objectId)
+            const contenu_encode = URL_DE_BASE_DU_RAPPORT + etudiant.objectId;
+            
+            // L'URL de l'API de génération d'image
+            const qr_code_url = "https://chart.googleapis.com/chart?cht=qr&chs=120x120&chl=" + encodeURIComponent(contenu_encode);
+            
+            // Créer et insérer l'image
+            const img = document.createElement('img');
+            img.src = qr_code_url;
+            img.alt = "QR Code pour " + etudiant.Nom;
+            qrCell.appendChild(img);
+        }
+
+        /**
+         * Chargement des données depuis Backendless et génération des QR Codes
+         */
+        function chargerEtudiantsEtGenererQRs() {
+            const dataStore = Backendless.Data.of(TABLE_NAME);
+            const tbody = document.getElementById('corps-tableau');
+
+            // Réinitialiser le corps du tableau avant de charger les données
+            tbody.innerHTML = ''; 
+
+            dataStore.find() // Récupère toutes les lignes de la table
+                .then(etudiants => {
+                    if (etudiants && etudiants.length > 0) {
+                        etudiants.forEach(genererLigneEtQRCodes);
+                    } else {
+                        tbody.innerHTML = '<tr><td colspan="5">Aucun étudiant trouvé dans la base de données.</td></tr>';
+                    }
+                })
+                .catch(error => {
+                    tbody.innerHTML = `<tr><td colspan="5" style="color: red;">Erreur de chargement des données: ${error.message}. Vérifiez vos clés Backendless.</td></tr>`;
+                });
+        }
+
+        // Lance le processus de chargement au démarrage de la page
+        chargerEtudiantsEtGenererQRs(); 
+    </script>
+</body>
+</html>
