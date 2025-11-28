@@ -40,41 +40,42 @@
         const JAVASCRIPT_API_KEY = "72B5D4D5-2CDA-4F02-A5AB-DAACA9661180"; // REMPLACER
         const TABLE_NAME = "resultats_etudiants"; // REMPLACER (ex: EtudiantsResultats)
 
-        // 3. URL de la page de destination (À REMPLACER PAR VOTRE VRAIE URL !)
-        const URL_DE_BASE_DU_RAPPORT = "https://biothque.github.io/c/rapport.html?objectId="; 
+       // ... (Vos clés d'API Backendless et nom de table ici) ...
+
+// 3. URL de la page de destination (MIS À JOUR AVEC VOTRE LIEN RÉEL)
+const URL_DE_BASE_DU_RAPPORT = "https://biothque.github.io/c/rapport.html?objectId="; 
         
-        // Initialisation du SDK
-        Backendless.initApp(APPLICATION_ID, JAVASCRIPT_API_KEY);
+// Initialisation du SDK
+Backendless.initApp(APPLICATION_ID, JAVASCRIPT_API_KEY);
 
-        /**
-         * Fonction pour générer la ligne de tableau et insérer le QR Code
-         */
-        function genererLigneEtQRCodes(etudiant) {
-            const tbody = document.getElementById('corps-tableau');
-            const tr = tbody.insertRow();
-            
-            // Affichage des données de l'étudiant
-            tr.insertCell().textContent = etudiant.N;
-            tr.insertCell().textContent = etudiant.Nom;
-            tr.insertCell().textContent = etudiant.Mention;
-            tr.insertCell().textContent = etudiant.Frais_Payes;
-            
-            // Génération du QR Code
-            const qrCell = tr.insertCell();
-            
-            // Le contenu : L'URL complète avec l'ID de l'objet (l'objectId)
-            const contenu_encode = URL_DE_BASE_DU_RAPPORT + etudiant.objectId;
-            
-            // L'URL de l'API de génération d'image
-            const qr_code_url = "https://chart.googleapis.com/chart?cht=qr&chs=120x120&chl=" + encodeURIComponent(contenu_encode);
-            
-            // Créer et insérer l'image
-            const img = document.createElement('img');
-            img.src = qr_code_url;
-            img.alt = "QR Code pour " + etudiant.Nom;
-            qrCell.appendChild(img);
-        }
-
+/**
+ * Fonction pour générer la ligne de tableau et insérer le QR Code
+ */
+function genererLigneEtQRCodes(etudiant) {
+    const tbody = document.getElementById('corps-tableau');
+    const tr = tbody.insertRow();
+    
+    // ... (Affichage des données de l'étudiant) ...
+    tr.insertCell().textContent = etudiant.N;
+    tr.insertCell().textContent = etudiant.Nom;
+    tr.insertCell().textContent = etudiant.Mention;
+    tr.insertCell().textContent = etudiant.Frais_Payes;
+    
+    // Génération du QR Code
+    const qrCell = tr.insertCell();
+    
+    // 1. Le contenu à encoder dans le QR Code (l'URL complète)
+    const contenu_encode = URL_DE_BASE_DU_RAPPORT + etudiant.objectId;
+    
+    // 2. L'URL de l'API de génération d'image de Google
+    const qr_code_url = "https://chart.googleapis.com/chart?cht=qr&chs=120x120&chl=" + encodeURIComponent(contenu_encode);
+    
+    // 3. Créer et insérer la balise image
+    const img = document.createElement('img');
+    img.src = qr_code_url;
+    img.alt = "QR Code pour " + etudiant.Nom;
+    qrCell.appendChild(img);
+}
         /**
          * Chargement des données depuis Backendless et génération des QR Codes
          */
@@ -104,3 +105,4 @@
 </body>
 
 </html>
+
