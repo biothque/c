@@ -1,46 +1,89 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Logo Cœur Vibrant</title>
+    <title>Adhésion COP - Cœur Vibrant</title>
     <style>
-        /* CSS pour la mise en page et l'animation */
         body {
-            /* Centrage du contenu sur toute la page */
             display: flex;
+            flex-direction: column; /* Disposition verticale des éléments */
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            background-color: #ffffff; /* Fond blanc pur comme demandé */
+            background-color: #ffffff; /* Fond blanc */
+            font-family: Arial, sans-serif; /* Police de base */
+        }
+
+        .section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin: 20px 0; /* Espacement au-dessus et en dessous de chaque section */
+        }
+
+        .section-top {
+            margin-bottom: 50px; /* Plus d'espace au-dessus du logo */
+        }
+
+        .section-bottom {
+            margin-top: 50px; /* Plus d'espace en dessous du logo */
+        }
+
+        .icon-link {
+            text-decoration: none; /* Supprime le soulignement du lien */
+            color: #333; /* Couleur du texte par défaut */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: color 0.3s ease;
+        }
+
+        .icon-link:hover {
+            color: #007bff; /* Changement de couleur au survol */
+        }
+
+        .icon-link svg {
+            width: 60px; /* Taille des icônes SVG */
+            height: 60px;
+            fill: #333; /* Couleur par défaut de l'icône */
+            transition: fill 0.3s ease;
+        }
+
+        .icon-link:hover svg {
+            fill: #007bff; /* Changement de couleur de l'icône au survol */
+        }
+
+        .icon-title {
+            margin-top: 10px;
+            font-size: 1.1em;
+            font-weight: bold;
         }
 
         .logo-container {
-            /* Conteneur pour appliquer l'animation */
             display: inline-block;
-            cursor: pointer; 
+            cursor: pointer;
             transition: transform 0.2s ease-in-out;
+            margin: 40px 0; /* Espacement autour du logo */
         }
 
         .logo {
-            /* Assurez-vous que la taille correspond à votre image */
-            width: 250px; 
+            width: 250px;
             height: auto;
             display: block;
         }
 
-        /* Définition de l'animation de battement de cœur */
         @keyframes heartbeat {
             0% { transform: scale(1); }
-            15% { transform: scale(1.05); } /* Expansion rapide (le "battement") */
-            30% { transform: scale(0.98); } /* Contraction légère */
+            15% { transform: scale(1.05); }
+            30% { transform: scale(0.98); }
             50% { transform: scale(1.02); }
             70% { transform: scale(0.99); }
             100% { transform: scale(1); }
         }
 
-        /* Classe pour appliquer l'animation */
         .vibrating {
             animation: heartbeat 1.5s infinite ease-in-out; 
         }
@@ -48,19 +91,43 @@
 </head>
 <body>
 
+    <div class="section section-top">
+        <a href="entrepreneur.html" class="icon-link">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-briefcase">
+                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+            </svg>
+            <div class="icon-title">Comment adhérer à la COPEMECO en étant un entrepreneur</div>
+        </a>
+    </div>
+    
+
     <div class="logo-container" id="logoContainer">
-        <img src="COP.png" alt="Logo COP" class="logo">
+        <img src="cop.png" alt="Logo COP" class="logo">
     </div>
 
+    <div class="section section-bottom">
+        <a href="futur_entrepreneur.html" class="icon-link">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+            <div class="icon-title">Comment devenir un futur entrepreneur</div>
+        </a>
+    </div>
+    
+<a href="information.html" class="floating-btn" title="Informations">
+        i
+</a>
+    
     <script>
-        // JavaScript pour démarrer l'animation
         document.addEventListener('DOMContentLoaded', (event) => {
             const logoContainer = document.getElementById('logoContainer');
             
-            // Démarrage de l'animation au chargement
             logoContainer.classList.add('vibrating');
 
-            // Ajout optionnel : Cliquez pour mettre en pause/reprendre l'animation
             logoContainer.addEventListener('click', () => {
                 if (logoContainer.classList.contains('vibrating')) {
                     logoContainer.classList.remove('vibrating');
