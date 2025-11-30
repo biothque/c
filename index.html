@@ -1,40 +1,41 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adhésion COP - Cœur Vibrant</title>
     <style>
+        /* --- Styles Généraux et Centrage --- */
         body {
             display: flex;
-            flex-direction: column; /* Disposition verticale des éléments */
+            flex-direction: column; 
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            background-color: #ffffff; /* Fond blanc */
-            font-family: Arial, sans-serif; /* Police de base */
+            background-color: #ffffff;
+            font-family: Arial, sans-serif;
         }
 
+        /* --- Styles des Sections Haut et Bas (Adhésion) --- */
         .section {
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
-            margin: 20px 0; /* Espacement au-dessus et en dessous de chaque section */
         }
 
         .section-top {
-            margin-bottom: 50px; /* Plus d'espace au-dessus du logo */
+            margin-bottom: 50px;
         }
 
         .section-bottom {
-            margin-top: 50px; /* Plus d'espace en dessous du logo */
+            margin-top: 50px;
         }
 
         .icon-link {
-            text-decoration: none; /* Supprime le soulignement du lien */
-            color: #333; /* Couleur du texte par défaut */
+            text-decoration: none;
+            color: #333;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -42,18 +43,20 @@
         }
 
         .icon-link:hover {
-            color: #007bff; /* Changement de couleur au survol */
+            color: #007bff;
         }
 
         .icon-link svg {
-            width: 60px; /* Taille des icônes SVG */
+            width: 60px;
             height: 60px;
-            fill: #333; /* Couleur par défaut de l'icône */
-            transition: fill 0.3s ease;
+            fill: none;
+            stroke: #333;
+            stroke-width: 2;
+            transition: stroke 0.3s ease;
         }
 
         .icon-link:hover svg {
-            fill: #007bff; /* Changement de couleur de l'icône au survol */
+            stroke: #007bff;
         }
 
         .icon-title {
@@ -62,11 +65,11 @@
             font-weight: bold;
         }
 
+        /* --- Styles du Logo Central Vibrant --- */
         .logo-container {
             display: inline-block;
             cursor: pointer;
-            transition: transform 0.2s ease-in-out;
-            margin: 40px 0; /* Espacement autour du logo */
+            margin: 40px 0;
         }
 
         .logo {
@@ -87,68 +90,101 @@
         .vibrating {
             animation: heartbeat 1.5s infinite ease-in-out; 
         }
-    
+
+        /* --- Styles du Bouton Flottant (Info, Rouge, Clignotant) --- */
         .floating-btn {
             position: fixed; 
             bottom: 30px;
             right: 30px;
             background-color: #e74c3c; /* Rouge vif */
-            /* ... le reste du CSS pour .floating-btn ... */
+            color: white;
+            width: 50px; 
+            height: 50px;
+            border-radius: 50%;
+            text-align: center;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            cursor: pointer;
+            
+            /* Centrage de l'icône SVG */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            /* Démarrage de l'animation de clignotement */
             animation: pulse-red 1.5s infinite;
         }
 
         .floating-btn svg {
-            /* ... le style du SVG ... */
+            width: 60%; 
+            height: 60%;
+            fill: none;
+            stroke: white; /* Icône blanche */
+            stroke-width: 2.5; 
         }
 
+        /* Définition de l'animation de clignotement en Rouge */
         @keyframes pulse-red {
-            /* ... la définition de l'animation ... */
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7);
+            }
+            70% {
+                transform: scale(1.1);
+                box-shadow: 0 0 0 15px rgba(231, 76, 60, 0); 
+            }
+            100% {
+                transform: scale(1);
+            }
         }
     </style>
 </head>
 <body>
 
     <div class="section section-top">
-        <a href="futur_entrepreneur.html" class="icon-link">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-briefcase">
+        <a href="adh.html" class="icon-link">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
                 <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
             </svg>
-            <div class="icon-title">Comment adhérer à la COPEMECO en étant un entrepreneur</div>
+            <div class="icon-title">Comment adhérer comme un entrepreneur</div>
         </a>
     </div>
-    
 
     <div class="logo-container" id="logoContainer">
         <img src="COP.png" alt="Logo COP" class="logo">
     </div>
 
     <div class="section section-bottom">
-        <a href="adh.html" class="icon-link">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users">
+        <a href="futur_entrepreneur.html" class="icon-link">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
                 <circle cx="9" cy="7" r="4"></circle>
                 <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
                 <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
             </svg>
-            <div class="icon-title">Comment devenir un futur entrepreneur</div>
+            <div class="icon-title">Comment adhérer comme un particulier</div>
         </a>
     </div>
-    
-<a href="information.html" class="floating-btn" title="Informations">
+
+    <a href="information.html" class="floating-btn" title="Informations">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="10"></circle>
             <line x1="12" y1="16" x2="12" y2="12"></line>
             <line x1="12" y1="8" x2="12.01" y2="8"></line>
         </svg>
-</a>
-    
+    </a>
+
     <script>
+        // JavaScript pour démarrer l'animation du logo
         document.addEventListener('DOMContentLoaded', (event) => {
             const logoContainer = document.getElementById('logoContainer');
             
+            // Démarrage de l'animation au chargement
             logoContainer.classList.add('vibrating');
 
+            // Clic pour mettre en pause/reprendre l'animation
             logoContainer.addEventListener('click', () => {
                 if (logoContainer.classList.contains('vibrating')) {
                     logoContainer.classList.remove('vibrating');
@@ -160,8 +196,10 @@
             });
         });
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
 <script src="https://api.backendless.com/sdk/js/latest/backendless.min.js"></script>
 </body>
+</body>
 </html>
+
