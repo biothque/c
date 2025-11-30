@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bouton d'Information Flottant</title>
+    <style>
+        /* Le body est ajusté pour ne pas interférer si le fichier est ouvert seul */
+        body {
+            margin: 0;
+            padding: 0;
+            /* Le bouton est fixe, donc le reste du body importe peu */
+        }
+        
+        /* --- Styles du Bouton Flottant (Info, Rouge, Clignotant) --- */
+        .floating-btn {
+            /* FIXED pour flotter en bas à droite de la fenêtre du navigateur */
+            position: fixed; 
+            bottom: 30px;
+            right: 30px;
+            background-color: #e74c3c; /* Rouge vif */
+            color: white;
+            width: 50px; 
+            height: 50px;
+            border-radius: 50%; /* Forme circulaire */
+            text-align: center;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            cursor: pointer;
+            
+            /* Centrage de l'icône SVG */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            /* Démarrage de l'animation de clignotement */
+            animation: pulse-red 1.5s infinite;
+        }
+
+        .floating-btn svg {
+            width: 60%; /* Taille de l'icône SVG à l'intérieur du cercle */
+            height: 60%;
+            fill: none;
+            stroke: white; /* Couleur de l'icône */
+            stroke-width: 2.5; 
+        }
+
+        /* Définition de l'animation de clignotement en Rouge */
+        @keyframes pulse-red {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7); /* Ombre rouge au départ */
+            }
+            70% {
+                transform: scale(1.1);
+                box-shadow: 0 0 0 15px rgba(231, 76, 60, 0); 
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <a href="votre_lien_information.html" class="floating-btn" title="Informations">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+        </svg>
+    </a>
+
+</body>
+</html>
