@@ -1,316 +1,342 @@
-
 <!doctype html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Fiche d'adhésion COPEMECO (version formulaire)</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fiche d'adhésion COPEMECO (version formulaire)</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="a4" id="page1">
-    <header class="header">
-      <img src="COP.png" alt="Logo COPEMECO" class="logo">
-      <div class="org">
-        <div class="org-name rainbow-blink">Confédération des Petites et Moyennes Entreprises Congolaises</div>
-        <div class="abbr">COPEMECO</div>
-      </div>
-    </header>
+  <div class="a4" id="page1">
+    <header class="header">
+      <img src="COP.png" alt="Logo COPEMECO" class="logo">
+      <div class="org">
+        <div class="org-name rainbow-blink">Confédération des Petites et Moyennes Entreprises Congolaises</div>
+        <div class="abbr">COPEMECO</div>
+      </div>
+    </header>
 
-    <h1 class="title">FICHE DE RENSEIGNEMENTS POUR ADHESION</h1>
+    <h1 class="title">FICHE DE RENSEIGNEMENTS POUR ADHESION</h1>
 
-    <section class="section" id="identification">
-      <h2>IDENTIFICATION</h2>
+    <section class="section" id="identification">
+      <h2>IDENTIFICATION</h2>
 
-      <label class="field" style="--y:20mm;">
-        <span class="label-text">Dénomination / Raison sociale</span>
-        <input type="text" name="denomination" class="line-input" placeholder=".....................................................................">
-      </label>
+      <label class="field">
+        <span class="label-text">Dénomination / Raison sociale</span>
+        <input type="text" name="denomination" class="line-input" placeholder="....................................................................." required>
+      </label>
 
-      <div class="row">
-        <label class="small-field">
-          <span class="label-text">N° RCCM</span>
-          <input type="text" name="rccm" class="short-input" placeholder="...">
-        </label>
-        <label class="small-field">
-          <span class="label-text">N° ID NAT</span>
-          <input type="text" name="idnat" class="short-input" placeholder="...">
-        </label>
-        <label class="small-field">
-          <span class="label-text">N° Impôt</span>
-          <input type="text" name="impot" class="short-input" placeholder="...">
-        </label>
-      </div>
+      <div class="row">
+        <label class="small-field">
+          <span class="label-text">N° RCCM</span>
+          <input type="text" name="rccm" class="short-input" placeholder="..." required>
+        </label>
+        <label class="small-field">
+          <span class="label-text">N° ID NAT</span>
+          <input type="text" name="idnat" class="short-input" placeholder="..." required>
+        </label>
+        <label class="small-field">
+          <span class="label-text">N° Impôt</span>
+          <input type="text" name="impot" class="short-input" placeholder="..." required>
+        </label>
+      </div>
 
-      <label class="field">
-        <span class="label-text">Siège Social (Adresse complète)</span>
-        <input type="text" name="siege" class="line-input" placeholder=".....................................................................">
-      </label>
+      <label class="field">
+        <span class="label-text">Siège Social (Adresse complète)</span>
+        <input type="text" name="siege" class="line-input" placeholder="....................................................................." required>
+      </label>
 
-      <div class="row">
-        <label class="small-field">
-          <span class="label-text">Tél</span>
-          <input type="tel" name="tel" class="short-input" placeholder="">
-        </label>
-        <label class="small-field">
-          <span class="label-text">Email</span>
-          <input type="email" name="email" class="short-input" placeholder="">
-        </label>
-        <label class="small-field">
-          <span class="label-text">Nationalité de PME</span>
-          <input type="text" name="nationalite" class="short-input" placeholder="">
-        </label>
-      </div>
+      <div class="row">
+        <label class="small-field">
+          <span class="label-text">Tél</span>
+          <input type="tel" name="tel" class="short-input" required>
+        </label>
+        <label class="small-field">
+          <span class="label-text">Email</span>
+          <input type="email" name="email" class="short-input" required>
+        </label>
+        <label class="small-field">
+          <span class="label-text">Nationalité de PME</span>
+          <input type="text" name="nationalite" class="short-input" required>
+        </label>
+      </div>
 
-      <label class="field">
-        <span class="label-text">Siège d’exploitation</span>
-        <input type="text" name="siege_exploitation" class="line-input">
-      </label>
+      <label class="field">
+        <span class="label-text">Siège d’exploitation</span>
+        <input type="text" name="siege_exploitation" class="line-input" required>
+      </label>
 
-      <label class="field">
-        <span class="label-text">Province</span>
-        <select name="province" class="line-input">
-          <option value="">--Choisir--</option>
-          <option>Kinshasa</option>
-          <option>Kongo Central</option>
-          <option>Kwilu</option>
-          <option>Kwango</option>
-          <option>Mai-Ndombe</option>
-          <option>Equateur</option>
-          <option>Mongala</option>
-          <option>Nord-Ubangi</option>
-          <option>Sud-Ubangi</option>
-          <option>Tshuapa</option>
-          <option>Tshopo</option>
-          <option>Bas-Uele</option>
-          <option>Haut-Uele</option>
-          <option>Ituri</option>
-          <option>Lomami</option>
-          <option>Kasaï</option>
-          <option>Kasaï Central</option>
-          <option>Kasaï Oriental</option>
-          <option>Sankuru</option>
-          <option>Haut-Lomami</option>
-          <option>Lualaba</option>
-          <option>Haut-Katanga</option>
-          <option>Tanganyika</option>
-          <option>Maniema</option>
-          <option>Nord-Kivu</option>
-          <option>Sud-Kivu</option>
-        </select></span>
-        <input type="text" name="province" class="line-input">
-      </label>
-    </section>
+      <label class="field">
+        <span class="label-text">Province</span>
+        <select name="province" class="line-input" required>
+          <option value="">--Choisir--</option>
+          <option>Kinshasa</option>
+          <option>Kongo Central</option>
+          <option>Kwilu</option>
+          <option>Kwango</option>
+          <option>Mai-Ndombe</option>
+          <option>Equateur</option>
+          <option>Mongala</option>
+          <option>Nord-Ubangi</option>
+          <option>Sud-Ubangi</option>
+          <option>Tshuapa</option>
+          <option>Tshopo</option>
+          <option>Bas-Uele</option>
+          <option>Haut-Uele</option>
+          <option>Ituri</option>
+          <option>Lomami</option>
+          <option>Kasaï</option>
+          <option>Kasaï Central</option>
+          <option>Kasaï Oriental</option>
+          <option>Sankuru</option>
+          <option>Haut-Lomami</option>
+          <option>Lualaba</option>
+          <option>Haut-Katanga</option>
+          <option>Tanganyika</option>
+          <option>Maniema</option>
+          <option>Nord-Kivu</option>
+          <option>Sud-Kivu</option>
+        </select>
+      </label>
+    </section>
 
-    <section class="section">
-      <h2>SITUATION JURIDIQUE</h2>
-      <div class="row">
-        <label class="small-field">
-          <span class="label-text">Forme juridique de la PME</span>
-          <input type="text" name="forme_juridique" class="short-input">
-        </label>
-        <label class="small-field">
-          <span class="label-text">Date et année de création</span>
-          <input type="text" name="date_creation" class="short-input" placeholder="JJ/MM/AAAA">
-        </label>
-        <label class="small-field">
-          <span class="label-text">Nombre d’associés</span>
-          <input type="number" name="nb_associés" class="short-input">
-        </label>
-      </div>
-    </section>
+    <section class="section">
+      <h2>SITUATION JURIDIQUE</h2>
+      <div class="row">
+        <label class="small-field">
+          <span class="label-text">Forme juridique de la PME</span>
+          <select name="forme_juridique" class="short-input" required>
+            <option value="">--Choisir--</option>
+            <option>Établissement (ETS)</option>
+            <option>Entreprise Individuelle (EI)</option>
+            <option>Société à Responsabilité Limitée (SARL)</option>
+            <option>Société Anonyme (SA)</option>
+            <option>Société en Nom Collectif (SNC)</option>
+            <option>Société en Commandite Simple (SCS)</option>
+            <option>Société Unipersonnelle (SU)</option>
+            <option>Groupement d'Intérêt Économique (GIE)</option>
+          </select>
+        </label>
+        <label class="small-field">
+          <span class="label-text">Date et année de création</span>
+          <input type="text" name="date_creation" class="short-input" placeholder="JJ/MM/AAAA" required>
+        </label>
+        <label class="small-field">
+          <span class="label-text">Nombre d’associés</span>
+          <input type="number" name="nb_associés" class="short-input" required>
+        </label>
+      </div>
+    </section>
 
-    <section class="section">
-      <h2>ACTIVITES ECONOMIQUES OU COMMERCIALES</h2>
+    <section class="section">
+      <h2>ACTIVITES ECONOMIQUES OU COMMERCIALES</h2>
 
-      <label class="field">
-        <span class="label-text">Objectif Social</span>
-        <input type="text" name="objectif_social" class="line-input">
-      </label>
+      <label class="field">
+        <span class="label-text">Objectif Social</span>
+        <input type="text" name="objectif_social" class="line-input" required>
+      </label>
 
-      <div class="row">
-        <label class="small-field">
-          <span class="label-text">Activité Principale</span>
-          <select name="act_principale" class="short-input">
+      <div class="row">
+        <label class="small-field">
+          <span class="label-text">Activité Principale</span>
+          <select name="act_principale" class="short-input" required>
+            <option value="">--Choisir--</option>
+            <option>Commerce général</option>
+            <option>Agriculture</option>
+            <option>Elevage</option>
+            <option>Transport</option>
+            <option>Industrie</option>
+            <option>Technologie / Informatique</option>
+            <option>Services</option>
+            <option>Construction</option>
+            <option>Education</option>
+            <option>Santé</option>
+            <option>Finance</option>
+            <option>Artisanat</option>
+            <option>Restauration / Hôtellerie</option>
+            <option>Import / Export</option>
+          </select>
+        </label>
+        <label class="small-field">
+          <span class="label-text">Activité Secondaire</span>
+          <input type="text" name="act_secondaire" class="short-input" required>
+        </label>
+      </div>
+
+      <label class="field">
+        <span class="label-text">Produit(s) / Services</span>
+        <input type="text" name="produits" class="line-input" required>
+      </label>
+
+      <div class="row">
+        <label class="small-field">
+          <span class="label-text">Capital social</span>
+          <input type="text" name="capital" class="short-input" required>
+        </label>
+        <label class="small-field">
+          <span class="label-text">Nombre d’agents</span>
+          <input type="number" name="nb_agents" class="short-input" required>
+        </label>
+      </div>
+
+      <div class="row">
+        <label class="small-field">
+          <span class="label-text">Chiffre d’affaires mensuel (en $)</span>
+          <input type="text" name="ca_mensuel" class="short-input" required>
+        </label>
+        <label class="small-field">
+          <span class="label-text">Masse salariale payée mensuellement (en $)</span>
+          <input type="text" name="masse_salariale" class="short-input" required>
+        </label>
+      </div>
+
+      <div class="row">
+        <label class="small-field">
+          <span class="label-text">Volume de l’IPR payé mensuellement (en $)</span>
+          <input type="text" name="ipr" class="short-input" required>
+        </label>
+        <label class="small-field">
+          <span class="label-text">Volume d’Impôts & taxes payés mensuellement (en $)</span>
+          <input type="text" name="impots" class="short-input" required>
+        </label>
+      </div>
+
+    </section>
+
+    <footer class="footer">Adresse : Av. Colonel Ebeya, n°195 Immeuble la référence 3ème étage/ local 311. C. Gombe / Kinshasa</footer>
+  </div>
+
+    <div class="a4" id="page2">
+    <h2>IDENTIFICATION DU RESPONSABLE</h2>
+
+    <div class="row">
+      <label class="small-field">
+        <span class="label-text">Nom du Propriétaire</span>
+        <input type="text" name="nom_proprietaire" class="short-input" required>
+      </label>
+
+      <label class="small-field">
+        <span class="label-text">Adresse</span>
+        <input type="text" name="adresse_responsable" class="short-input" required>
+      </label>
+
+      <label class="small-field">
+        <span class="label-text">Niveau d’études</span>
+        <select name="niveau_etudes" class="short-input" required>
+          <option value="">--Choisir--</option>
+          <option>Primaire</option>
+          <option>Secondaire</option>
+          <option>Supérieur</option>
+          <option>Autre</option>
+        </select>
+      </label>
+    </div>
+    
+    <div class="row">
+      <label class="small-field">
+        <span class="label-text">Faculté / Domaine d'études</span>
+        <input type="text" name="faculte_etudes" class="short-input" placeholder="Ex: Droit, Économie, Agronomie..." required>
+      </label>
+          <label class="small-field">
+        <span class="label-text">Nom du Gérant</span>
+        <input type="text" name="nom_gerant" class="short-input" required>
+      </label>
+      <label class="small-field">
+        <span class="label-text">Nationalité du Gérant</span>
+        <input type="text" name="nat_gerant" class="short-input" required>
+      </label>
+    </div>
+
+    <div class="row">
+      <label class="small-field">
+        <span class="label-text">Tél / Email du Gérant</span>
+        <input type="text" name="contact_gerant" class="short-input" required>
+      </label>
+      <label class="small-field">
+        <span class="label-text">Genre du Gérant</span>
+        <select name="genre_gerant" class="short-input" required>
             <option value="">--Choisir--</option>
-            <option>Commerce général</option>
-            <option>Agriculture</option>
-            <option>Elevage</option>
-            <option>Transport</option>
-            <option>Industrie</option>
-            <option>Technologie / Informatique</option>
-            <option>Services</option>
-            <option>Construction</option>
-            <option>Education</option>
-            <option>Santé</option>
-            <option>Finance</option>
-            <option>Artisanat</option>
-            <option>Restauration / Hôtellerie</option>
-            <option>Import / Export</option>
-          </select>
-        </label>
-        <label class="small-field">
-          <span class="label-text">Activité Secondaire</span>
-          <input type="text" name="act_secondaire" class="short-input">
-        </label>
-      </div>
-
-      <label class="field">
-        <span class="label-text">Produit(s) / Services</span>
-        <input type="text" name="produits" class="line-input">
-      </label>
-
-      <div class="row">
-        <label class="small-field">
-          <span class="label-text">Capital social</span>
-          <input type="text" name="capital" class="short-input">
-        </label>
-        <label class="small-field">
-          <span class="label-text">Nombre d’agents</span>
-          <input type="number" name="nb_agents" class="short-input">
-        </label>
-      </div>
-
-      <div class="row">
-        <label class="small-field">
-          <span class="label-text">Chiffre d’affaires mensuel (en $)</span>
-          <input type="text" name="ca_mensuel" class="short-input">
-        </label>
-        <label class="small-field">
-          <span class="label-text">Masse salariale payée mensuellement (en $)</span>
-          <input type="text" name="masse_salariale" class="short-input">
-        </label>
-      </div>
-
-      <div class="row">
-        <label class="small-field">
-          <span class="label-text">Volume de l’IPR payé mensuellement (en $)</span>
-          <input type="text" name="ipr" class="short-input">
-        </label>
-        <label class="small-field">
-          <span class="label-text">Volume d’Impôts & taxes payés mensuellement (en $)</span>
-          <input type="text" name="impots" class="short-input">
-        </label>
-      </div>
-
-    </section>
-
-    <footer class="footer">Adresse : Av. Colonel Ebeya, n°195 Immeuble la référence 3ème étage/ local 311. C. Gombe / Kinshasa</footer>
-  </div>
-
-  <!-- Page 2 -->
-  <div class="a4" id="page2">
-    <h2>IDENTIFICATION DU RESPONSABLE</h2>
-
-    <div class="row">
-      <label class="small-field">
-        <span class="label-text">Nom du Propriétaire</span>
-        <input type="text" name="nom_proprietaire" class="short-input">
-      </label>
-
-      <label class="small-field">
-        <span class="label-text">Adresse</span>
-        <input type="text" name="adresse_responsable" class="short-input">
-      </label>
-
-      <label class="small-field">
-        <span class="label-text">Niveau d’études</span>
-        <select name="niveau_etudes" class="short-input">
-          <option value="">--Choisir--</option>
-          <option>Primaire</option>
-          <option>Secondaire</option>
-          <option>Supérieur</option>
-          <option>Autre</option>
+            <option>Masculin</option>
+            <option>Féminin</option>
         </select>
-      </label>
-    </div>
+      </label>
+              <label class="small-field">
+        <span class="label-text">Tranche d'âge du Gérant</span>
+        <select name="tranche_age_gerant" class="short-input" required>
+          <option value="">--Choisir--</option>
+          <option>Homme (18-25 ans)</option>
+          <option>Femme (18-25 ans)</option>
+          <option>Homme (26-35 ans)</option>
+          <option>Femme (26-35 ans)</option>
+          <option>Homme (35 ans et +)</option>
+          <option>Femme (35 ans et +)</option>
+        </select>
+      </label>
+            </div>
 
-    <div class="row">
-      <label class="small-field">
-        <span class="label-text">Nom du Gérant</span>
-        <input type="text" name="nom_gerant" class="short-input">
-      </label>
-      <label class="small-field">
-        <span class="label-text">Nationalité du Gérant</span>
-        <input type="text" name="nat_gerant" class="short-input">
-      </label>
-      <label class="small-field">
-        <span class="label-text">Tél / Email</span>
-        <input type="text" name="contact_gerant" class="short-input">
-      </label>
-    </div>
+    <label class="field">
+        <span class="label-text">Nationalité des associés</span>
+        <input type="text" name="nat_associes" class="line-input" required>
+    </label>
+    
+    <div class="field">
+      <span class="label-text">Noms et Adresses de fournisseurs (Un par ligne)</span>
+      <textarea name="fournisseurs" rows="3" placeholder="1. Nom / Adresse\n2. Nom / Adresse\n3. Nom / Adresse" required></textarea>
+    </div>
 
-    <div class="row">
-      <label class="small-field">
-        <span class="label-text">Genre</span>
-        <select name="genre" class="short-input"><option></option><option>Masculin</option><option>Féminin</option></select>
-      </label>
-      <label class="small-field">
-        <span class="label-text">Nationalité des associés</span>
-        <input type="text" name="nat_associes" class="short-input">
-      </label>
-    </div>
+    <div class="field">
+      <span class="label-text">Noms et Adresses de clients (Un par ligne)</span>
+      <textarea name="clients" rows="3" placeholder="1. Nom / Adresse\n2. Nom / Adresse\n3. Nom / Adresse" required></textarea>
+    </div>
 
-    <div class="field">
-      <span class="label-text">Noms et Adresses de fournisseurs</span>
-      <textarea name="fournisseurs" rows="3" placeholder="1.\n2.\n3."></textarea>
-    </div>
+    <div class="row">
+      <label class="small-field">
+        <span class="label-text">Avez-vous une comptabilité ?</span>
+        <select name="comptabilite" class="short-input" required><option value="">--Choisir--</option><option>Oui</option><option>Non</option></select>
+      </label>
+      <label class="small-field">
+        <span class="label-text">Si oui, est-elle régulièrement tenue ?</span>
+        <select name="compta_reguliere" class="short-input" required><option value="">--Choisir--</option><option>Oui</option><option>Non</option></select>
+      </label>
+    </div>
 
-    <div class="field">
-      <span class="label-text">Noms et Adresses de clients</span>
-      <textarea name="clients" rows="3" placeholder="1.\n2.\n3."></textarea>
-    </div>
+    <div class="row">
+      <label class="small-field">
+        <span class="label-text">Date de la dernière déclaration du bilan</span>
+        <input type="text" name="date_declaration" class="short-input" placeholder="JJ/MM/AAAA" required>
+      </label>
+      <label class="small-field">
+        <span class="label-text">Exercice concerné</span>
+        <input type="text" name="exercice" class="short-input" placeholder="Ex: 2024" required>
+      </label>
+    </div>
 
-    <div class="field small">
-      <span class="label-text">Avez-vous une comptabilité</span>
-      <select name="comptabilite" class="short-input"><option></option><option>Oui</option><option>Non</option></select> ?</span>
-      <select name="comptabilite" class="short-input"><option></option><option>Oui</option><option>Non</option></select>
-    </div>
+    <div class="field">
+      <span class="label-text">Qu’est-ce que la PME attend de la COPEMECO ? (Max 500 caractères)</span>
+      <textarea name="attentes" rows="3" maxlength="500" required></textarea>
+    </div>
 
-    <div class="row">
-      <label class="small-field">
-        <span class="label-text">Si oui, est-elle régulièrement tenue ?</span>
-      <select name="compta_reguliere" class="short-input"><option></option><option>Oui</option><option>Non</option></select>
-    </div>
+    <div class="sign-block">
+      <div>
+        <div>Pour la PME</div>
+        <div class="sign-line">Nom et Qualité</div>
+        <div class="sign-line">Signature</div>
+      </div>
 
-    <div class="row">
-      <label class="small-field">
-        <span class="label-text">Date de la dernière déclaration du bilan du bilan</span>
-        <input type="text" name="date_declaration" class="short-input">
-      </label>
-      <label class="small-field">
-        <span class="label-text">Exercice</span>
-        <input type="text" name="exercice" class="short-input">
-      </label>
-    </div>
+      <div>
+        <div>Pour la COPEMECO</div>
+        <div class="sign-line">Nom et Qualité</div>
+        <div class="sign-line">Signature</div>
+      </div>
+    </div>
 
-    <div class="field">
-      <span class="label-text">Qu’est-ce que la PME attend de la COPEMECO ?</span>
-      <textarea name="attentes" rows="3"></textarea>
-    </div>
+    <div class="form-actions">
+      <button id="submitBtn">Soumettre</button>
+      <button id="resetBtn" type="button">Réinitialiser</button>
+    </div>
+  </div>
 
-    <div class="sign-block">
-      <div>
-        <div>Pour la PME</div>
-        <div class="sign-line">Nom et Qualité</div>
-        <div class="sign-line">Signature</div>
-      </div>
-
-      <div>
-        <div>Pour la COPEMECO</div>
-        <div class="sign-line">Nom et Qualité</div>
-        <div class="sign-line">Signature</div>
-      </div>
-    </div>
-
-    <div class="form-actions">
-      <button id="submitBtn">Soumettre</button>
-      <button id="resetBtn" type="button">Réinitialiser</button>
-    </div>
-  </div>
-
-  <!-- Librairies PDF & QR Code -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
 <script src="https://api.backendless.com/sdk/js/latest/backendless.min.js"></script>
 
@@ -318,4 +344,3 @@
 </body>
 
 </html>
-
