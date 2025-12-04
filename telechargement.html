@@ -7,7 +7,7 @@
     <style>
         body { font-family: 'Arial', sans-serif; background: #f4f4f4; padding: 20px; text-align: center; }
         .container { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); display: inline-block; margin-top: 50px; }
-        input[type="text"] { padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px; width: 300px; }
+        input[type="text"] { padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px; width: 350px; }
         button { padding: 10px 20px; background-color: #007BFF; color: white; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.3s; }
         button:hover { background-color: #0056b3; }
         #message { margin-top: 20px; font-weight: bold; }
@@ -17,8 +17,8 @@
     <div class="container">
         <h1>Génération de la Fiche d'Adhésion</h1>
 
-        <label for="pmeIdentifier">Entrez le N° d'Adhésion ou le N° ID NAT :</label>
-        <input type="text" id="pmeIdentifier" placeholder="Ex: ADH-20240101-1234 ou IDNAT12345" required>
+        <label for="pmeIdentifier">Entrez l'**Identifiant Unique (objectId)** Backendless :</label>
+        <input type="text" id="pmeIdentifier" placeholder="Ex: C87413D3-CE85-48AA-88E0-98E012345678" required>
         <button id="generatePdfBtn">Générer le PDF</button>
         <div id="message"></div>
     </div>
@@ -29,7 +29,7 @@
     
     <script>
         // ==============================================
-        // 1. CONFIGURATION BACKENDLESS (À REMPLACER)
+        // 1. CONFIGURATION BACKENDLESS (IMPORTANT: Vérifiez vos clés !)
         // ==============================================
         const APP_ID = "3D3629AB-2B0E-49DE-AA35-4A0EFAB84AE7"; 
         const API_KEY = "B3C84FA1-67E6-40A2-8CA4-2E77E52E2EB4"; 
@@ -39,15 +39,15 @@
             Backendless.serverURL = "https://api.backendless.com";
             Backendless.initApp(APP_ID, API_KEY);
         } else {
-            console.error("Le SDK Backendless n'est pas chargé.");
+            console.error("Le SDK Backendless n'est pas chargé. Vérifiez l'accès à internet.");
         }
 
         const { jsPDF } = window.jspdf;
         const messageEl = document.getElementById('message');
 
         // ==============================================
-        // 2. MODÈLE DE DONNÉES COMPLETES
-        // Utilisé pour garantir que TOUTES les clés sont présentes dans l'objet de données
+        // 2. MODÈLE DE DONNÉES COMPLETES 
+        // Utilisé pour garantir que TOUTES les clés sont présentes
         // ==============================================
         const FIELD_MODEL = {
             denomination: "", rccm: "", idnat: "", impot: "", siege: "", tel: "", email: "", 
@@ -75,10 +75,11 @@
                 console.warn(`Image ${src} non chargée.`);
                 resolve(null);
             };
+            // Assurez-vous que COP.png est dans le même répertoire que ce fichier HTML
             img.src = src; 
         });
 
-        // Fonction d'aide pour obtenir la valeur (transforme "" ou "Non précisé" en "Non précisé")
+        // Fonction d'aide pour obtenir la valeur et gérer les vides
         const getValue = (key, formData) => {
             const value = formData[key];
             if (typeof value === 'string') {
@@ -90,29 +91,34 @@
 
 
         // ==============================================
-        // 4. LOGIQUE DE RECUPERATION BACKENDLESS
+        // 4. LOGIQUE DE RECUPERATION BACKENDLESS (Recherche par objectId)
         // ==============================================
         async function fetchPmeData(identifier) {
-            // Utiliser une requête OR pour chercher par numero_adhesion ou idnat
-            const whereClause = `numero_adhesion = '${identifier}' OR idnat = '${identifier}'`;
+            // Recherche UNICEMENT par l'objectId, gérant correctement les tirets
+            const whereClause = `objectId = '${identifier}'`;
             
             const queryBuilder = Backendless.Data.of(TABLE).builder();
             queryBuilder.setWhereClause(whereClause);
-            queryBuilder.setPageSize(1);
+            queryBuilder.setPageSize(1); 
+
+            // Débogage: Affiche la requête envoyée
+            console.log("Requête Backendless (WHERE):", whereClause);
 
             const result = await Backendless.Data.of(TABLE).find(queryBuilder);
             
+            // Débogage: Affiche le résultat reçu
+            console.log("Résultat reçu de Backendless:", result);
+
             return result.length > 0 ? result[0] : null;
         }
 
         // ==============================================
-        // 5. FONCTION DE GÉNÉRATION PDF (Intégrée)
+        // 5. FONCTION DE GÉNÉRATION PDF
         // ==============================================
         async function generatePDFExact(formData){
             const pdf = new jsPDF({ unit: 'mm', format: 'a4' });
             const pageWidth = 210, pageHeight = 297;
 
-            // Alias pour appeler getValue avec formData
             const getVal = (key) => getValue(key, formData);
 
             let logoImg = null;
@@ -122,7 +128,6 @@
             // --- PAGE 1 ---
             if(logoImg){
                 try{
-                    // Logique du filigrane
                     const wmCanvas = document.createElement('canvas');
                     const ctx = wmCanvas.getContext('2d');
                     const wmSizePx = 1200;
@@ -160,6 +165,7 @@
             
             // Pour les champs non-directs
             drawLineField('Numéro d\'Adhésion (Généré)', 'numero_adhesion', 15, 80);
+            drawLineField('ID Backendless (objectId)', 'objectId', 15, 80);
             y += 3;
 
             pdf.setFont('helvetica','bold');
@@ -212,7 +218,6 @@
 
             if(logoImg){
                 try{
-                    // Logique du filigrane page 2
                     const wmCanvas2 = document.createElement('canvas');
                     const ctx2 = wmCanvas2.getContext('2d');
                     const wmSizePx2 = 1200;
@@ -288,11 +293,13 @@
 
             if(typeof QRious !== 'undefined'){
                 const qrCanvas = document.createElement('canvas');
+                // Utilise le Numéro d'Adhésion pour le QR code
                 new QRious({ element: qrCanvas, value: getVal('numero_adhesion') || 'ADHESION_COPEMECO', size: 200 });
                 const qrData = qrCanvas.toDataURL('image/png');
                 pdf.addImage(qrData, 'PNG', 160, 260, 30, 30);
             }
 
+            // Nomme le fichier PDF avec la Dénomination et le Numéro d'Adhésion
             const pdfFileName = `ADHESION_${getVal('denomination').replace(/\s/g, '_')}_${getVal('numero_adhesion')}.pdf`;
             pdf.save(pdfFileName);
         }
@@ -306,37 +313,37 @@
 
             if (!identifier) {
                 messageEl.style.color = 'red';
-                messageEl.textContent = "Veuillez entrer un identifiant.";
+                messageEl.textContent = "Veuillez entrer l'Identifiant Unique (objectId).";
                 return;
             }
 
             messageEl.style.color = '#007BFF';
-            messageEl.textContent = `Recherche de la fiche pour "${identifier}" en cours...`;
+            messageEl.textContent = `Recherche de la fiche pour l'ID "${identifier}" en cours...`;
 
             try {
                 const pmeDataFromDb = await fetchPmeData(identifier);
 
-                if (pmeDataFromDb && pmeDataFromDb.numero_adhesion) {
+                if (pmeDataFromDb && pmeDataFromDb.objectId) {
                     
-                    // --- ÉTAPE CLÉ: Fusion des données pour garantir la structure complète ---
+                    // Fusion des données pour garantir la structure complète
                     const pmeData = { 
-                        ...FIELD_MODEL, // Assure la présence de toutes les clés
-                        ...pmeDataFromDb // Écrase avec les valeurs réelles de la base
+                        ...FIELD_MODEL,
+                        ...pmeDataFromDb 
                     };
                     
                     messageEl.style.color = 'green';
-                    messageEl.textContent = `Fiche d'adhésion N° ${pmeData.numero_adhesion} trouvée. Génération du PDF...`;
+                    messageEl.textContent = `Fiche d'adhésion pour ID ${pmeData.objectId} trouvée. Génération du PDF...`;
                     
                     await generatePDFExact(pmeData);
                     
-                    messageEl.textContent = `✅ PDF de la fiche N° ${pmeData.numero_adhesion} généré et téléchargé !`;
+                    messageEl.textContent = `✅ PDF de la fiche pour ID ${pmeData.objectId} généré et téléchargé !`;
                 } else {
                     messageEl.style.color = 'red';
-                    messageEl.textContent = `❌ Aucune fiche d'adhésion trouvée pour l'identifiant: ${identifier}. Vérifiez le N° ou l'ID NAT.`;
+                    messageEl.textContent = `❌ Aucune fiche d'adhésion trouvée pour l'Identifiant: ${identifier}. Vérifiez que l'ID est correct (tirets inclus).`;
                 }
             } catch (error) {
                 messageEl.style.color = 'red';
-                messageEl.textContent = "Erreur critique lors du processus. Consultez la console (F12).";
+                messageEl.textContent = "Erreur critique lors du processus. Consultez la console (F12) et vérifiez les clés API/Permissions.";
                 console.error("Erreur détaillée:", error);
             }
         });
