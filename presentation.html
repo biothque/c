@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="fr-FR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>COPEMECO – Nos Entrepreneurs</title>
+    <link rel="icon" href="COP.png" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Configuration de la police Inter */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f9fb;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        /* ------------------ STYLES COMMUNS (Barre, Footer, Bouton) ------------------ */
+
+        .nav-subtitle {
+            font-size: 0.75rem;
+            line-height: 1;
+            font-weight: 600;
+            color: #ef4444;
+        }
+
+        /* Styles pour le bouton d'aide flottant (Couleur personnalisée) */
+        .custom-assist-button {
+            background: linear-gradient(135deg, #1d95ad, #fbbf24); 
+            box-shadow: 0 10px 15px -3px rgba(30, 144, 255, 0.5), 0 4px 6px -2px rgba(30, 144, 255, 0.5);
+            transition: all 0.3s ease;
+        }
+        
+        /* Animation de clignotement pour le bouton flottant */
+        @keyframes flash-button {
+            0% { transform: scale(1); box-shadow: 0 10px 15px -3px rgba(30, 144, 255, 0.5), 0 4px 6px -2px rgba(30, 144, 255, 0.5); }
+            50% { transform: scale(1.1); box-shadow: 0 0 25px 5px rgba(255, 255, 255, 0.9), 0 0 50px 10px rgba(255, 255, 255, 0.7); }
+            100% { transform: scale(1); box-shadow: 0 10px 15px -3px rgba(30, 144, 255, 0.5), 0 4px 6px -2px rgba(30, 144, 255, 0.5); }
+        }
+        .blinking-assist-button {
+            animation: flash-button 2s infinite ease-in-out;
+        }
+
+        /* Styles pour l'effet de frappe (Typing Effect) dans le footer */
+        .typing-text-container {
+            overflow: hidden; 
+            white-space: nowrap;
+            border-right: .15em solid #34d399; 
+            font-size: 0.9rem;
+            animation: 
+                typewriter 6.5s steps(47, end) infinite, 
+                blink-caret .75s step-end infinite;
+            max-width: 100%;
+        }
+
+        @media (max-width: 640px) {
+            .typing-text-container {
+                font-size: 0.75rem; 
+            }
+        }
+        @keyframes typewriter {
+            0%, 100% { width: 0; }
+            46.15% { width: 100%; } 
+            69.23% { width: 100%; } 
+            92.3% { width: 0; } 
+        }
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #34d399; } 
+        }
+
+        /* Styles pour l'effet d'explosion des icônes (Exploding Icons) dans le footer */
+        .exploding-icon {
+            display: inline-block;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+        .exploding-icon:hover {
+            transform: scale(1.5);
+            color: #38bdf8; 
+            text-shadow: 0 0 15px rgba(56, 189, 248, 0.8);
+        }
+
+        /* ------------------ NOUVEAUX STYLES POUR LES ENTREPRENEURS ------------------ */
+
+        .entrepreneur-section {
+            padding-top: 3rem;
+            padding-bottom: 3rem;
+        }
+
+        /* Définition des couleurs de section */
+        .section-blue { background-color: #e0f2fe; border-top: 5px solid #3b82f6; } /* Tech */
+        .section-red { background-color: #fee2e2; border-top: 5px solid #ef4444; } /* Culture */
+        .section-green { background-color: #d1fae5; border-top: 5px solid #10b981; } /* Agro */
+
+        /* Style de la carte entrepreneur */
+        .entrepreneur-card {
+            background-color: white;
+            border-radius: 1.5rem; 
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); 
+            padding: 1.5rem; 
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%; 
+            display: flex;
+            flex-direction: column;
+        }
+
+        .entrepreneur-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        /* Conteneur des 3 photos */
+        .photo-container {
+            display: grid;
+            grid-template-columns: 1fr; 
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        @media (min-width: 768px) { 
+            .photo-container {
+                grid-template-columns: 1.2fr 1fr; 
+            }
+        }
+
+        /* Photo de l'Entrepreneur (Ronde) - Case 1 */
+        .entrepreneur-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 5px solid; 
+        }
+
+        .entrepreneur-photo-wrapper {
+            position: relative;
+            padding-bottom: 100%; 
+            height: 0;
+            margin-bottom: 0.5rem; 
+        }
+        @media (min-width: 768px) {
+            .entrepreneur-photo-wrapper {
+                margin-bottom: 0; 
+            }
+        }
+        .entrepreneur-photo-wrapper img {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        /* Conteneur des photos de produits - Cases 2 & 3 */
+        .product-photos-wrapper {
+            display: grid;
+            grid-template-rows: 1fr 1fr; 
+            gap: 1rem;
+        }
+
+        .product-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 0.75rem; 
+            min-height: 100px;
+        }
+
+        /* ------------------ STYLES DU CARROUSEL BANNIÈRE ------------------ */
+
+        .photo-banner-carousel {
+            display: flex;
+            overflow: hidden;
+            position: relative;
+            height: 150px; 
+            margin-bottom: 4rem; 
+            border-radius: 1rem;
+            background-color: white;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+
+        .carousel-track {
+            display: flex;
+            white-space: nowrap; 
+            animation: scroll-carousel 40s linear infinite; /* Animation de défilement */
+            padding: 15px 0; /* Centrage vertical des images */
+        }
+
+        /* L'animation de défilement CSS */
+        @keyframes scroll-carousel {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); } /* Défilement de la moitié du contenu pour une boucle parfaite */
+        }
+        
+        .carousel-item {
+            flex-shrink: 0;
+            width: 150px; /* Taille de l'item du carrousel */
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .carousel-img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid #3b82f6; 
+            transition: transform 0.5s ease;
+        }
+
+        .carousel-img:hover {
+            transform: scale(1.05);
+            animation-play-state: paused; /* Pause l'animation au survol */
+        }
+
+    </style>
+</head>
+<body class="antialiased">
+    
+    <div id="main-content" class="visible">
+        
+        <header class="bg-white shadow-lg sticky top-0 z-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center h-20">
+                    <a href="index.html" class="flex-shrink-0 flex items-center space-x-2">
+                        <img class="h-10 w-auto" src="COP.png" alt="COPEMECO Logo">
+                        <div class="flex flex-col items-start leading-none">
+                            <span class="text-xl font-bold text-gray-800">COPEMECO</span>
+                            <span class="nav-subtitle">Coordination Nationale</span>
+                        </div>
+                    </a>
+                    
+                    <nav id="main-nav" class="hidden md:block">
+                        <div class="ml-10 flex items-baseline space-x-4">
+                            <a href="index.html#defense" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Défense</a>
+                            <a href="index.html#actualites" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Actualités</a>
+                            <a href="index.html#partenaires" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Partenaires</a>
+                            <a href="#contact" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Contact</a>
+                        </div>
+                    </nav>
+                    
+                    <div class="flex items-center space-x-4">
+                        <button class="text-gray-700 hover:text-blue-600 p-2 rounded-full hover:bg-gray-100 transition duration-150" title="Rechercher">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                        </button>
+                        <button class="text-gray-700 hover:text-blue-600 text-sm font-medium">FR / EN</button>
+                        
+                        <div class="md:hidden">
+                            <button id="menu-button" class="text-gray-700 hover:text-blue-600 p-2 rounded-full hover:bg-gray-100 transition duration-150" title="Menu">
+                                <svg id="menu-icon-open" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                                <svg id="menu-icon-close" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div id="mobile-menu" class="hidden md:hidden fixed w-full bg-white shadow-xl z-40">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 flex flex-col items-center">
+                <a href="index.html#defense" class="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Défense</a>
+                <a href="index.html#actualites" class="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Actualités</a>
+                <a href="index.html#partenaires" class="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Partenaires</a>
+                <a href="#contact" class="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Contact</a>
+            </div>
+        </div>
+
+        <div class="h-1 w-full bg-gradient-to-r from-red-500 via-yellow-500 to-blue-500"></div>
+
+        <section id="entrepreneurs" class="py-12 md:py-20 bg-gray-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="photo-banner-carousel max-w-7xl mx-auto mb-16">
+                    <div id="carousel-track" class="carousel-track">
+                        </div>
+                </div>
+                
+                <h1 class="text-4xl sm:text-5xl font-extrabold text-gray-900 text-center mb-16">
+                    Mettez en lumière nos champions PME
+                </h1>
+                
+
+                <div id="entrepreneurs-list">
+                    </div>
+
+            </div>
+        </section>
+
+        <div class="h-1 w-full bg-gradient-to-r from-red-500 via-yellow-500 to-blue-500"></div>
+
+        <a href="logo2.html" 
+            id="floating-help-button" 
+            class="custom-assist-button blinking-assist-button fixed bottom-8 right-8 w-16 h-16 rounded-full flex items-center justify-center text-white shadow-lg z-50 focus:outline-none"
+            title="Inscription"
+            target="_blank" 
+        >
+            <img class="w-12 h-12 rounded-full object-cover" 
+                src="COP4.png" 
+                alt="Inscription">
+        </a>
+
+        <footer id="contact" class="bg-gray-800 text-white py-10">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center text-center">
+                    
+                    <div class="text-center md:text-left">
+                        <h3 class="text-xl font-bold mb-3">Nous Contacter</h3>
+                        <div id="address-container" class="h-16 flex items-center justify-center md:justify-start">
+                            <p class="text-gray-400 typing-text-container" id="typing-address">
+                                Adresse : Av. Colonel Ebeya, n°195 Immeuble FONAREV 3ème étage/ local 311. C. Gombe / Kinshasa
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <img class="h-12 w-auto mx-auto mb-4" src="COP.png" alt="Logo COPEMECO">
+                        <p class="text-sm text-gray-500">Tous droits réservés © 2024 COPEMECO.</p>
+                    </div>
+
+                    <div class="text-center md:text-right">
+                        <h3 class="text-xl font-bold mb-3">Suivez-nous</h3>
+                        <div class="flex justify-center md:justify-end space-x-6 text-2xl">
+                            <a href="#" class="text-gray-400 hover:text-blue-600 exploding-icon transition" aria-label="Facebook">
+                                <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-3 7h-2.5v1.5h2.5v2h-2.5v4h-3v-4h-1.5v-2h1.5v-1.5c0-1.782.909-2.75 2.75-2.75h2.25v2.5z"/></svg>
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-green-500 exploding-icon transition" aria-label="WhatsApp">
+                                <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.031 3c-4.939 0-8.96 4.021-8.96 8.96 0 1.58.418 3.125 1.217 4.512l-1.282 4.673 4.821-1.258c1.378.784 2.923 1.18 4.168 1.18 4.939 0 8.96-4.021 8.96-8.96s-4.021-8.96-8.96-8.96zm4.551 11.232c-.158.423-.92.833-1.272.852-.352.018-.738-.135-1.124-.269s-.828-.328-1.581-.977c-.753-.65-1.517-1.46-2.138-2.26s-1.018-1.638-1.018-2.541c0-.85.342-1.353.694-1.666.352-.313.738-.471 1.09-.471.293 0 .586.018.799.037.19.018.423.018.656.406.233.388.753 1.834.829 1.989.076.155.122.342.018.53s-.342.85-.694 1.297c-.352.446-.72.883-1.09 1.297-.233.25-.47.464-.237.852.233.388.738 1.278 1.597 1.99s1.865 2.158 1.865 2.158c.25.138.446.092.597-.046.166-.145.539-.556.772-.888.233-.332.42-.313.587-.245.176.069.19.147.36.438.158.388.352.924.166 1.092z"/></svg>
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-red-500 exploding-icon transition" aria-label="Gmail">
+                                <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 12.713l-11.985-9.713h23.971l-11.986 9.713zm-5.471-7.713h10.943l-5.472 4.438-5.471-4.438zm-6.529 12.438v-9.438l12 9.713 12-9.713v9.438c0 1.104-.896 2-2 2h-20c-1.104 0-2-.896-2-2z"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-10 pt-6 border-t border-gray-700 text-center text-sm text-gray-500">
+                    La COPEMECO est le fer de lance du développement des PME en RDC.
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const entrepreneursData = [
+                { 
+                    sectionTitle: "Innovation Numérique & Tech", 
+                    sectionColor: "blue",
+                    themeColor: "text-blue-600",
+                    borderColor: "border-blue-500",
+                    items: [
+                        { name: "Marie Kabasele", company: "KabilaTech", photo: "https://placehold.co/150x150/3b82f6/ffffff?text=E1", product1: "https://placehold.co/200x200/93c5fd/3b82f6?text=App+Mobile", product2: "https://placehold.co/200x200/60a5fa/3b82f6?text=Plateforme+IA", contactLink: "#contact" },
+                        { name: "Jean-Luc Mambu", company: "CyberConnect", photo: "https://placehold.co/150x150/1e40af/ffffff?text=E2", product1: "https://placehold.co/200x200/bfdbfe/1e40af?text=Routeur+5G", product2: "https://placehold.co/200x200/93c5fd/1e40af?text=Sécurité+Web", contactLink: "#contact" },
+                        { name: "Fiston Luta", company: "DRC-Dev", photo: "https://placehold.co/150x150/065f46/ffffff?text=E3", product1: "https://placehold.co/200x200/bbf7d0/065f46?text=Logiciel+RH", product2: "https://placehold.co/200x200/86efac/065f46?text=Data+Center", contactLink: "#contact" },
+                        { name: "Esther Ndaya", company: "MobiPay", photo: "https://placehold.co/150x150/f59e0b/ffffff?text=E4", product1: "https://placehold.co/200x200/fcd34d/f59e0b?text=Terminal+POS", product2: "https://placehold.co/200x200/facc15/f59e0b?text=Portefeuille+Numérique", contactLink: "#contact" }
+                    ]
+                },
+                { 
+                    sectionTitle: "Artisanat, Mode & Culture", 
+                    sectionColor: "red",
+                    themeColor: "text-red-600",
+                    borderColor: "border-red-500",
+                    items: [
+                        { name: "Chantal Nkusu", company: "Mode Kivu", photo: "https://placehold.co/150x150/ef4444/ffffff?text=E5", product1: "https://placehold.co/200x200/fca5a5/ef4444?text=Robe+Wax", product2: "https://placehold.co/200x200/f87171/ef4444?text=Accessoires", contactLink: "#contact" },
+                        { name: "Patrick Londe", company: "Sculptures du Fleuve", photo: "https://placehold.co/150x150/9333ea/ffffff?text=E6", product1: "https://placehold.co/200x200/d8b4fe/9333ea?text=Statue+Bois", product2: "https://placehold.co/200x200/c084fc/9333ea?text=Masque+Traditionnel", contactLink: "#contact" }
+                    ]
+                },
+                { 
+                    sectionTitle: "Agro-Industrie & Produits Locaux", 
+                    sectionColor: "green",
+                    themeColor: "text-green-600",
+                    borderColor: "border-green-500",
+                    items: [
+                        { name: "Sophie Tshibala", company: "Huile de Palme S.T.", photo: "https://placehold.co/150x150/059669/ffffff?text=E7", product1: "https://placehold.co/200x200/a7f3d0/059669?text=Bidon+Huile", product2: "https://placehold.co/200x200/6ee7b7/059669?text=Manioc+Transformé", contactLink: "#contact" },
+                        { name: "Moïse Kasonga", company: "Café Matadi", photo: "https://placehold.co/150x150/4f46e5/ffffff?text=E8", product1: "https://placehold.co/200x200/c7d2fe/4f46e5?text=Sachet+Café", product2: "https://placehold.co/200x200/a5b4fc/4f46e5?text=Fèves+Cacao", contactLink: "#contact" },
+                        { name: "Deborah Nzeba", company: "Épices Congo", photo: "https://placehold.co/150x150/db2777/ffffff?text=E9", product1: "https://placehold.co/200x200/fbcfe8/db2777?text=Poivre+Local", product2: "https://placehold.co/200x200/f9a8d4/db2777?text=Sachets+Épices", contactLink: "#contact" },
+                        { name: "Alain Mutombo", company: "Pêche Durable", photo: "https://placehold.co/150x150/22d3ee/ffffff?text=E10", product1: "https://placehold.co/200x200/a5f3fc/22d3ee?text=Poisson+Fumé", product2: "https://placehold.co/200x200/67e8f9/22d3ee?text=Filet+Poisson", contactLink: "#contact" }
+                    ]
+                }
+            ];
+
+            // 1. Logique de Génération du Carrousel de Bannière
+            const allPhotos = [];
+            entrepreneursData.forEach(section => {
+                section.items.forEach(item => {
+                    allPhotos.push(item.photo); 
+                });
+            });
+
+            const carouselTrack = document.getElementById('carousel-track');
+            // Dupliquer les photos pour un défilement infini et fluide
+            const photosForCarousel = [...allPhotos, ...allPhotos]; 
+
+            photosForCarousel.forEach(photoUrl => {
+                const item = document.createElement('div');
+                item.className = 'carousel-item';
+                // La bordure bleue est définie dans le CSS .carousel-img
+                item.innerHTML = `<img class="carousel-img" src="${photoUrl}" alt="Entrepreneur">`; 
+                carouselTrack.appendChild(item);
+            });
+
+
+            // 2. Logique de Rendu des Cartes Entrepreneurs
+            const renderEntrepreneurs = () => {
+                const listContainer = document.getElementById('entrepreneurs-list');
+
+                entrepreneursData.forEach(section => {
+                    // Création de la section
+                    const sectionDiv = document.createElement('div');
+                    sectionDiv.className = `entrepreneur-section section-${section.sectionColor} mb-16 rounded-xl shadow-xl`;
+                    
+                    // Titre de la section
+                    const titleDiv = document.createElement('div');
+                    titleDiv.className = 'max-w-7xl mx-auto px-4 sm:px-6 lg:px-8';
+                    titleDiv.innerHTML = `<h2 class="text-3xl font-extrabold ${section.themeColor} mb-8 border-b pb-2 border-opacity-30 border-current">${section.sectionTitle}</h2>`;
+                    sectionDiv.appendChild(titleDiv);
+
+                    // Conteneur de grille pour les cartes
+                    const cardsGrid = document.createElement('div');
+                    cardsGrid.className = 'max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8';
+
+                    section.items.forEach(item => {
+                        const cardDiv = document.createElement('div');
+                        cardDiv.className = 'entrepreneur-card';
+
+                        cardDiv.innerHTML = `
+                            <div class="photo-container">
+                                <div class="entrepreneur-photo-wrapper">
+                                    <img class="entrepreneur-photo ${section.borderColor}" src="${item.photo}" alt="Photo de ${item.name}">
+                                </div>
+                                <div class="product-photos-wrapper col-span-1">
+                                    <img class="product-photo" src="${item.product1}" alt="Produit 1 de ${item.company}">
+                                    <img class="product-photo" src="${item.product2}" alt="Produit 2 de ${item.company}">
+                                </div>
+                            </div>
+
+                            <div class="flex-grow pt-4">
+                                <h3 class="text-xl font-bold text-gray-900">${item.company}</h3>
+                                <p class="text-sm text-gray-600 mb-4">Par <span class="font-semibold">${item.name}</span></p>
+                            </div>
+
+                            <a href="${item.contactLink}" class="mt-4 ${section.themeColor} hover:${section.themeColor.replace('600', '800')} font-semibold text-center py-2 px-4 border border-current rounded-lg transition duration-300">
+                                Contacter l'entreprise
+                            </a>
+                        `;
+                        cardsGrid.appendChild(cardDiv);
+                    });
+
+                    sectionDiv.appendChild(cardsGrid);
+                    listContainer.appendChild(sectionDiv);
+                });
+            };
+            
+            // 3. Logique du Menu Mobile
+            const menuButton = document.getElementById('menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIconOpen = document.getElementById('menu-icon-open');
+            const menuIconClose = document.getElementById('menu-icon-close');
+
+            if (menuButton) {
+                menuButton.addEventListener('click', () => {
+                    const isMenuOpen = mobileMenu.classList.toggle('hidden');
+                    menuIconOpen.classList.toggle('hidden', !isMenuOpen);
+                    menuIconClose.classList.toggle('hidden', isMenuOpen);
+                });
+                
+                // Cacher le menu après le clic
+                mobileMenu.querySelectorAll('a').forEach(link => {
+                     link.addEventListener('click', () => {
+                        mobileMenu.classList.add('hidden');
+                        menuIconOpen.classList.remove('hidden');
+                        menuIconClose.classList.add('hidden');
+                    });
+                });
+            }
+
+            // Lancement du rendu des entrepreneurs
+            renderEntrepreneurs();
+        });
+    </script>
+</body>
+</html>
