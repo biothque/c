@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="fr-FR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>COPEMECO – Nous Contacter et Nos Agences</title>
+    <link rel="icon" href="COP.png" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Configuration de la police Inter */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f9fb;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        /* ------------------ STYLES COMMUNS (Barre, Footer, Bouton) ------------------ */
+
+        .nav-subtitle {
+            font-size: 0.75rem;
+            line-height: 1;
+            font-weight: 600;
+            color: #ef4444;
+        }
+
+        /* Styles pour le bouton d'aide flottant (Couleur personnalisée) */
+        .custom-assist-button {
+            background: linear-gradient(135deg, #1d95ad, #fbbf24); 
+            box-shadow: 0 10px 15px -3px rgba(30, 144, 255, 0.5), 0 4px 6px -2px rgba(30, 144, 255, 0.5);
+            transition: all 0.3s ease;
+        }
+        
+        /* Animation de clignotement pour le bouton flottant */
+        @keyframes flash-button {
+            0% { transform: scale(1); box-shadow: 0 10px 15px -3px rgba(30, 144, 255, 0.5), 0 4px 6px -2px rgba(30, 144, 255, 0.5); }
+            50% { transform: scale(1.1); box-shadow: 0 0 25px 5px rgba(255, 255, 255, 0.9), 0 0 50px 10px rgba(255, 255, 255, 0.7); }
+            100% { transform: scale(1); box-shadow: 0 10px 15px -3px rgba(30, 144, 255, 0.5), 0 4px 6px -2px rgba(30, 144, 255, 0.5); }
+        }
+        .blinking-assist-button {
+            animation: flash-button 2s infinite ease-in-out;
+        }
+
+        /* Styles pour l'effet de frappe (Typing Effect) dans le footer */
+        .typing-text-container {
+            overflow: hidden; 
+            white-space: nowrap;
+            border-right: .15em solid #34d399; 
+            font-size: 0.9rem;
+            animation: 
+                typewriter 6.5s steps(47, end) infinite, 
+                blink-caret .75s step-end infinite;
+            max-width: 100%;
+        }
+
+        @media (max-width: 640px) {
+            .typing-text-container {
+                font-size: 0.75rem; 
+            }
+        }
+        @keyframes typewriter {
+            0%, 100% { width: 0; }
+            46.15% { width: 100%; } 
+            69.23% { width: 100%; } 
+            92.3% { width: 0; } 
+        }
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #34d399; } 
+        }
+
+        /* Styles pour l'effet d'explosion des icônes (Exploding Icons) dans le footer */
+        .exploding-icon {
+            display: inline-block;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+        .exploding-icon:hover {
+            transform: scale(1.5);
+            color: #38bdf8; 
+            text-shadow: 0 0 15px rgba(56, 189, 248, 0.8);
+        }
+
+        /* ------------------ STYLES CARTE ET AGENCES ------------------ */
+
+        .map-container {
+            border-radius: 1.5rem; 
+            overflow: hidden;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            transition: transform 0.3s ease;
+        }
+        
+        .map-container:hover {
+            transform: scale(1.01);
+        }
+
+        .agency-card {
+            background-color: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            transition: box-shadow 0.3s ease, border-left 0.3s ease;
+            border-left: 5px solid #3b82f6; /* Bleu par défaut */
+        }
+        
+        .agency-card:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid #ef4444; /* Rouge au survol pour attirer l'attention */
+        }
+
+    </style>
+</head>
+<body class="antialiased">
+    
+    <div id="main-content" class="visible">
+        
+        <header class="bg-white shadow-lg sticky top-0 z-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center h-20">
+                    <a href="index.html" class="flex-shrink-0 flex items-center space-x-2">
+                        <img class="h-10 w-auto" src="COP.png" alt="COPEMECO Logo">
+                        <div class="flex flex-col items-start leading-none">
+                            <span class="text-xl font-bold text-gray-800">COPEMECO</span>
+                            <span class="nav-subtitle">Coordination Nationale</span>
+                        </div>
+                    </a>
+                    
+                    <nav id="main-nav" class="hidden md:block">
+                        <div class="ml-10 flex items-baseline space-x-4">
+                            <a href="index.html#defense" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Défense</a>
+                            <a href="actualites.html" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Actualités</a>
+                            <a href="index.html#partenaires" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Partenaires</a>
+                            <a href="#" class="text-blue-600 px-3 py-2 rounded-md text-sm font-medium bg-blue-50/50">Contact</a>
+                        </div>
+                    </nav>
+                    
+                    <div class="flex items-center space-x-4">
+                        <button class="text-gray-700 hover:text-blue-600 p-2 rounded-full hover:bg-gray-100 transition duration-150" title="Rechercher">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                        </button>
+                        <button class="text-gray-700 hover:text-blue-600 text-sm font-medium">FR / EN</button>
+                        
+                        <div class="md:hidden">
+                            <button id="menu-button" class="text-gray-700 hover:text-blue-600 p-2 rounded-full hover:bg-gray-100 transition duration-150" title="Menu">
+                                <svg id="menu-icon-open" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                                <svg id="menu-icon-close" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div id="mobile-menu" class="hidden md:hidden fixed w-full bg-white shadow-xl z-40">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 flex flex-col items-center">
+                <a href="index.html#defense" class="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Défense</a>
+                <a href="actualites.html" class="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Actualités</a>
+                <a href="index.html#partenaires" class="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Partenaires</a>
+                <a href="#" class="text-blue-600 block px-3 py-2 rounded-md text-base font-medium bg-blue-50/50">Contact</a>
+            </div>
+        </div>
+
+        <div class="h-1 w-full bg-gradient-to-r from-red-500 via-yellow-500 to-blue-500"></div>
+
+        <section id="contact-section" class="py-12 md:py-20 bg-gray-50 min-h-screen">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h1 class="text-4xl sm:text-5xl font-extrabold text-gray-900 text-center mb-6">
+                    Où Nous Trouver en RDC
+                </h1>
+                
+                <p class="text-center text-lg text-gray-600 max-w-3xl mx-auto mb-12">
+                    La COPEMECO est présente sur le territoire national pour être au plus proche des PME.
+                </p>
+
+                <div class="flex justify-center mb-16">
+                    <div class="w-full max-w-4xl map-container">
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15447600.56450654!2d16.632296549999996!3d-3.9298492499999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x19a27e366a6a3861%3A0xa193798952875b11!2sR%C3%A9publique%20d%C3%A9mocratique%20du%20Congo!5e0!3m2!1sfr!2scd!4v1700000000000!5m2!1sfr!2scd"
+                            width="100%" 
+                            height="500" 
+                            style="border:0;" 
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade"
+                            title="Carte de la République Démocratique du Congo">
+                        </iframe>
+                    </div>
+                </div>
+                
+
+[Image of Map of Democratic Republic of Congo with major cities/regions]
+
+                
+                <div class="mb-16">
+                    <h2 class="text-3xl font-bold text-blue-700 mb-8 border-b-2 border-blue-200 pb-3">
+                        Nos Différents Points de Contact
+                    </h2>
+                    <div id="agencies-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        </div>
+                </div>
+
+                <div class="bg-white p-8 rounded-xl shadow-lg border-t-4 border-red-500">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6">
+                        Contactez-nous Directement
+                    </h2>
+                    
+                    <form action="mailto:businesscerealeafrica@gmail.com" method="POST" enctype="text/plain" class="space-y-4">
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-gray-700">Nom et Prénom</label>
+                            <input type="text" id="name" name="Nom%20et%20Prénom" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border" required>
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700">Adresse E-mail</label>
+                            <input type="email" id="email" name="Email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border" required>
+                        </div>
+                        <div>
+                            <label for="message" class="block text-sm font-medium text-gray-700">Votre Message</label>
+                            <textarea id="message" name="Message" rows="4" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border" required></textarea>
+                        </div>
+                        <div>
+                            <button type="submit" class="w-full inline-flex justify-center py-3 px-4 border border-transparent shadow-sm text-base font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition duration-150">
+                                Envoyer le Message
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+        </section>
+
+        <div class="h-1 w-full bg-gradient-to-r from-red-500 via-yellow-500 to-blue-500"></div>
+
+        <a href="logo2.html" 
+            id="floating-help-button" 
+            class="custom-assist-button blinking-assist-button fixed bottom-8 right-8 w-16 h-16 rounded-full flex items-center justify-center text-white shadow-lg z-50 focus:outline-none"
+            title="Accéder au formulaire"
+            target="_blank" 
+        >
+            <img class="w-12 h-12 rounded-full object-cover" 
+                src="COP4.png" 
+                alt="Formulaire d'inscription">
+        </a>
+
+        <footer id="footer-contact" class="bg-gray-800 text-white py-10">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center text-center">
+                    
+                    <div class="text-center md:text-left">
+                        <h3 class="text-xl font-bold mb-3">Nous Contacter</h3>
+                        <div id="address-container" class="h-16 flex items-center justify-center md:justify-start">
+                            <p class="text-gray-400 typing-text-container" id="typing-address">
+                                Adresse : Av. Colonel Ebeya, n°195 Immeuble FONAREV 3ème étage/ local 311. C. Gombe / Kinshasa
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <img class="h-12 w-auto mx-auto mb-4" src="COP.png" alt="Logo COPEMECO">
+                        <p class="text-sm text-gray-500">Tous droits réservés © 2024 COPEMECO.</p>
+                    </div>
+
+                    <div class="text-center md:text-right">
+                        <h3 class="text-xl font-bold mb-3">Suivez-nous</h3>
+                        <div class="flex justify-center md:justify-end space-x-6 text-2xl">
+                            <a href="#" class="text-gray-400 hover:text-blue-600 exploding-icon transition" aria-label="Facebook">
+                                <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-3 7h-2.5v1.5h2.5v2h-2.5v4h-3v-4h-1.5v-2h1.5v-1.5c0-1.782.909-2.75 2.75-2.75h2.25v2.5z"/></svg>
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-green-500 exploding-icon transition" aria-label="WhatsApp">
+                                <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.031 3c-4.939 0-8.96 4.021-8.96 8.96 0 1.58.418 3.125 1.217 4.512l-1.282 4.673 4.821-1.258c1.378.784 2.923 1.18 4.168 1.18 4.939 0 8.96-4.021 8.96-8.96s-4.021-8.96-8.96-8.96zm4.551 11.232c-.158.423-.92.833-1.272.852-.352.018-.738-.135-1.124-.269s-.828-.328-1.581-.977c-.753-.65-1.517-1.46-2.138-2.26s-1.018-1.638-1.018-2.541c0-.85.342-1.353.694-1.666.352-.313.738-.471 1.09-.471.293 0 .586.018.799.037.19.018.423.018.656.406.233.388.753 1.834.829 1.989.076.155.122.342.018.53s-.342.85-.694 1.297c-.352.446-.72.883-1.09 1.297-.233.25-.47.464-.237.852.233.388.738 1.278 1.597 1.99s1.865 2.158 1.865 2.158c.25.138.446.092.597-.046.166-.145.539-.556.772-.888.233-.332.42-.313.587-.245.176.069.19.147.36.438.158.388.352.924.166 1.092z"/></svg>
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-red-500 exploding-icon transition" aria-label="Gmail">
+                                <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 12.713l-11.985-9.713h23.971l-11.986 9.713zm-5.471-7.713h10.943l-5.472 4.438-5.471-4.438zm-6.529 12.438v-9.438l12 9.713 12-9.713v9.438c0 1.104-.896 2-2 2h-20c-1.104 0-2-.896-2-2z"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-10 pt-6 border-t border-gray-700 text-center text-sm text-gray-500">
+                    La COPEMECO est le fer de lance du développement des PME en RDC.
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const agenciesData = [
+                {
+                    city: "Kinshasa",
+                    province: "Kinshasa (Siège Social)",
+                    address: "Av. Colonel Ebeya, n°195 Immeuble FONAREV 3ème étage/ local 311. C. Gombe",
+                    phone: "+243 81 234 5678",
+                    email: "siege@copemeco-rdc.org"
+                },
+                {
+                    city: "Lubumbashi",
+                    province: "Haut-Katanga",
+                    address: "Avenue Kasaï, Immeuble Katanga Business Center, 1er étage.",
+                    phone: "+243 97 123 4567",
+                    email: "lubumbashi@copemeco-rdc.org"
+                },
+                {
+                    city: "Goma",
+                    province: "Nord-Kivu",
+                    address: "Boulevard Kanyamuhanga, Quartier Les Volcans, Bureau 4.",
+                    phone: "+243 85 987 6543",
+                    email: "goma@copemeco-rdc.org"
+                },
+                {
+                    city: "Kisangani",
+                    province: "Tshopo",
+                    address: "Rue du Port, Immeuble de la Province, Rez-de-chaussée.",
+                    phone: "+243 89 456 7890",
+                    email: "kisangani@copemeco-rdc.org"
+                },
+                {
+                    city: "Matadi",
+                    province: "Kongo Central",
+                    address: "Place de la Gare, Bureau 201, face au Fleuve.",
+                    phone: "+243 99 321 0987",
+                    email: "matadi@copemeco-rdc.org"
+                },
+                {
+                    city: "Kananga",
+                    province: "Kasaï Central",
+                    address: "Avenue Lumumba, Immeuble Central des PME.",
+                    phone: "+243 84 555 1111",
+                    email: "kananga@copemeco-rdc.org"
+                },
+            ];
+
+            const agenciesListContainer = document.getElementById('agencies-list');
+
+            /**
+             * Génère une carte d'agence HTML.
+             * @param {object} agency
+             */
+            const createAgencyCard = (agency) => {
+                const div = document.createElement('div');
+                div.className = 'agency-card';
+                div.innerHTML = `
+                    <h3 class="text-xl font-extrabold text-gray-900 mb-1">${agency.city}</h3>
+                    <p class="text-sm font-semibold text-red-600 mb-3">${agency.province}</p>
+                    
+                    <div class="space-y-2 text-gray-700">
+                        <p class="flex items-start">
+                            <svg class="w-5 h-5 mr-2 mt-0.5 text-blue-500 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                            <span class="text-sm">${agency.address}</span>
+                        </p>
+                        <p class="flex items-center">
+                            <svg class="w-5 h-5 mr-2 text-blue-500" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"/></svg>
+                            <a href="mailto:${agency.email}" class="text-sm hover:underline">${agency.email}</a>
+                        </p>
+                        <p class="flex items-center">
+                            <svg class="w-5 h-5 mr-2 text-blue-500" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 15.5c-1.25 0-2.45-.2-3.57-.57-.35-.11-.74-.03-1.02.24l-2.2 2.2c-2.83-1.44-5.15-3.75-6.59-6.59l2.2-2.2c.28-.28.36-.67.25-1.02C8.75 6.45 8.55 5.25 8.55 4c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.42 17 17 17 .55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1z"/></svg>
+                            <a href="tel:${agency.phone}" class="text-sm hover:underline">${agency.phone}</a>
+                        </p>
+                    </div>
+                `;
+                agenciesListContainer.appendChild(div);
+            };
+
+            // Remplissage de la liste des agences
+            agenciesData.forEach(createAgencyCard);
+            
+            // Logique du Menu Mobile
+            const menuButton = document.getElementById('menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIconOpen = document.getElementById('menu-icon-open');
+            const menuIconClose = document.getElementById('menu-icon-close');
+
+            if (menuButton) {
+                menuButton.addEventListener('click', () => {
+                    const isMenuOpen = mobileMenu.classList.toggle('hidden');
+                    menuIconOpen.classList.toggle('hidden', !isMenuOpen);
+                    menuIconClose.classList.toggle('hidden', isMenuOpen);
+                });
+                
+                // Cacher le menu après le clic
+                mobileMenu.querySelectorAll('a').forEach(link => {
+                     link.addEventListener('click', () => {
+                        mobileMenu.classList.add('hidden');
+                        menuIconOpen.classList.remove('hidden');
+                        menuIconClose.classList.add('hidden');
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>
