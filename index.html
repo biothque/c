@@ -264,6 +264,16 @@
             box-shadow: 0 10px 15px -3px rgba(30, 144, 255, 0.5), 0 4px 6px -2px rgba(30, 144, 255, 0.5);
             transition: all 0.3s ease;
         }
+        
+        /* NOUVEAU: Animation de clignotement pour le bouton flottant */
+        @keyframes flash-button {
+            0% { transform: scale(1); box-shadow: 0 10px 15px -3px rgba(30, 144, 255, 0.5), 0 4px 6px -2px rgba(30, 144, 255, 0.5); }
+            50% { transform: scale(1.1); box-shadow: 0 0 25px 5px rgba(255, 255, 255, 0.9), 0 0 50px 10px rgba(255, 255, 255, 0.7); }
+            100% { transform: scale(1); box-shadow: 0 10px 15px -3px rgba(30, 144, 255, 0.5), 0 4px 6px -2px rgba(30, 144, 255, 0.5); }
+        }
+        .blinking-assist-button {
+            animation: flash-button 2s infinite ease-in-out;
+        }
 
         /* ------------------ NOUVEAUX STYLES POUR LA DIRECTION ------------------ */
 
@@ -415,7 +425,6 @@
                             <a href="" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Défense</a>
                             <a href="#actualites" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Actualités</a>
                             <a href="#partenaires" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Partenaires</a>
-                            <a href="#equipe" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Équipe</a>
                             <a href="#contact" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Contact</a>
                         </div>
                     </nav>
@@ -442,7 +451,6 @@
                 <a href="" class="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Défense</a>
                 <a href="#actualites" class="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Actualités</a>
                 <a href="#partenaires" class="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Partenaires</a>
-                <a href="#equipe" class="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Équipe</a>
                 <a href="#contact" class="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Contact</a>
             </div>
         </div>
@@ -608,9 +616,6 @@
 
         <div class="h-1 w-full bg-gradient-to-r from-red-500 via-yellow-500 to-blue-500"></div>
 
-**Insérez le nouveau code HTML ici :**
-
-```html
 <section id="direction" class="py-20 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h2 class="text-4xl font-extrabold text-gray-900 mb-12 relative">
@@ -626,32 +631,9 @@
 
 <div class="h-1 w-full bg-gradient-to-r from-red-500 via-yellow-500 to-blue-500"></div>
 
-<section id="equipe" class="py-20" style="background-color: #e0f2fe;"> 
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h2 class="multi-color-blink text-3xl sm:text-5xl mb-12">
-                    L'Équipe de la Coordination Nationale
-                </h2>
-
-                <div class="relative inline-block p-4 bg-white rounded-full shadow-2xl mb-10">
-                    <img class="coordinator-photo w-48 h-48 sm:w-64 sm:h-64 object-cover rounded-full border-4 border-blue-400" 
-                        src="https://placehold.co/256x256/22d3ee/ffffff?text=Photo+Coordonnateur" 
-                        alt="Photo du Coordonnateur National">
-                    <p class="mt-4 text-2xl font-bold text-gray-800">Nom du Coordonnateur</p>
-                    <p class="text-blue-600">Coordonnateur National</p>
-                </div>
-
-                <h3 class="text-2xl font-semibold mt-10 mb-6 text-gray-700">Nos Membres Clés</h3>
-                
-                <div id="members-carousel" class="flex justify-start sm:justify-center overflow-x-auto relative pb-4">
-                    <div class="flex space-x-8" id="members-container">
-                        </div>
-                </div>
-            </div>
-        </section>
-
        <a href="logo2.html" 
    id="floating-help-button" 
-   class="custom-assist-button fixed bottom-8 right-8 w-16 h-16 rounded-full flex items-center justify-center text-white shadow-lg z-50 focus:outline-none"
+   class="custom-assist-button blinking-assist-button fixed bottom-8 right-8 w-16 h-16 rounded-full flex items-center justify-center text-white shadow-lg z-50 focus:outline-none"
    title="Inscription"
    target="_blank" 
 >
@@ -923,35 +905,7 @@
                     });
                 });
                 
-                // 5. Logique Carrousel des Membres (Équipe)
-                const membersContainer = document.getElementById('members-container');
-                const members = [
-                    { name: "Membre 1", title: "Secrétaire Général", img: "https://placehold.co/150x150/ef4444/ffffff?text=M1" },
-                    { name: "Membre 2", title: "Trésorier", img: "https://placehold.co/150x150/3b82f6/ffffff?text=M2" },
-                    { name: "Membre 3", title: "Chargé des Opérations", img: "https://placehold.co/150x150/10b981/ffffff?text=M3" },
-                    { name: "Membre 4", title: "Relations Publiques", img: "https://placehold.co/150x150/f59e0b/ffffff?text=M4" },
-                ];
-                
-                // Fonction pour créer un élément membre
-                const createMemberCard = (member) => {
-                    const div = document.createElement('div');
-                    div.className = 'flex-shrink-0 w-48 text-center p-4 bg-white rounded-xl shadow-lg transition duration-300 hover:shadow-2xl';
-                    div.innerHTML = `
-                        <img class="w-24 h-24 object-cover rounded-full mx-auto mb-3 border-2 border-sky-500" src="${member.img}" alt="Photo de ${member.name}">
-                        <p class="font-bold text-gray-800">${member.name}</p>
-                        <p class="text-sm text-gray-500">${member.title}</p>
-                    `;
-                    return div;
-                };
-
-                // Remplir le conteneur des membres
-                if (membersContainer) {
-                     members.forEach(member => {
-                        membersContainer.appendChild(createMemberCard(member));
-                    });
-                }
-                
-                // 6. Logique du Menu Mobile
+                // 5. Logique du Menu Mobile
                 const menuButton = document.getElementById('menu-button');
                 const mobileMenu = document.getElementById('mobile-menu');
                 const menuIconOpen = document.getElementById('menu-icon-open');
@@ -984,11 +938,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
