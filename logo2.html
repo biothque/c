@@ -48,6 +48,14 @@
             height: 500px;
             position: relative;
         }
+        
+        /* ADJUSTEMENT RESPONSIVE: Réduction de la taille du logo sur mobile */
+        @media (max-width: 640px) {
+            #logo-container {
+                width: 80vw; /* 80% de la largeur de l'écran */
+                height: 80vw;
+            }
+        }
 
         svg {
             width: 100%;
@@ -148,7 +156,7 @@
 
         /* ------------------ STYLES MIS À JOUR ------------------ */
 
-        /* NOUVEAU: Style pour la troncature et la transition du texte dans les actualités */
+        /* Style pour la troncature et la transition du texte dans les actualités */
         .news-content {
             overflow: hidden;
             max-height: 4rem; /* Hauteur initiale tronquée (environ 4 lignes de texte) */
@@ -193,6 +201,20 @@
             color: rgba(13, 22, 33, 0.05); 
             pointer-events: none;
             white-space: nowrap;
+            
+            /* ADJUSTEMENT RESPONSIVE: Taille du texte du filigrane */
+            font-size: 4rem; /* Default for mobile */
+        }
+
+        @media (min-width: 640px) { /* sm */
+            .partners-watermark {
+                font-size: 6rem;
+            }
+        }
+        @media (min-width: 1024px) { /* lg */
+            .partners-watermark {
+                font-size: 8rem; 
+            }
         }
 
         /* 4. Styles pour l'effet de frappe (Typing Effect) dans le footer */
@@ -207,6 +229,13 @@
                 typewriter 6.5s steps(47, end) infinite, 
                 blink-caret .75s step-end infinite;
             max-width: 100%;
+        }
+
+        /* ADJUSTEMENT RESPONSIVE: Taille du texte de l'adresse sur mobile */
+        @media (max-width: 640px) {
+            .typing-text-container {
+                font-size: 0.75rem; /* Smaller font on mobile */
+            }
         }
 
         /* NOUVELLE KEYFRAME DE MACHINE À ÉCRIRE */
@@ -294,6 +323,16 @@
             opacity: 0.05;
             z-index: 0;
             pointer-events: none;
+            
+            /* ADJUSTEMENT RESPONSIVE: Assurer une grande taille sur mobile aussi */
+            width: 90%; 
+            height: 90%;
+        }
+        @media (min-width: 768px) { /* md */
+            .partners-logo-watermark {
+                width: 80%;
+                height: 80%;
+            }
         }
     </style>
 </head>
@@ -332,6 +371,7 @@
     </div>
     
     <div id="main-content">
+        
         <header class="bg-white shadow-lg sticky top-0 z-50">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between items-center h-20">
@@ -342,7 +382,8 @@
                             <span class="nav-subtitle">Coordination Nationale</span>
                         </div>
                     </a>
-                    <nav class="md:block">
+                    
+                    <nav id="main-nav" class="hidden md:block">
                         <div class="ml-10 flex items-baseline space-x-4">
                             <a href="" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Défense</a>
                             <a href="#actualites" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Actualités</a>
@@ -351,16 +392,34 @@
                             <a href="#contact" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Contact</a>
                         </div>
                     </nav>
+                    
                     <div class="flex items-center space-x-4">
                         <button class="text-gray-700 hover:text-blue-600 p-2 rounded-full hover:bg-gray-100 transition duration-150" title="Rechercher">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                         </button>
                         <button class="text-gray-700 hover:text-blue-600 text-sm font-medium">FR / EN</button>
+                        
+                        <div class="md:hidden">
+                            <button id="menu-button" class="text-gray-700 hover:text-blue-600 p-2 rounded-full hover:bg-gray-100 transition duration-150" title="Menu">
+                                <svg id="menu-icon-open" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                                <svg id="menu-icon-close" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </header>
 
+        <div id="mobile-menu" class="hidden md:hidden fixed w-full bg-white shadow-xl z-40">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 flex flex-col items-center">
+                <a href="" class="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Défense</a>
+                <a href="#actualites" class="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Actualités</a>
+                <a href="#partenaires" class="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Partenaires</a>
+                <a href="#equipe" class="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Équipe</a>
+                <a href="#contact" class="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Contact</a>
+            </div>
+        </div>
+        
         <section id="defense" class="py-20" style="background-color: #0d1621;">
             <div id="economic-defense">
                 <div id="image-carousel-bg" class="absolute inset-0 z-0">
@@ -368,10 +427,10 @@
 
                 <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 bg-black bg-opacity-50 rounded-xl shadow-2xl">
                     <div class="text-center">
-                        <h2 class="text-5xl font-extrabold mb-4">
+                        <h2 class="text-3xl sm:text-5xl font-extrabold mb-4">
                             Défense des Intérêts Économiques
                         </h2>
-                        <p class="text-xl max-w-3xl mx-auto text-gray-200">
+                        <p class="text-lg sm:text-xl max-w-xl md:max-w-3xl mx-auto text-gray-200">
                             La COPEMECO assure la protection et la promotion de l'environnement des affaires pour toutes les PME.
                         </p>
                     </div>
@@ -401,30 +460,25 @@
 
         <section id="actualites" class="py-20 bg-gray-100">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-4xl font-extrabold text-gray-900 text-center mb-12">
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-900 text-center mb-12">
                     Nos Dernières Actualités
                 </h2>
                 
                 <div class="grid md:grid-cols-3 gap-8">
                     
                     <div id="actu-1" class="news-article reveal-item bg-white rounded-xl shadow-lg hover:shadow-2xl transition duration-300 overflow-hidden">
-                        
                         <img class="w-full h-48 object-cover" 
                             src="https://placehold.co/800x400/1e3a8a/ffffff?text=ÉVÉNEMENT+Image" 
                             alt="Image Événement du Forum"
                         >
-                        
                         <div class="p-6">
                             <span class="text-xs font-semibold uppercase tracking-wider text-blue-600">ÉVÉNEMENT</span>
-                            
                             <h3 class="text-xl font-bold text-gray-900 mt-2 mb-2">Grand Forum Annuel</h3>
-                            
                             <p class="text-gray-700 text-base news-content" 
                                 data-full-text="La COPEMECO organise son grand forum annuel de l'entrepreneuriat congolais. Au programme : conférences, networking et opportunités d'investissement. Rejoignez-nous pour bâtir l'avenir des PME en RDC ! Les inscriptions sont ouvertes dès maintenant. Il s'agit d'un texte plus long pour tester la fonctionnalité de troncature et d'expansion. Le forum se tiendra à Kinshasa."
                             >
                                 La COPEMECO organise son grand forum annuel de l'entrepreneuriat congolais. Au programme : conférences, networking et opportunités d'investissement...
                             </p>
-                            
                             <button class="mt-4 text-blue-600 hover:text-blue-800 font-semibold text-sm read-more-btn" data-target="actu-1">
                                 Lire la suite
                             </button>
@@ -432,22 +486,18 @@
                     </div>
 
                     <div id="actu-2" class="news-article reveal-item bg-white rounded-xl shadow-lg hover:shadow-2xl transition duration-300 overflow-hidden">
-                        
                         <img class="w-full h-48 object-cover" 
                             src="https://placehold.co/800x400/38a169/ffffff?text=RAPPORT+Image" 
                             alt="Image Rapport Économique"
                         >
-                        
                         <div class="p-6">
                             <span class="text-xs font-semibold uppercase tracking-wider text-green-600">RAPPORT</span>
                             <h3 class="text-xl font-bold text-gray-900 mt-2 mb-2">Rapport Économique Trimestriel</h3>
-                            
                             <p class="text-gray-700 text-base news-content" 
                                 data-full-text="Notre dernier rapport trimestriel sur l'état des PME en RDC révèle des tendances clés et des recommandations politiques majeures. Un outil essentiel pour les décideurs et les investisseurs qui ciblent le marché congolais. Téléchargez l'édition complète depuis notre portail dédié."
                             >
                                 Notre dernier rapport trimestriel sur l'état des PME en RDC révèle des tendances clés et des recommandations politiques majeures...
                             </p>
-                            
                             <button class="mt-4 text-blue-600 hover:text-blue-800 font-semibold text-sm read-more-btn" data-target="actu-2">
                                 Lire la suite
                             </button>
@@ -455,22 +505,18 @@
                     </div>
 
                     <div id="actu-3" class="news-article reveal-item bg-white rounded-xl shadow-lg hover:shadow-2xl transition duration-300 overflow-hidden">
-                        
                         <img class="w-full h-48 object-cover" 
                             src="https://placehold.co/800x400/f59e0b/ffffff?text=FORMATION+Image" 
                             alt="Image Formation Entrepreneuriale"
                         >
-                        
                         <div class="p-6">
                             <span class="text-xs font-semibold uppercase tracking-wider text-yellow-600">FORMATION</span>
                             <h3 class="text-xl font-bold text-gray-900 mt-2 mb-2">Cycle de Formations Intensives</h3>
-                            
                             <p class="text-gray-700 text-base news-content" 
                                 data-full-text="Lancez votre PME avec succès grâce à notre nouveau cycle de formations intensives en gestion, marketing numérique et conformité légale. Les sessions débutent le mois prochain. Places limitées, inscrivez-vous rapidement ! Un programme de mentorat est aussi inclus."
                             >
                                 Lancez votre PME avec succès grâce à notre nouveau cycle de formations intensives en gestion, marketing numérique et conformité légale...
                             </p>
-                            
                             <button class="mt-4 text-blue-600 hover:text-blue-800 font-semibold text-sm read-more-btn" data-target="actu-3">
                                 Lire la suite
                             </button>
@@ -479,6 +525,7 @@
                 </div>
             </div>
         </section>
+
         <div class="h-1 w-full bg-gradient-to-r from-red-500 via-yellow-500 to-blue-500"></div>
 
         <section id="partenaires" class="relative py-20 bg-white overflow-hidden">
@@ -492,7 +539,7 @@
                     NOS PARTENAIRES
                 </div>
                 
-                <h2 class="text-4xl font-extrabold text-gray-900 text-center mb-12 relative z-10">
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-900 text-center mb-12 relative z-10">
                     Nos Partenaires Stratégiques
                 </h2>
                 
@@ -536,7 +583,7 @@
 
         <section id="equipe" class="py-20" style="background-color: #e0f2fe;">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h2 class="multi-color-blink text-4xl sm:text-5xl mb-12">
+                <h2 class="multi-color-blink text-3xl sm:text-5xl mb-12">
                     L'Équipe de la Coordination Nationale
                 </h2>
 
@@ -549,7 +596,8 @@
                 </div>
 
                 <h3 class="text-2xl font-semibold mt-10 mb-6 text-gray-700">Nos Membres Clés</h3>
-                <div id="members-carousel" class="flex justify-center overflow-hidden relative">
+                
+                <div id="members-carousel" class="flex justify-start sm:justify-center overflow-x-auto relative pb-4">
                     <div class="flex space-x-8" id="members-container">
                         </div>
                 </div>
@@ -565,10 +613,11 @@
         <footer id="contact" class="bg-gray-800 text-white py-10">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 
-                <div class="grid grid-cols-3 gap-8 items-center">
-                    <div class="text-left">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center text-center">
+                    
+                    <div class="text-center md:text-left">
                         <h3 class="text-xl font-bold mb-3">Nous Contacter</h3>
-                        <div id="address-container" class="h-16 flex items-center">
+                        <div id="address-container" class="h-16 flex items-center justify-center md:justify-start">
                             <p class="text-gray-400 typing-text-container" id="typing-address">
                                 Adresse: 123, Av. M'Pongo, Kinshasa/Gombe, RDC.
                             </p>
@@ -580,9 +629,9 @@
                         <p class="text-sm text-gray-500">Tous droits réservés © 2024 COPEMECO.</p>
                     </div>
 
-                    <div class="text-right">
+                    <div class="text-center md:text-right">
                         <h3 class="text-xl font-bold mb-3">Suivez-nous</h3>
-                        <div class="flex justify-end space-x-6 text-2xl">
+                        <div class="flex justify-center md:justify-end space-x-6 text-2xl">
                             <a href="#" class="text-gray-400 hover:text-blue-600 exploding-icon transition" aria-label="Facebook">
                                 <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-3 7h-2.5v1.5h2.5v2h-2.5v4h-3v-4h-1.5v-2h1.5v-1.5c0-1.782.909-2.75 2.75-2.75h2.25v2.5z"/></svg>
                             </a>
@@ -799,6 +848,34 @@
                         membersContainer.appendChild(createMemberCard(member));
                     });
                 }
+                
+                // 6. Logique du Menu Mobile
+                const menuButton = document.getElementById('menu-button');
+                const mobileMenu = document.getElementById('mobile-menu');
+                const menuIconOpen = document.getElementById('menu-icon-open');
+                const menuIconClose = document.getElementById('menu-icon-close');
+
+                if (menuButton) {
+                    menuButton.addEventListener('click', () => {
+                        // Toggle the visibility of the mobile menu
+                        const isMenuOpen = mobileMenu.classList.toggle('hidden');
+                        
+                        // Toggle icons (hamburger <-> close)
+                        menuIconOpen.classList.toggle('hidden', !isMenuOpen);
+                        menuIconClose.classList.toggle('hidden', isMenuOpen);
+                    });
+                    
+                    // Hide menu after clicking a link (optional, but good practice)
+                    mobileMenu.querySelectorAll('a').forEach(link => {
+                         link.addEventListener('click', () => {
+                            mobileMenu.classList.add('hidden');
+                            menuIconOpen.classList.remove('hidden');
+                            menuIconClose.classList.add('hidden');
+                        });
+                    });
+                }
+
+
             }; // Fin de initializeHomePageScripts
 
         });
