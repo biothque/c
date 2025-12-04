@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Téléchargement Fiche d'adhésion COPEMECO</title>
+    <style>
+        body { font-family: 'Arial', sans-serif; background: #f4f4f4; padding: 20px; text-align: center; }
+        .container { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); display: inline-block; margin-top: 50px; }
+        input[type="text"] { padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px; width: 300px; }
+        button { padding: 10px 20px; background-color: #007BFF; color: white; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.3s; }
+        button:hover { background-color: #0056b3; }
+        #message { margin-top: 20px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Génération de la Fiche d'Adhésion (Post-Enregistrement)</h1>
+
+        <label for="pmeIdentifier">Entrez le N° d'Adhésion ou le N° ID NAT :</label>
+        <input type="text" id="pmeIdentifier" placeholder="Ex: ADH-20240101-1234 ou IDNAT12345" required>
+        <button id="generatePdfBtn">Générer le PDF</button>
+        <div id="message"></div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+    <script src="https://api.backendless.com/sdk/js/latest/backendless.min.js"></script>
+    
+    <script>
+        // ==============================================
+        // CONFIGURATION BACKENDLESS
+        // ==============================================
+        const APP_ID = "3D3629AB-2B0E-49DE-AA35-4A0EFAB84AE7"; 
+        const API_KEY = "B3C84FA1-67E6-40A2-8CA4-2E77E52E2EB4"; 
+        const TABLE = "adhesions"; 
+
+        if (typeof Backendless !== 'undefined') {
+            Backendless.serverURL = "https://api.backendless.com";
+            Backendless.initApp(APP_ID, API_KEY);
+        } else {
+            document.getElementById('message').textContent = "Erreur: Le SDK Backendless n'est pas chargé.";
+        }
+
+        const { jsPDF } = window.jspdf;
+        const messageEl = document.getElementById('message');
+
+        // ==============================================
+        // FONCTIONS D'AIDE ET DE LOGIQUE PDF (REUTILISEES)
+        // ==============================================
+
+        // Fonction d'aide pour charger l'image (logo, filigrane)
+        const loadImage = (src) => new Promise((resolve, reject) => {
+            const img = new Image();
+            img.crossOrigin = 'anonymous';
+            img.onload = () => resolve(img);
+            img.onerror = () => {
+                console.warn(`Image ${src} non chargée.`);
+                resolve(null);
+            };
+            img.src = src; 
+        });
+
+        // Fonction d'aide pour obtenir la valeur (doit être définie avant generatePDFExact)
+        const getValue = (key, formData) => formData[key] && formData[key].trim() !== 'Non précisé' ? formData[key] : 'Non précisé';
+
+
+        // -------------------------------------------------
+        // Générateur PDF A4 fidèle (Copie de la fonction du script d'origine)
+        // -------------------------------------------------
+        async function generatePDFExact(formData){
+            const pdf = new jsPDF({ unit: 'mm', format: 'a4' });
+            const pageWidth = 210, pageHeight = 297;
+
+            // Adaptez l'appel de getValue pour inclure formData en argument
+            const getVal = (key) => getValue(key, formData);
+
+            let logoImg = null;
+            try { logoImg = await loadImage('COP.png'); } 
+            catch(e){ console.warn('Erreur critique logo COP.png:', e); }
+
+            // --- PAGE 1 ---
+            if(logoImg){
+                try{
+                    // Logique du filigrane
+                    const wmCanvas = document.createElement('canvas');
+                    const ctx = wmCanvas.getContext('2d');
+                    const wmSizePx = 1200;
+                    wmCanvas.width = wmSizePx; wmCanvas.height = wmSizePx;
+                    ctx.globalAlpha = 0.07;
+                    ctx.drawImage(logoImg, 0, 0, wmSizePx, wmSizePx);
+                    const wmData = wmCanvas.toDataURL('image/png');
+                    const wmSizeMm = 120;
+                    pdf.addImage(wmData, 'PNG', (pageWidth - wmSizeMm) / 2, 40, wmSizeMm, wmSizeMm);
+                }catch(e){ console.warn('Erreur filigrane pdf:', e); }
+            }
+
+            pdf.setFont('helvetica','bold');
+            pdf.setFontSize(12);
+            pdf.text('Confédération des Petites et Moyennes Entreprises Congolaises', pageWidth/2, 20, { align: 'center' });
+            pdf.setFontSize(18);
+            pdf.text('COPEMECO', pageWidth/2, 28, { align: 'center' });
+
+            pdf.setFontSize(14);
+            pdf.text('FICHE DE RENSEIGNEMENTS POUR ADHESION', pageWidth/2, 40, { align: 'center' });
+
+            pdf.setFontSize(10);
+            let y = 50;
+
+            function drawLineField(label, value, xLabel=15, xValue=80){
+                pdf.setFontSize(10);
+                pdf.setFont('helvetica', (label.endsWith(':') || label.length > 50) ? 'bold' : 'normal');
+                pdf.text(label.replace(':', '') + ' :', xLabel, y); 
+                
+                pdf.setFont('helvetica','normal');
+                // Utilise getVal (qui appelle getValue)
+                const display = getVal(value) || '................................................................................';
+                pdf.text(display, xValue, y, { maxWidth: pageWidth - xValue - 10 });
+                y += 7;
+            }
+            
+            // Pour les champs non-directs
+            drawLineField('Numéro d\'Adhésion (Généré)', 'numero_adhesion', 15, 80);
+            y += 3;
+
+            pdf.setFont('helvetica','bold');
+            pdf.text('IDENTIFICATION', 15, y); y += 6;
+            pdf.setFont('helvetica','normal');
+            drawLineField('Dénomination / Raison sociale', 'denomination');
+            drawLineField('N° RCCM', 'rccm');
+            drawLineField('N° ID NAT', 'idnat');
+            drawLineField('N° Impôt', 'impot');
+            drawLineField('Siège Social (Adresse complète)', 'siege');
+            drawLineField('Tél', 'tel', 15, 30);
+            drawLineField('Email', 'email', 70, 95);
+            drawLineField('Nationalité de PME', 'nationalite', 130, 165);
+            y -= 14; 
+            
+            drawLineField('Siège d’exploitation', 'siege_exploitation');
+            drawLineField('Province', 'province');
+            y += 4;
+
+            pdf.setFont('helvetica','bold');
+            pdf.text('SITUATION JURIDIQUE', 15, y);
+            y += 6;
+            pdf.setFont('helvetica','normal');
+            drawLineField('Forme juridique de la PME', 'forme_juridique');
+            drawLineField('Date et année de création', 'date_creation');
+            drawLineField('Nombre d’associés', 'nb_associés');
+            y += 4;
+
+            pdf.setFont('helvetica','bold');
+            pdf.text('ACTIVITES ECONOMIQUES OU COMMERCIALES', 15, y);
+            y += 6;
+            pdf.setFont('helvetica','normal');
+            drawLineField('Objectif Social', 'objectif_social');
+            drawLineField('Activité Principale', 'act_principale');
+            drawLineField('Activité Secondaire', 'act_secondaire');
+            drawLineField('Produit(s) / Services', 'produits');
+            drawLineField('Capital social', 'capital');
+            drawLineField('Nombre d’agents', 'nb_agents');
+            drawLineField("Chiffre d'affaires mensuel (en $)", 'ca_mensuel');
+            drawLineField('Masse salariale payée mensuellement (en $)', 'masse_salariale');
+            drawLineField("Volume de l'IPR payé mensuellement (en $)", 'ipr');
+            drawLineField("Volume d'Impôts & taxes payés mensuellement (en $)", 'impots');
+
+            pdf.setFontSize(9);
+            pdf.text('Adresse : Av. Colonel Ebeya, n°195 Immeuble la référence 3ème étage/ local 311. C. Gombe / Kinshasa', 15, 287);
+
+            // --- PAGE 2 ---
+            pdf.addPage();
+            y = 20;
+
+            if(logoImg){
+                try{
+                    // Logique du filigrane page 2
+                    const wmCanvas2 = document.createElement('canvas');
+                    const ctx2 = wmCanvas2.getContext('2d');
+                    const wmSizePx2 = 1200;
+                    wmCanvas2.width = wmSizePx2; wmCanvas2.height = wmSizePx2;
+                    ctx2.globalAlpha = 0.07;
+                    ctx2.drawImage(logoImg, 0, 0, wmSizePx2, wmSizePx2);
+                    const wmData2 = wmCanvas2.toDataURL('image/png');
+                    const wmSizeMm2 = 120;
+                    pdf.addImage(wmData2, 'PNG', (pageWidth - wmSizeMm2) / 2, 40, wmSizeMm2, wmSizeMm2);
+                }catch(e){ console.warn('Erreur filigrane p2', e); }
+            }
+
+            pdf.setFont('helvetica','bold');
+            pdf.setFontSize(12);
+            pdf.text('IDENTIFICATION DU RESPONSABLE', pageWidth/2, 18, { align: 'center' });
+            y = 28;
+            pdf.setFont('helvetica','normal');
+
+            drawLineField('Nom du Propriétaire', 'nom_proprietaire');
+            drawLineField('Adresse du Propriétaire', 'adresse_responsable');
+            drawLineField('Niveau d’études', 'niveau_etudes');
+            drawLineField('Faculté / Domaine d\'études', 'faculte_etudes');
+            drawLineField('Nom du Gérant', 'nom_gerant');
+            drawLineField('Nationalité du Gérant', 'nat_gerant');
+            drawLineField('Tél / Email du Gérant', 'contact_gerant');
+            drawLineField('Genre du Gérant', 'genre_gerant');
+            drawLineField('Tranche d\'âge du Gérant', 'tranche_age_gerant');
+            drawLineField('Nationalité des associés', 'nat_associes');
+            y += 4;
+
+            pdf.setFont('helvetica','bold');
+            pdf.text('Noms et Adresses de fournisseurs :', 15, y); y += 6;
+            pdf.setFont('helvetica','normal');
+            const fournisseursText = getVal('fournisseurs') ? String(getVal('fournisseurs')).split('\n').map(l => l.trim()).filter(l => l.length > 0).join(' / ') : 'Non précisé';
+            pdf.text(fournisseursText, 15, y, { maxWidth: 180 });
+            y += (Math.ceil(pdf.getStringUnitWidth(fournisseursText) * pdf.internal.getFontSize() / pageWidth * 180 / 180) * 5) + 5; 
+
+            pdf.setFont('helvetica','bold');
+            pdf.text('Noms et Adresses de clients :', 15, y); y += 6;
+            pdf.setFont('helvetica','normal');
+            const clientsText = getVal('clients') ? String(getVal('clients')).split('\n').map(l => l.trim()).filter(l => l.length > 0).join(' / ') : 'Non précisé';
+            pdf.text(clientsText, 15, y, { maxWidth: 180 });
+            y += (Math.ceil(pdf.getStringUnitWidth(clientsText) * pdf.internal.getFontSize() / pageWidth * 180 / 180) * 5) + 5;
+
+            drawLineField('Avez-vous une comptabilité', 'comptabilite');
+            drawLineField('Si oui, est-elle régulièrement tenue', 'compta_reguliere');
+            drawLineField('Date de la dernière déclaration du bilan', 'date_declaration');
+            drawLineField('Exercice concerné', 'exercice');
+
+            y += 8;
+            pdf.setFont('helvetica','bold');
+            pdf.text('Qu’est-ce que la PME attend de la COPEMECO ?', 15, y); y += 6;
+            pdf.setFont('helvetica','normal');
+            const attentesText = getVal('attentes') ? String(getVal('attentes')) : 'Non précisé';
+            pdf.text(attentesText, 15, y, { maxWidth: 180 });
+
+            const sigY = 240;
+            pdf.setFontSize(11);
+
+            pdf.text('Pour la PME', 20, sigY - 5);
+            pdf.line(20, sigY, 90, sigY);
+            pdf.text('Nom et Qualité', 20, sigY + 5);
+            pdf.line(20, sigY + 15, 90, sigY + 15);
+
+            pdf.text('Pour la COPEMECO', 120, sigY - 5);
+            pdf.line(120, sigY, 195, sigY);
+            pdf.text('Nom et Qualité', 120, sigY + 5);
+            pdf.line(120, sigY + 15, 195, sigY + 15);
+
+            // Utilisez la date de création de la fiche si disponible, sinon la date du jour
+            const creationDate = formData.createdAt ? new Date(formData.createdAt) : new Date();
+            const dateStr = `${creationDate.getDate().toString().padStart(2, '0')}/${(creationDate.getMonth()+1).toString().padStart(2, '0')}/${creationDate.getFullYear()}`;
+            pdf.text(`Fait à Kinshasa le ${dateStr}`, 15, 275);
+
+            if(typeof QRious !== 'undefined'){
+                const qrCanvas = document.createElement('canvas');
+                // Génère le QR code avec le Numéro d'Adhésion
+                new QRious({ element: qrCanvas, value: formData.numero_adhesion || 'ADHESION_COPEMECO', size: 200 });
+                const qrData = qrCanvas.toDataURL('image/png');
+                pdf.addImage(qrData, 'PNG', 160, 260, 30, 30);
+            } else {
+                console.warn("La librairie QRious n'est pas chargée.");
+            }
+
+            // Téléchargement du fichier
+            const pdfFileName = `ADHESION_${getVal('denomination').replace(/\s/g, '_')}_${getVal('numero_adhesion')}.pdf`;
+            pdf.save(pdfFileName);
+        }
+
+        // ==============================================
+        // LOGIQUE DE RECUPERATION BACKENDLESS
+        // ==============================================
+
+        async function fetchPmeData(identifier) {
+            // Utiliser une requête OR pour chercher par numero_adhesion ou idnat
+            const whereClause = `numero_adhesion = '${identifier}' OR idnat = '${identifier}'`;
+            
+            const queryBuilder = Backendless.Data.of(TABLE).builder();
+            queryBuilder.setWhereClause(whereClause);
+            queryBuilder.setPageSize(1); // On a besoin d'un seul résultat
+
+            const result = await Backendless.Data.of(TABLE).find(queryBuilder);
+            
+            return result.length > 0 ? result[0] : null;
+        }
+
+        // ==============================================
+        // GESTIONNAIRE D'EVENEMENT PRINCIPAL
+        // ==============================================
+        document.getElementById('generatePdfBtn').addEventListener('click', async function() {
+            const identifier = document.getElementById('pmeIdentifier').value.trim();
+            messageEl.textContent = ''; 
+
+            if (!identifier) {
+                messageEl.style.color = 'red';
+                messageEl.textContent = "Veuillez entrer un identifiant.";
+                return;
+            }
+
+            messageEl.style.color = '#007BFF';
+            messageEl.textContent = `Recherche de la fiche pour "${identifier}" en cours...`;
+
+            try {
+                const pmeData = await fetchPmeData(identifier);
+
+                if (pmeData && pmeData.numero_adhesion) {
+                    messageEl.style.color = 'green';
+                    messageEl.textContent = `Fiche d'adhésion N° ${pmeData.numero_adhesion} trouvée. Génération du PDF...`;
+                    
+                    // Appel de la fonction de génération avec les données de la base
+                    await generatePDFExact(pmeData);
+                    
+                    messageEl.textContent = `✅ PDF de la fiche N° ${pmeData.numero_adhesion} généré et téléchargé !`;
+                } else {
+                    messageEl.style.color = 'red';
+                    messageEl.textContent = `❌ Aucune fiche d'adhésion trouvée pour l'identifiant: ${identifier}`;
+                }
+            } catch (error) {
+                messageEl.style.color = 'red';
+                messageEl.textContent = "Erreur lors de la récupération des données ou de la génération du PDF.";
+                console.error("Erreur détaillée:", error);
+            }
+        });
+
+    </script>
+</body>
+</html>
