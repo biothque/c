@@ -148,6 +148,14 @@
 
         /* ------------------ STYLES MIS À JOUR ------------------ */
 
+        /* NOUVEAU: Style pour la troncature et la transition du texte dans les actualités */
+        .news-content {
+            overflow: hidden;
+            max-height: 4rem; /* Hauteur initiale tronquée (environ 4 lignes de texte) */
+            transition: max-height 0.5s ease-in-out; /* Pour l'animation "Lire la suite" */
+            line-height: 1.5; /* Assure une bonne lisibilité */
+        }
+
         /* 1. Titre clignotant multi-couleur pour l'équipe (Équipe de la Coordination) */
         @keyframes color-blink {
             0%   { color: #ef4444; } /* Rouge */
@@ -250,27 +258,7 @@
             transform: translateY(0);
         }
 
-        /* 8. Conteneur pour l'image floue (Actualités) */
-        .fuzzy-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            filter: blur(8px) brightness(0.7); /* Flou et assombrissement */
-            z-index: 1;
-        }
-        .actualites-card {
-            position: relative;
-            overflow: hidden;
-            background-color: #1f2937; /* Fond sombre pour contraste */
-            color: white;
-            z-index: 2;
-        }
-
-        /* 9. Carrousel des partenaires */
+        /* 8. Styles pour le Carrousel des partenaires */
         .scrolling-logos {
             display: flex;
             overflow: hidden;
@@ -287,7 +275,7 @@
             animation: scroll-left 40s linear infinite;
         }
 
-        /* 10. Style pour le sous-titre rouge dans la navbar */
+        /* 9. Style pour le sous-titre rouge dans la navbar */
         .nav-subtitle {
             font-size: 0.75rem; /* text-xs */
             line-height: 1; /* Pour réduire l'espace */
@@ -358,8 +346,8 @@
                         <div class="ml-10 flex items-baseline space-x-4">
                             <a href="" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Défense</a>
                             <a href="#actualites" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Actualités</a>
-                            <a href="#partenaires" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Projets</a>
-                            <a href="#equipe" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Adhésion</a>
+                            <a href="#partenaires" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Partenaires</a>
+                            <a href="#equipe" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Équipe</a>
                             <a href="#contact" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Contact</a>
                         </div>
                     </nav>
@@ -418,40 +406,72 @@
                 </h2>
                 
                 <div class="grid md:grid-cols-3 gap-8">
-                    <div id="actu-1" class="actualites-card reveal-item rounded-xl shadow-2xl min-h-[400px] overflow-hidden">
-                        <div class="fuzzy-bg" style="background-image: url('https://placehold.co/800x600/1e3a8a/ffffff?text=ÉVÉNEMENT');"></div>
-                        <div class="relative p-6 h-full flex flex-col justify-end">
-                            <h3 class="text-3xl font-bold mb-3">Événements</h3>
-                            <p class="text-gray-300 text-base news-content overflow-hidden max-h-16 transition-all duration-500 ease-in-out" data-full-text="La COPEMECO organise son grand forum annuel de l'entrepreneuriat congolais. Au programme : conférences, networking et opportunités d'investissement. Rejoignez-nous pour bâtir l'avenir des PME en RDC ! Les inscriptions sont ouvertes dès maintenant.">
+                    
+                    <div id="actu-1" class="news-article reveal-item bg-white rounded-xl shadow-lg hover:shadow-2xl transition duration-300 overflow-hidden">
+                        
+                        <img class="w-full h-48 object-cover" 
+                            src="https://placehold.co/800x400/1e3a8a/ffffff?text=ÉVÉNEMENT+Image" 
+                            alt="Image Événement du Forum"
+                        >
+                        
+                        <div class="p-6">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-blue-600">ÉVÉNEMENT</span>
+                            
+                            <h3 class="text-xl font-bold text-gray-900 mt-2 mb-2">Grand Forum Annuel</h3>
+                            
+                            <p class="text-gray-700 text-base news-content" 
+                                data-full-text="La COPEMECO organise son grand forum annuel de l'entrepreneuriat congolais. Au programme : conférences, networking et opportunités d'investissement. Rejoignez-nous pour bâtir l'avenir des PME en RDC ! Les inscriptions sont ouvertes dès maintenant. Il s'agit d'un texte plus long pour tester la fonctionnalité de troncature et d'expansion. Le forum se tiendra à Kinshasa."
+                            >
                                 La COPEMECO organise son grand forum annuel de l'entrepreneuriat congolais. Au programme : conférences, networking et opportunités d'investissement...
                             </p>
-                            <button class="mt-4 text-blue-300 hover:text-blue-100 font-semibold text-left transition duration-300 read-more-btn" data-target="actu-1">
+                            
+                            <button class="mt-4 text-blue-600 hover:text-blue-800 font-semibold text-sm read-more-btn" data-target="actu-1">
                                 Lire la suite
                             </button>
                         </div>
                     </div>
 
-                    <div id="actu-2" class="actualites-card reveal-item rounded-xl shadow-2xl min-h-[400px] overflow-hidden">
-                        <div class="fuzzy-bg" style="background-image: url('https://placehold.co/800x600/38a169/ffffff?text=RAPPORT');"></div>
-                        <div class="relative p-6 h-full flex flex-col justify-end">
-                            <h3 class="text-3xl font-bold mb-3">Rapport Économique</h3>
-                            <p class="text-gray-300 text-base news-content overflow-hidden max-h-16 transition-all duration-500 ease-in-out" data-full-text="Notre dernier rapport trimestriel sur l'état des PME en RDC révèle des tendances clés et des recommandations politiques majeures. Un outil essentiel pour les décideurs et les investisseurs qui ciblent le marché congolais. Téléchargez l'édition complète.">
+                    <div id="actu-2" class="news-article reveal-item bg-white rounded-xl shadow-lg hover:shadow-2xl transition duration-300 overflow-hidden">
+                        
+                        <img class="w-full h-48 object-cover" 
+                            src="https://placehold.co/800x400/38a169/ffffff?text=RAPPORT+Image" 
+                            alt="Image Rapport Économique"
+                        >
+                        
+                        <div class="p-6">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-green-600">RAPPORT</span>
+                            <h3 class="text-xl font-bold text-gray-900 mt-2 mb-2">Rapport Économique Trimestriel</h3>
+                            
+                            <p class="text-gray-700 text-base news-content" 
+                                data-full-text="Notre dernier rapport trimestriel sur l'état des PME en RDC révèle des tendances clés et des recommandations politiques majeures. Un outil essentiel pour les décideurs et les investisseurs qui ciblent le marché congolais. Téléchargez l'édition complète depuis notre portail dédié."
+                            >
                                 Notre dernier rapport trimestriel sur l'état des PME en RDC révèle des tendances clés et des recommandations politiques majeures...
                             </p>
-                            <button class="mt-4 text-blue-300 hover:text-blue-100 font-semibold text-left transition duration-300 read-more-btn" data-target="actu-2">
+                            
+                            <button class="mt-4 text-blue-600 hover:text-blue-800 font-semibold text-sm read-more-btn" data-target="actu-2">
                                 Lire la suite
                             </button>
                         </div>
                     </div>
 
-                    <div id="actu-3" class="actualites-card reveal-item rounded-xl shadow-2xl min-h-[400px] overflow-hidden">
-                        <div class="fuzzy-bg" style="background-image: url('https://placehold.co/800x600/f59e0b/ffffff?text=FORMATION');"></div>
-                        <div class="relative p-6 h-full flex flex-col justify-end">
-                            <h3 class="text-3xl font-bold mb-3">Formation Entrepreneuriale</h3>
-                            <p class="text-gray-300 text-base news-content overflow-hidden max-h-16 transition-all duration-500 ease-in-out" data-full-text="Lancez votre PME avec succès grâce à notre nouveau cycle de formations intensives en gestion, marketing numérique et conformité légale. Les sessions débutent le mois prochain. Places limitées, inscrivez-vous rapidement !">
+                    <div id="actu-3" class="news-article reveal-item bg-white rounded-xl shadow-lg hover:shadow-2xl transition duration-300 overflow-hidden">
+                        
+                        <img class="w-full h-48 object-cover" 
+                            src="https://placehold.co/800x400/f59e0b/ffffff?text=FORMATION+Image" 
+                            alt="Image Formation Entrepreneuriale"
+                        >
+                        
+                        <div class="p-6">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-yellow-600">FORMATION</span>
+                            <h3 class="text-xl font-bold text-gray-900 mt-2 mb-2">Cycle de Formations Intensives</h3>
+                            
+                            <p class="text-gray-700 text-base news-content" 
+                                data-full-text="Lancez votre PME avec succès grâce à notre nouveau cycle de formations intensives en gestion, marketing numérique et conformité légale. Les sessions débutent le mois prochain. Places limitées, inscrivez-vous rapidement ! Un programme de mentorat est aussi inclus."
+                            >
                                 Lancez votre PME avec succès grâce à notre nouveau cycle de formations intensives en gestion, marketing numérique et conformité légale...
                             </p>
-                            <button class="mt-4 text-blue-300 hover:text-blue-100 font-semibold text-left transition duration-300 read-more-btn" data-target="actu-3">
+                            
+                            <button class="mt-4 text-blue-600 hover:text-blue-800 font-semibold text-sm read-more-btn" data-target="actu-3">
                                 Lire la suite
                             </button>
                         </div>
@@ -459,7 +479,6 @@
                 </div>
             </div>
         </section>
-
         <div class="h-1 w-full bg-gradient-to-r from-red-500 via-yellow-500 to-blue-500"></div>
 
         <section id="partenaires" class="relative py-20 bg-white overflow-hidden">
@@ -679,10 +698,7 @@
                 }
 
                 // 2. Logique du Pied de Page (Typing Effect)
-                const typingAddressElement = document.getElementById('typing-address');
-                if (typingAddressElement) {
-                    // Le style et l'animation sont gérés entièrement par le CSS (typewriter keyframe)
-                }
+                // Le style et l'animation sont gérés entièrement par le CSS (typewriter keyframe)
                 
 
                 // 3. Logique du Scroll Reveal (Actualités)
@@ -707,35 +723,53 @@
                 });
 
 
-                // 4. Logique "Lire la suite" (Actualités)
+                // 4. Logique "Lire la suite" (Actualités) - VERSION AMÉLIORÉE
+                const characterLimit = 150;
+                
+                // 4.1 Initialisation du contenu tronqué
+                document.querySelectorAll('.news-content').forEach(p => {
+                    const fullText = p.getAttribute('data-full-text');
+                    
+                    // Si le texte est plus long que la limite, le tronquer
+                    if (fullText.length > characterLimit) {
+                         p.textContent = fullText.substring(0, characterLimit) + '...'; 
+                    } else {
+                        // Si le texte est court, on retire le bouton "Lire la suite"
+                        const card = p.closest('.news-article');
+                        const readMoreBtn = card ? card.querySelector('.read-more-btn') : null;
+                        if (readMoreBtn) {
+                            readMoreBtn.style.display = 'none';
+                        }
+                        // S'assurer que le contenu court est complet
+                        p.textContent = fullText;
+                    }
+                });
+
+                // 4.2 Gestion du clic sur "Lire la suite" / "Réduire"
                 document.querySelectorAll('.read-more-btn').forEach(button => {
                     button.addEventListener('click', (e) => {
                         const targetId = e.target.getAttribute('data-target');
                         const card = document.getElementById(targetId);
                         const contentP = card.querySelector('.news-content');
                         const isExpanded = contentP.classList.contains('expanded');
+                        const fullText = contentP.getAttribute('data-full-text');
 
                         if (isExpanded) {
                             // Rétracter
-                            contentP.textContent = contentP.getAttribute('data-full-text').substring(0, 150) + '...';
+                            contentP.textContent = fullText.substring(0, characterLimit) + '...';
                             contentP.classList.remove('expanded');
-                            contentP.style.maxHeight = '4rem'; 
+                            contentP.style.maxHeight = '4rem'; // Rétablit la hauteur tronquée (CSS)
                             e.target.textContent = 'Lire la suite';
                         } else {
                             // Développer
-                            contentP.textContent = contentP.getAttribute('data-full-text');
+                            contentP.textContent = fullText;
                             contentP.classList.add('expanded');
-                            contentP.style.maxHeight = '300px'; // Une grande valeur pour s'assurer que tout s'affiche
+                            // Définir la hauteur max sur la hauteur réelle du contenu pour la transition fluide
+                            // NOTE: Ceci doit être fait après l'ajout du texte complet
+                            contentP.style.maxHeight = contentP.scrollHeight + 'px'; 
                             e.target.textContent = 'Réduire';
                         }
                     });
-                });
-
-                // Initialiser le contenu tronqué et ajouter l'attribut data-full-text
-                document.querySelectorAll('.news-content').forEach(p => {
-                    const fullText = p.getAttribute('data-full-text');
-                    // S'assurer que le contenu initial est tronqué (ajoute "...")
-                    p.textContent = fullText.substring(0, 150) + '...'; 
                 });
                 
                 // 5. Logique Carrousel des Membres (Équipe)
@@ -770,5 +804,4 @@
         });
     </script>
 </body>
-
 </html>
