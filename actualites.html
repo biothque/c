@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="fr-FR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>COPEMECO – Actualités et Événements</title>
+    <link rel="icon" href="COP.png" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Configuration de la police Inter */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f9fb;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        /* ------------------ STYLES COMMUNS (Barre, Footer, Bouton) ------------------ */
+
+        .nav-subtitle {
+            font-size: 0.75rem;
+            line-height: 1;
+            font-weight: 600;
+            color: #ef4444;
+        }
+
+        /* Styles pour le bouton d'aide flottant (Couleur personnalisée) */
+        .custom-assist-button {
+            background: linear-gradient(135deg, #1d95ad, #fbbf24); 
+            box-shadow: 0 10px 15px -3px rgba(30, 144, 255, 0.5), 0 4px 6px -2px rgba(30, 144, 255, 0.5);
+            transition: all 0.3s ease;
+        }
+        
+        /* Animation de clignotement pour le bouton flottant */
+        @keyframes flash-button {
+            0% { transform: scale(1); box-shadow: 0 10px 15px -3px rgba(30, 144, 255, 0.5), 0 4px 6px -2px rgba(30, 144, 255, 0.5); }
+            50% { transform: scale(1.1); box-shadow: 0 0 25px 5px rgba(255, 255, 255, 0.9), 0 0 50px 10px rgba(255, 255, 255, 0.7); }
+            100% { transform: scale(1); box-shadow: 0 10px 15px -3px rgba(30, 144, 255, 0.5), 0 4px 6px -2px rgba(30, 144, 255, 0.5); }
+        }
+        .blinking-assist-button {
+            animation: flash-button 2s infinite ease-in-out;
+        }
+
+        /* Styles pour l'effet de frappe (Typing Effect) dans le footer */
+        .typing-text-container {
+            overflow: hidden; 
+            white-space: nowrap;
+            border-right: .15em solid #34d399; 
+            font-size: 0.9rem;
+            animation: 
+                typewriter 6.5s steps(47, end) infinite, 
+                blink-caret .75s step-end infinite;
+            max-width: 100%;
+        }
+
+        @media (max-width: 640px) {
+            .typing-text-container {
+                font-size: 0.75rem; 
+            }
+        }
+        @keyframes typewriter {
+            0%, 100% { width: 0; }
+            46.15% { width: 100%; } 
+            69.23% { width: 100%; } 
+            92.3% { width: 0; } 
+        }
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #34d399; } 
+        }
+
+        /* Styles pour l'effet d'explosion des icônes (Exploding Icons) dans le footer */
+        .exploding-icon {
+            display: inline-block;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+        .exploding-icon:hover {
+            transform: scale(1.5);
+            color: #38bdf8; 
+            text-shadow: 0 0 15px rgba(56, 189, 248, 0.8);
+        }
+
+        /* ------------------ STYLES ACTUALITÉS ------------------ */
+
+        /* Style général de la carte d'actualité */
+        .news-card {
+            background-color: white;
+            border-radius: 1rem; 
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        /* Image de la carte */
+        .news-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        /* Style des tags de catégorie */
+        .category-tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px; /* Full rounded */
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: white;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Couleurs des tags (Pour la démonstration, les vrais tags peuvent être dynamiques) */
+        .tag-Économie { background-color: #3b82f6; } /* blue-500 */
+        .tag-Social { background-color: #ef4444; } /* red-500 */
+        .tag-Finances { background-color: #10b981; } /* green-500 */
+        .tag-Politique { background-color: #f59e0b; } /* amber-500 */
+        .tag-Success-Stories { background-color: #8b5cf6; } /* violet-500 */
+        .tag-Vie-de-la-COPEMECO { background-color: #06b6d4; } /* cyan-500 */
+
+        /* Style des boutons de filtrage */
+        .filter-button {
+            transition: background-color 0.2s ease, transform 0.1s ease;
+            white-space: nowrap; 
+        }
+        .filter-button:hover {
+            transform: translateY(-1px);
+        }
+        .filter-button.active {
+            background-color: #1d4ed8; /* blue-700 */
+            color: white;
+            font-weight: 700;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+    </style>
+</head>
+<body class="antialiased">
+    
+    <div id="main-content" class="visible">
+        
+        <header class="bg-white shadow-lg sticky top-0 z-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center h-20">
+                    <a href="index.html" class="flex-shrink-0 flex items-center space-x-2">
+                        <img class="h-10 w-auto" src="COP.png" alt="COPEMECO Logo">
+                        <div class="flex flex-col items-start leading-none">
+                            <span class="text-xl font-bold text-gray-800">COPEMECO</span>
+                            <span class="nav-subtitle">Coordination Nationale</span>
+                        </div>
+                    </a>
+                    
+                    <nav id="main-nav" class="hidden md:block">
+                        <div class="ml-10 flex items-baseline space-x-4">
+                            <a href="index.html#defense" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Défense</a>
+                            <a href="#" class="text-blue-600 px-3 py-2 rounded-md text-sm font-medium bg-blue-50/50">Actualités</a>
+                            <a href="index.html#partenaires" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Partenaires</a>
+                            <a href="#contact" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Contact</a>
+                        </div>
+                    </nav>
+                    
+                    <div class="flex items-center space-x-4">
+                        <button class="text-gray-700 hover:text-blue-600 p-2 rounded-full hover:bg-gray-100 transition duration-150" title="Rechercher">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                        </button>
+                        <button class="text-gray-700 hover:text-blue-600 text-sm font-medium">FR / EN</button>
+                        
+                        <div class="md:hidden">
+                            <button id="menu-button" class="text-gray-700 hover:text-blue-600 p-2 rounded-full hover:bg-gray-100 transition duration-150" title="Menu">
+                                <svg id="menu-icon-open" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                                <svg id="menu-icon-close" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div id="mobile-menu" class="hidden md:hidden fixed w-full bg-white shadow-xl z-40">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 flex flex-col items-center">
+                <a href="index.html#defense" class="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Défense</a>
+                <a href="#" class="text-blue-600 block px-3 py-2 rounded-md text-base font-medium bg-blue-50/50">Actualités</a>
+                <a href="index.html#partenaires" class="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Partenaires</a>
+                <a href="#contact" class="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Contact</a>
+            </div>
+        </div>
+
+        <div class="h-1 w-full bg-gradient-to-r from-red-500 via-yellow-500 to-blue-500"></div>
+
+        <section id="actualites-section" class="py-12 md:py-20 bg-gray-50 min-h-screen">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h1 class="text-4xl sm:text-5xl font-extrabold text-gray-900 text-center mb-10">
+                    Nos Dernières Actualités
+                </h1>
+                
+                <p class="text-center text-lg text-gray-600 max-w-3xl mx-auto mb-12">
+                    Retrouvez ici toutes les informations clés concernant la COPEMECO, le monde des PME et l'économie nationale.
+                </p>
+
+                <div class="flex flex-col md:flex-row md:justify-between md:items-center space-y-4 md:space-y-0 p-4 mb-10 bg-white rounded-xl shadow-lg border-t-4 border-blue-600">
+                    <h2 class="text-xl font-bold text-gray-800">Filtrer par Catégorie :</h2>
+                    
+                    <div id="filter-buttons" class="flex flex-wrap gap-2 text-sm font-medium">
+                        </div>
+                </div>
+
+                <div id="news-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    </div>
+
+            </div>
+        </section>
+
+        <div class="h-1 w-full bg-gradient-to-r from-red-500 via-yellow-500 to-blue-500"></div>
+
+        <a href="logo2.html" 
+            id="floating-help-button" 
+            class="custom-assist-button blinking-assist-button fixed bottom-8 right-8 w-16 h-16 rounded-full flex items-center justify-center text-white shadow-lg z-50 focus:outline-none"
+            title="Accéder au formulaire"
+            target="_blank" 
+        >
+            <img class="w-12 h-12 rounded-full object-cover" 
+                src="COP4.png" 
+                alt="Formulaire d'inscription">
+        </a>
+
+        <footer id="contact" class="bg-gray-800 text-white py-10">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center text-center">
+                    
+                    <div class="text-center md:text-left">
+                        <h3 class="text-xl font-bold mb-3">Nous Contacter</h3>
+                        <div id="address-container" class="h-16 flex items-center justify-center md:justify-start">
+                            <p class="text-gray-400 typing-text-container" id="typing-address">
+                                Adresse : Av. Colonel Ebeya, n°195 Immeuble FONAREV 3ème étage/ local 311. C. Gombe / Kinshasa
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <img class="h-12 w-auto mx-auto mb-4" src="COP.png" alt="Logo COPEMECO">
+                        <p class="text-sm text-gray-500">Tous droits réservés © 2024 COPEMECO.</p>
+                    </div>
+
+                    <div class="text-center md:text-right">
+                        <h3 class="text-xl font-bold mb-3">Suivez-nous</h3>
+                        <div class="flex justify-center md:justify-end space-x-6 text-2xl">
+                            <a href="#" class="text-gray-400 hover:text-blue-600 exploding-icon transition" aria-label="Facebook">
+                                <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-3 7h-2.5v1.5h2.5v2h-2.5v4h-3v-4h-1.5v-2h1.5v-1.5c0-1.782.909-2.75 2.75-2.75h2.25v2.5z"/></svg>
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-green-500 exploding-icon transition" aria-label="WhatsApp">
+                                <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.031 3c-4.939 0-8.96 4.021-8.96 8.96 0 1.58.418 3.125 1.217 4.512l-1.282 4.673 4.821-1.258c1.378.784 2.923 1.18 4.168 1.18 4.939 0 8.96-4.021 8.96-8.96s-4.021-8.96-8.96-8.96zm4.551 11.232c-.158.423-.92.833-1.272.852-.352.018-.738-.135-1.124-.269s-.828-.328-1.581-.977c-.753-.65-1.517-1.46-2.138-2.26s-1.018-1.638-1.018-2.541c0-.85.342-1.353.694-1.666.352-.313.738-.471 1.09-.471.293 0 .586.018.799.037.19.018.423.018.656.406.233.388.753 1.834.829 1.989.076.155.122.342.018.53s-.342.85-.694 1.297c-.352.446-.72.883-1.09 1.297-.233.25-.47.464-.237.852.233.388.738 1.278 1.597 1.99s1.865 2.158 1.865 2.158c.25.138.446.092.597-.046.166-.145.539-.556.772-.888.233-.332.42-.313.587-.245.176.069.19.147.36.438.158.388.352.924.166 1.092z"/></svg>
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-red-500 exploding-icon transition" aria-label="Gmail">
+                                <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 12.713l-11.985-9.713h23.971l-11.986 9.713zm-5.471-7.713h10.943l-5.472 4.438-5.471-4.438zm-6.529 12.438v-9.438l12 9.713 12-9.713v9.438c0 1.104-.896 2-2 2h-20c-1.104 0-2-.896-2-2z"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-10 pt-6 border-t border-gray-700 text-center text-sm text-gray-500">
+                    La COPEMECO est le fer de lance du développement des PME en RDC.
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const actualitesData = [
+                // Note: Utilisation du format YYYY-MM-DD pour un tri facile et fiable.
+                { id: 1, title: "Success Story: KabilaTech reçoit un prix international", date: "2025-12-03", category: "Success Stories", snippet: "L'une de nos PME technologiques fait la fierté nationale en remportant un trophée à l'étranger. Lisez leur parcours inspirant !", image: "https://placehold.co/400x250/14b8a6/ffffff?text=Succes" },
+                { id: 2, title: "Lancement du Programme PME Numérique", date: "2025-12-01", category: "Économie", snippet: "La COPEMECO a inauguré son nouveau programme d'accélération digitale, offrant des formations et des outils gratuits aux PME.", image: "https://placehold.co/400x250/10b981/ffffff?text=Tech" },
+                { id: 3, title: "Conférence sur l'Entrepreneuriat Féminin", date: "2025-11-28", category: "Social", snippet: "Un événement majeur pour célébrer et soutenir les femmes entrepreneures, avec des ateliers de mentorat et des tables rondes.", image: "https://placehold.co/400x250/ef4444/ffffff?text=Femmes" },
+                { id: 4, title: "Signature d'un Partenariat avec la Banque Centrale", date: "2025-11-15", category: "Finances", snippet: "Un accord historique pour faciliter l'accès au financement des PME et réduire les taux d'intérêt pour les petites entreprises.", image: "https://placehold.co/400x250/3b82f6/ffffff?text=Partenariat" },
+                { id: 5, title: "Webinaire: Se préparer aux nouvelles réglementations fiscales", date: "2025-11-01", category: "Finances", snippet: "Un point complet sur les changements fiscaux impactant les petites et moyennes entreprises pour l'année prochaine.", image: "https://placehold.co/400x250/fcd34d/000000?text=Fiscalite" },
+                { id: 6, title: "Nouveau bureau provincial à Lubumbashi", date: "2025-10-25", category: "Vie de la COPEMECO", snippet: "La COPEMECO étend sa couverture pour mieux servir les entrepreneurs du Haut-Katanga avec des services de proximité.", image: "https://placehold.co/400x250/06b6d4/ffffff?text=Bureaux" },
+                { id: 7, title: "Visite Ministérielle dans les Kivu", date: "2025-10-10", category: "Politique", snippet: "Le Ministre de l'Économie a rencontré les PME locales pour discuter des défis et des opportunités d'investissement dans la région.", image: "https://placehold.co/400x250/f97316/ffffff?text=Visite" },
+                { id: 8, title: "Atelier de Formation sur l'Exportation", date: "2025-09-05", category: "Économie", snippet: "Des sessions intensives pour préparer les PME à conquérir les marchés régionaux et internationaux.", image: "https://placehold.co/400x250/a855f7/ffffff?text=Formation" },
+            ];
+
+            const newsContainer = document.getElementById('news-container');
+            const filterButtonsContainer = document.getElementById('filter-buttons');
+            let currentFilter = 'Tous'; // Filtre par défaut
+
+            /**
+             * Formate une date YYYY-MM-DD en DD/MM/YYYY
+             * @param {string} dateString 
+             * @returns {string}
+             */
+            const formatDate = (dateString) => {
+                const [year, month, day] = dateString.split('-');
+                return `${day}/${month}/${year}`;
+            };
+
+            /**
+             * Génère une carte d'actualité HTML.
+             * @param {object} newsItem 
+             * @returns {string}
+             */
+            const createNewsCard = (newsItem) => {
+                const formattedDate = formatDate(newsItem.date);
+                // Le nom de la catégorie est utilisé pour générer la classe CSS du tag
+                const tagClass = `tag-${newsItem.category.replace(/ /g, '-')}`; 
+
+                return `
+                    <div class="news-card">
+                        <img class="news-image" src="${newsItem.image}" alt="Image pour ${newsItem.title}">
+                        <div class="p-6">
+                            <span class="category-tag ${tagClass}">${newsItem.category}</span>
+                            <h3 class="text-xl font-bold text-gray-900 mt-2 mb-2">${newsItem.title}</h3>
+                            <p class="text-sm text-gray-500 mb-4 flex items-center">
+                                <svg class="w-4 h-4 mr-1 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                Publié le ${formattedDate}
+                            </p>
+                            <p class="text-gray-700 mb-4">${newsItem.snippet}</p>
+                            <a href="#" class="text-blue-600 font-semibold hover:text-blue-800 transition duration-150">
+                                Lire l'article complet →
+                            </a>
+                        </div>
+                    </div>
+                `;
+            };
+
+            /**
+             * Fonction principale pour trier et afficher les actualités.
+             * @param {string} filterCategory 
+             */
+            const renderActualites = (filterCategory = 'Tous') => {
+                currentFilter = filterCategory;
+                newsContainer.innerHTML = '';
+                
+                // 1. TRIER : Par date (du plus récent au plus ancien)
+                const sortedNews = [...actualitesData].sort((a, b) => new Date(b.date) - new Date(a.date));
+
+                // 2. FILTRER
+                const filteredNews = sortedNews.filter(item => 
+                    filterCategory === 'Tous' || item.category === filterCategory
+                );
+
+                // 3. AFFICHAGE
+                if (filteredNews.length === 0) {
+                    newsContainer.innerHTML = '<p class="text-center col-span-full text-xl text-gray-500 p-10">Aucune actualité trouvée pour cette catégorie.</p>';
+                    return;
+                }
+
+                filteredNews.forEach(item => {
+                    newsContainer.innerHTML += createNewsCard(item);
+                });
+
+                // Mettre à jour l'état des boutons de filtre
+                document.querySelectorAll('.filter-button').forEach(btn => {
+                    btn.classList.remove('active', 'bg-blue-700');
+                    btn.classList.add('bg-blue-50', 'text-blue-600', 'hover:bg-blue-100');
+                    if (btn.textContent === filterCategory) {
+                        btn.classList.add('active', 'bg-blue-700');
+                        btn.classList.remove('bg-blue-50', 'text-blue-600', 'hover:bg-blue-100');
+                    }
+                });
+            };
+
+            /**
+             * Génère les boutons de filtre dynamiquement.
+             */
+            const setupFilterButtons = () => {
+                // Récupère toutes les catégories uniques
+                const categories = ['Tous', ...new Set(actualitesData.map(item => item.category))]; 
+
+                categories.forEach(category => {
+                    const button = document.createElement('button');
+                    button.textContent = category;
+                    button.className = 'filter-button px-4 py-2 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 transition duration-200';
+                    button.addEventListener('click', () => {
+                        renderActualites(category);
+                    });
+                    filterButtonsContainer.appendChild(button);
+                });
+            };
+
+            // Lancement initial
+            setupFilterButtons();
+            renderActualites('Tous'); // Affiche toutes les actualités triées par date récente au chargement
+
+            // Logique du Menu Mobile
+            const menuButton = document.getElementById('menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIconOpen = document.getElementById('menu-icon-open');
+            const menuIconClose = document.getElementById('menu-icon-close');
+
+            if (menuButton) {
+                menuButton.addEventListener('click', () => {
+                    const isMenuOpen = mobileMenu.classList.toggle('hidden');
+                    menuIconOpen.classList.toggle('hidden', !isMenuOpen);
+                    menuIconClose.classList.toggle('hidden', isMenuOpen);
+                });
+                
+                mobileMenu.querySelectorAll('a').forEach(link => {
+                     link.addEventListener('click', () => {
+                        mobileMenu.classList.add('hidden');
+                        menuIconOpen.classList.remove('hidden');
+                        menuIconClose.classList.add('hidden');
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>
