@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="fr-FR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>COPEMECO – Défense des Intérêts Économiques</title>
+    <link rel="icon" href="COP.png" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Configuration de la police Inter */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f9fb;
+            /* Important pour le bon affichage de l'intro */
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        /* ------------------------------------------------ */
+        /* --- Styles de l'Animation d'Intro (logo.html) --- */
+        /* ------------------------------------------------ */
+        #intro-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999; 
+            transition: opacity 1s ease-out, visibility 1s; 
+        }
+
+        .hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        #logo-container {
+            width: 500px; 
+            height: 500px;
+            position: relative;
+        }
+        
+        /* ADJUSTEMENT RESPONSIVE: Réduction de la taille du logo sur mobile */
+        @media (max-width: 640px) {
+            #logo-container {
+                width: 80vw; /* 80% de la largeur de l'écran */
+                height: 80vw;
+            }
+        }
+
+        svg {
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+        }
+
+        /* STYLES DU LOGO SVG */
+        .arm { fill: none; stroke-width: 25; stroke-linecap: round; opacity: 0; }
+        .arm-blue { stroke: #0047AB; }
+        .arm-red { stroke: #E60000; }
+
+        .red-arc {
+            fill: none; stroke: #E60000; stroke-width: 8; stroke-linecap: round;
+            stroke-dasharray: 450; stroke-dashoffset: 450;
+            filter: drop-shadow(0 0 0px transparent); transition: filter 0.5s ease;
+        }
+
+        .laurel {
+            fill: none; stroke: #0099DD; stroke-width: 4; stroke-linecap: round;
+            stroke-linejoin: round; stroke-dasharray: 1000; stroke-dashoffset: 1000;
+        }
+
+        .gear-group { transform-origin: center; opacity: 0; }
+        .gear-shape { fill: #FFEC00; stroke: none; }
+
+        .text-group { opacity: 0; }
+        .logo-text {
+            font-family: 'Arial Black', sans-serif; font-weight: 900;
+            font-size: 42px; fill: #0088CC; text-anchor: middle;
+        }
+
+        /* ANIMATIONS DU LOGO */
+        .anim-arms-left { animation: slideInLeft 1s ease-out forwards; }
+        .anim-arms-right { animation: slideInRight 1s ease-out forwards; }
+        @keyframes slideInLeft { 0% { opacity: 0; transform: translateX(-50px); } 100% { opacity: 1; transform: translateX(0); } }
+        @keyframes slideInRight { 0% { opacity: 0; transform: translateX(50px); } 100% { opacity: 1; transform: translateX(0); } }
+
+        .anim-draw-arc { animation: drawLine 1.5s ease-out forwards; }
+        .anim-shine { filter: drop-shadow(0 0 10px #ff4d4d); }
+        .anim-draw-leaves { animation: drawLine 2s linear forwards; }
+        @keyframes drawLine { to { stroke-dashoffset: 0; } }
+
+        .anim-gear-entry { animation: gearAssemble 2s cubic-bezier(0.17, 0.67, 0.83, 0.67) forwards; }
+        @keyframes gearAssemble {
+            0% { opacity: 0; transform: scale(1.5) rotate(0deg); }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; transform: scale(1) rotate(720deg); }
+        }
+
+        .anim-text-reveal { animation: fadeUp 1s ease-out forwards; }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Contenu principal masqué au début */
+        #main-content {
+            opacity: 0; 
+            transition: opacity 1.5s ease-in;
+        }
+        
+        .visible {
+            opacity: 1 !important;
+        }
+
+        /* ------------------------------------------------ */
+        /* --- Styles de loga.html (Page d'accueil) --- */
+        /* ------------------------------------------------ */
+
+        /* Styles spécifiques au carrousel de fond (Zoom et Transition Élégante) */
+        .slide-in-out {
+            opacity: 0;
+            transition: opacity 2s ease-in-out, transform 8s ease-in-out;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .slide-active {
+            opacity: 1;
+            transform: scale(1.15); /* Zoom In pour l'effet */
+        }
+
+        .slide-zoom-out {
+             /* État pour le zoom arrière */
+            opacity: 0;
+            transform: scale(1.0);
+        }
+
+        /* Surcharge pour la section "Défense des Intérêts Économiques" */
+        #defense {
+            position: relative;
+            overflow: hidden;
+            min-height: 80vh;
+            color: white; 
+        }
+
+        /* ------------------ STYLES MIS À JOUR ------------------ */
+
+        /* Style pour la troncature et la transition du texte dans les actualités */
+        .news-content {
+            overflow: hidden;
+            max-height: 4rem; /* Hauteur initiale tronquée (environ 4 lignes de texte) */
+            transition: max-height 0.5s ease-in-out; /* Pour l'animation "Lire la suite" */
+            line-height: 1.5; /* Assure une bonne lisibilité */
+        }
+
+        /* 1. Titre clignotant multi-couleur pour l'équipe (Équipe de la Coordination) */
+        @keyframes color-blink {
+            0%   { color: #ef4444; } /* Rouge */
+            25%  { color: #3b82f6; } /* Bleu */
+            50%  { color: #10b981; } /* Vert */
+            75%  { color: #f59e0b; } /* Jaune */
+            100% { color: #ef4444; }
+        }
+        @keyframes blink {
+            50% { opacity: 0.2; }
+        }
+        .multi-color-blink {
+            animation: color-blink 5s infinite, blink 1s step-start infinite; 
+            font-weight: 900;
+        }
+
+        /* 2. Zoom In/Out pour la photo du Coordonnateur */
+        @keyframes coordinator-zoom {
+            0%   { transform: scale(1); }
+            50%  { transform: scale(1.08); }
+            100% { transform: scale(1); }
+        }
+        .coordinator-photo {
+            animation: coordinator-zoom 10s infinite ease-in-out;
+        }
+
+        /* 3. Style pour l'effet de filigrane des partenaires (CENTRE) */
+        .partners-watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); 
+            font-size: 8rem; 
+            font-weight: 900;
+            color: rgba(13, 22, 33, 0.05); 
+            pointer-events: none;
+            white-space: nowrap;
+            
+            /* ADJUSTEMENT RESPONSIVE: Taille du texte du filigrane */
+            font-size: 4rem; /* Default for mobile */
+        }
+
+        @media (min-width: 640px) { /* sm */
+            .partners-watermark {
+                font-size: 6rem;
+            }
+        }
+        @media (min-width: 1024px) { /* lg */
+            .partners-watermark {
+                font-size: 8rem; 
+            }
+        }
+
+        /* 4. Styles pour l'effet de frappe (Typing Effect) dans le footer */
+        .typing-text-container {
+            overflow: hidden; 
+            white-space: nowrap;
+            border-right: .15em solid #34d399; /* Curseur simulé */
+            font-size: 0.9rem;
+            /* NOUVEAU: Animation de machine à écrire en boucle, effacement inclus */
+            /* 47 est le nombre de caractères de l'adresse */
+            animation: 
+                typewriter 6.5s steps(47, end) infinite, 
+                blink-caret .75s step-end infinite;
+            max-width: 100%;
+        }
+
+        /* ADJUSTEMENT RESPONSIVE: Taille du texte de l'adresse sur mobile */
+        @media (max-width: 640px) {
+            .typing-text-container {
+                font-size: 0.75rem; /* Smaller font on mobile */
+            }
+        }
+
+        /* NOUVELLE KEYFRAME DE MACHINE À ÉCRIRE */
+        @keyframes typewriter {
+            /* Démarrage (0s) et Réinitialisation (6.5s) */
+            0%, 100% { width: 0; }
+            
+            /* Écriture (0s à 3s / 46.15% du temps total) */
+            46.15% { width: 100%; } 
+            
+            /* Pause (3s à 4.5s / 69.23% du temps total) */
+            69.23% { width: 100%; } 
+            
+            /* Effacement (4.5s à 6s / 92.3% du temps total) */
+            92.3% { width: 0; } 
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #34d399; } 
+        }
+
+        /* 5. Styles pour le bouton d'aide flottant (Couleur personnalisée) */
+        .custom-assist-button {
+            background: linear-gradient(135deg, #1d95ad, #fbbf24); /* Bleu turquoise et jaune vif */
+            box-shadow: 0 10px 15px -3px rgba(30, 144, 255, 0.5), 0 4px 6px -2px rgba(30, 144, 255, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        /* ------------------ NOUVEAUX STYLES POUR LA DIRECTION ------------------ */
+
+/* Style pour l'anneau extérieur rouge (simule la bordure décalée) */
+.direction-photo-ring {
+    position: relative;
+    width: 150px; /* Taille de base pour la photo */
+    height: 150px;
+    padding: 10px; /* Espace autour de la photo */
+    border-radius: 50%;
+    /* Simule le cercle extérieur rouge décalé */
+    background: radial-gradient(circle at 10% 10%, rgba(239, 68, 68, 0.2) 0%, transparent 40%),
+                radial-gradient(circle at 90% 90%, rgba(239, 68, 68, 0.2) 0%, transparent 40%),
+                #fef2f2; /* Fond très clair */
+    box-shadow: 0 0 0 4px #ef4444; /* Bordure rouge pour l'effet */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.direction-photo-ring img {
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border: 3px solid white; /* Bordure blanche interne */
+}
+
+        /* 6. Styles pour l'effet d'explosion des icônes (Exploding Icons) dans le footer */
+        .exploding-icon {
+            display: inline-block;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+        .exploding-icon:hover {
+            transform: scale(1.5);
+            color: #38bdf8; 
+            text-shadow: 0 0 15px rgba(56, 189, 248, 0.8);
+        }
+
+        /* 7. Styles pour l'effet de scroll-reveal des actualités */
+        .reveal-item {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .reveal-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 8. Styles pour le Carrousel des partenaires */
+        .scrolling-logos {
+            display: flex;
+            overflow: hidden;
+            white-space: nowrap;
+            padding: 20px 0;
+        }
+
+        /* Animation pour le défilement horizontal */
+        @keyframes scroll-left {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); } /* Défilement de la moitié du contenu */
+        }
+        .scrolling-logos-container {
+            animation: scroll-left 40s linear infinite;
+        }
+
+        /* 9. Style pour le sous-titre rouge dans la navbar */
+        .nav-subtitle {
+            font-size: 0.75rem; /* text-xs */
+            line-height: 1; /* Pour réduire l'espace */
+            font-weight: 600;
+            color: #ef4444; /* Rouge 500 */
+        }
+        /* NOUVEAU: Style pour le filigrane image des Partenaires */
+        .partners-logo-watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); 
+            width: 80%;
+            height: 80%;
+            object-fit: contain;
+            opacity: 0.05;
+            z-index: 0;
+            pointer-events: none;
+            
+            /* ADJUSTEMENT RESPONSIVE: Assurer une grande taille sur mobile aussi */
+            width: 90%; 
+            height: 90%;
+        }
+        @media (min-width: 768px) { /* md */
+            .partners-logo-watermark {
+                width: 80%;
+                height: 80%;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div id="intro-screen">
+        <div id="logo-container">
+            <svg viewBox="0 0 400 400">
+                <g id="gear" class="gear-group">
+                    <path class="gear-shape" d="M200,30 L220,30 L230,60 L260,65 L280,40 L300,50 L290,80 L320,100 L350,90 L360,110 L330,130 L350,160 L380,160 L380,180 L350,190 L350,210 L380,220 L380,240 L350,240 L330,270 L360,290 L350,310 L320,300 L290,320 L300,350 L280,360 L260,335 L230,340 L220,370 L200,370 L190,340 L160,335 L140,360 L120,350 L130,320 L100,300 L70,310 L60,290 L90,270 L70,240 L40,240 L40,220 L70,210 L70,190 L40,180 L40,160 L70,150 L90,120 L60,100 L70,80 L100,90 L130,70 L120,40 L140,30 L160,55 L190,50 Z M200,100 A100,100 0 1,0 200,300 A100,100 0 1,0 200,100 Z" fill-rule="evenodd"/>
+                </g>
+                <g id="leaves">
+                    <path class="laurel" d="M190,320 C140,310 80,250 80,180 C80,140 100,100 120,80" />
+                    <path class="laurel" d="M190,320 C180,300 160,280 140,280" />
+                    <path class="laurel" d="M170,300 C150,280 130,260 110,260" />
+                    <path class="laurel" d="M150,270 C130,250 110,230 90,230" />
+                    <path class="laurel" d="M130,240 C110,220 90,200 85,190" />
+                    
+                    <path class="laurel" d="M210,320 C260,310 320,250 320,180 C320,140 300,100 280,80" />
+                    <path class="laurel" d="M210,320 C220,300 240,280 260,280" />
+                    <path class="laurel" d="M230,300 C250,280 270,260 290,260" />
+                    <path class="laurel" d="M250,270 C270,250 290,230 310,230" />
+                    <path class="laurel" d="M270,240 C290,220 310,200 315,190" />
+                </g>
+                <path id="redArc" class="red-arc" d="M120,250 A90,90 0 1,1 280,250" />
+                <g id="arms">
+                    <path id="armBlue" class="arm arm-blue" d="M150,140 L150,200 L200,230 L230,200" />
+                    <path id="armRed" class="arm arm-red" d="M250,260 L250,200 L200,170 L170,200" />
+                </g>
+                <g id="textGroup" class="text-group">
+                    <rect x="100" y="235" width="200" height="50" fill="white" opacity="0.8"/>
+                    <text x="200" y="275" class="logo-text">COPEMECO</text>
+                </g>
+            </svg>
+        </div>
+    </div>
+    
+    <div id="main-content">
+        
+        <header class="bg-white shadow-lg sticky top-0 z-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center h-20">
+                    <a href="#" class="flex-shrink-0 flex items-center space-x-2">
+                        <img class="h-10 w-auto" src="COP.png" alt="COPEMECO Logo">
+                        <div class="flex flex-col items-start leading-none">
+                            <span class="text-xl font-bold text-gray-800">COPEMECO</span>
+                            <span class="nav-subtitle">Coordination Nationale</span>
+                        </div>
+                    </a>
+                    
+                    <nav id="main-nav" class="hidden md:block">
+                        <div class="ml-10 flex items-baseline space-x-4">
+                            <a href="" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Défense</a>
+                            <a href="#actualites" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Actualités</a>
+                            <a href="#partenaires" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Partenaires</a>
+                            <a href="#equipe" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Équipe</a>
+                            <a href="#contact" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Contact</a>
+                        </div>
+                    </nav>
+                    
+                    <div class="flex items-center space-x-4">
+                        <button class="text-gray-700 hover:text-blue-600 p-2 rounded-full hover:bg-gray-100 transition duration-150" title="Rechercher">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                        </button>
+                        <button class="text-gray-700 hover:text-blue-600 text-sm font-medium">FR / EN</button>
+                        
+                        <div class="md:hidden">
+                            <button id="menu-button" class="text-gray-700 hover:text-blue-600 p-2 rounded-full hover:bg-gray-100 transition duration-150" title="Menu">
+                                <svg id="menu-icon-open" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                                <svg id="menu-icon-close" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div id="mobile-menu" class="hidden md:hidden fixed w-full bg-white shadow-xl z-40">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 flex flex-col items-center">
+                <a href="" class="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Défense</a>
+                <a href="#actualites" class="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Actualités</a>
+                <a href="#partenaires" class="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Partenaires</a>
+                <a href="#equipe" class="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Équipe</a>
+                <a href="#contact" class="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Contact</a>
+            </div>
+        </div>
+        
+        <section id="defense" class="py-20" style="background-color: #0d1621;">
+            <div id="economic-defense">
+                <div id="image-carousel-bg" class="absolute inset-0 z-0">
+                    </div>
+
+                <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 bg-black bg-opacity-50 rounded-xl shadow-2xl">
+                    <div class="text-center">
+                        <h2 class="text-3xl sm:text-5xl font-extrabold mb-4">
+                            Défense des Intérêts Économiques
+                        </h2>
+                        <p class="text-lg sm:text-xl max-w-xl md:max-w-3xl mx-auto text-gray-200">
+                            La COPEMECO assure la protection et la promotion de l'environnement des affaires pour toutes les PME.
+                        </p>
+                    </div>
+
+                    <div class="mt-12 grid md:grid-cols-3 gap-8 text-center">
+                        <div class="p-6 bg-white bg-opacity-10 rounded-xl backdrop-blur-sm shadow-xl hover:bg-opacity-20 transition duration-300">
+                            <svg class="w-10 h-10 mx-auto text-blue-400 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                            <h3 class="text-2xl font-semibold">Stabilité Juridique</h3>
+                            <p class="mt-2 text-gray-300">Garantie d'un cadre légal clair et protecteur.</p>
+                        </div>
+                        <div class="p-6 bg-white bg-opacity-10 rounded-xl backdrop-blur-sm shadow-xl hover:bg-opacity-20 transition duration-300">
+                            <svg class="w-10 h-10 mx-auto text-blue-400 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                            <h3 class="text-2xl font-semibold">Facilitation</h3>
+                            <p class="mt-2 text-gray-300">Simplification des procédures administratives et douanières.</p>
+                        </div>
+                        <div class="p-6 bg-white bg-opacity-10 rounded-xl backdrop-blur-sm shadow-xl hover:bg-opacity-20 transition duration-300">
+                            <svg class="w-10 h-10 mx-auto text-blue-400 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.477 3-10S13.657 3 12 3m0 18c-1.657 0-3-4.477-3-10S10.343 3 12 3m0 0v18"></path></svg>
+                            <h3 class="text-2xl font-semibold">Promotion</h3>
+                            <p class="mt-2 text-gray-300">Visibilité des opportunités de la RDC à l'international.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <div class="h-1 w-full bg-gradient-to-r from-red-500 via-yellow-500 to-blue-500"></div>
+
+        <section id="actualites" class="py-20 bg-gray-100">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-900 text-center mb-12">
+                    Nos Dernières Actualités
+                </h2>
+                
+                <div class="grid md:grid-cols-3 gap-8">
+                    
+                    <div id="actu-1" class="news-article reveal-item bg-white rounded-xl shadow-lg hover:shadow-2xl transition duration-300 overflow-hidden">
+                        <img class="w-full h-48 object-cover" 
+                            src="nature.jpeg" 
+                            alt="Image Événement du Forum"
+                        >
+                        <div class="p-6">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-blue-600">ÉVÉNEMENT</span>
+                            <h3 class="text-xl font-bold text-gray-900 mt-2 mb-2">Grand Forum Annuel</h3>
+                            <p class="text-gray-700 text-base news-content" 
+                                data-full-text="La COPEMECO organise son grand forum annuel de l'entrepreneuriat congolais. Au programme : conférences, networking et opportunités d'investissement. Rejoignez-nous pour bâtir l'avenir des PME en RDC ! Les inscriptions sont ouvertes dès maintenant. Il s'agit d'un texte plus long pour tester la fonctionnalité de troncature et d'expansion. Le forum se tiendra à Kinshasa."
+                            >
+                                La COPEMECO organise son grand forum annuel de l'entrepreneuriat congolais. Au programme : conférences, networking et opportunités d'investissement...
+                            </p>
+                            <button class="mt-4 text-blue-600 hover:text-blue-800 font-semibold text-sm read-more-btn" data-target="actu-1">
+                                Lire la suite
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="actu-2" class="news-article reveal-item bg-white rounded-xl shadow-lg hover:shadow-2xl transition duration-300 overflow-hidden">
+                        <img class="w-full h-48 object-cover" 
+                            src="trans1.jpeg" 
+                            alt="Image Rapport Économique"
+                        >
+                        <div class="p-6">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-green-600">RAPPORT</span>
+                            <h3 class="text-xl font-bold text-gray-900 mt-2 mb-2">Rapport Économique Trimestriel</h3>
+                            <p class="text-gray-700 text-base news-content" 
+                                data-full-text="Notre dernier rapport trimestriel sur l'état des PME en RDC révèle des tendances clés et des recommandations politiques majeures. Un outil essentiel pour les décideurs et les investisseurs qui ciblent le marché congolais. Téléchargez l'édition complète depuis notre portail dédié."
+                            >
+                                Notre dernier rapport trimestriel sur l'état des PME en RDC révèle des tendances clés et des recommandations politiques majeures...
+                            </p>
+                            <button class="mt-4 text-blue-600 hover:text-blue-800 font-semibold text-sm read-more-btn" data-target="actu-2">
+                                Lire la suite
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="actu-3" class="news-article reveal-item bg-white rounded-xl shadow-lg hover:shadow-2xl transition duration-300 overflow-hidden">
+                        <img class="w-full h-48 object-cover" 
+                            src="nature3.jpg" 
+                            alt="Image Formation Entrepreneuriale"
+                        >
+                        <div class="p-6">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-yellow-600">FORMATION</span>
+                            <h3 class="text-xl font-bold text-gray-900 mt-2 mb-2">Cycle de Formations Intensives</h3>
+                            <p class="text-gray-700 text-base news-content" 
+                                data-full-text="Lancez votre PME avec succès grâce à notre nouveau cycle de formations intensives en gestion, marketing numérique et conformité légale. Les sessions débutent le mois prochain. Places limitées, inscrivez-vous rapidement ! Un programme de mentorat est aussi inclus."
+                            >
+                                Lancez votre PME avec succès grâce à notre nouveau cycle de formations intensives en gestion, marketing numérique et conformité légale...
+                            </p>
+                            <button class="mt-4 text-blue-600 hover:text-blue-800 font-semibold text-sm read-more-btn" data-target="actu-3">
+                                Lire la suite
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="h-1 w-full bg-gradient-to-r from-red-500 via-yellow-500 to-blue-500"></div>
+
+        <section id="partenaires" class="relative py-20 bg-white overflow-hidden">
+            
+            <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
+                <img src="COP.png" alt="Logo Filigrane COPEMECO" 
+                    class="partners-logo-watermark"
+                >
+
+                <div class="partners-watermark">
+                    NOS PARTENAIRES
+                </div>
+                
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-900 text-center mb-12 relative z-10">
+                    Nos Partenaires Stratégiques
+                </h2>
+                
+                <div class="scrolling-logos">
+                    <div class="scrolling-logos-container flex justify-center items-center space-x-12">
+                        <a href="#" class="p-4 flex justify-center items-center flex-shrink-0 w-32 md:w-40" aria-label="Partenaire 1"><img class="h-12 w-auto grayscale opacity-70 hover:opacity-100 transition duration-300" src="1.png" alt="Partenaire 1"></a>
+                        <a href="#" class="p-4 flex justify-center items-center flex-shrink-0 w-32 md:w-40" aria-label="Partenaire 2"><img class="h-12 w-auto grayscale opacity-70 hover:opacity-100 transition duration-300" src="2.jpeg" alt="Partenaire 2"></a>
+                        <a href="#" class="p-4 flex justify-center items-center flex-shrink-0 w-32 md:w-40" aria-label="Partenaire 3"><img class="h-12 w-auto grayscale opacity-70 hover:opacity-100 transition duration-300" src="3.png" alt="Partenaire 3"></a>
+                        <a href="#" class="p-4 flex justify-center items-center flex-shrink-0 w-32 md:w-40" aria-label="Partenaire 4"><img class="h-12 w-auto grayscale opacity-70 hover:opacity-100 transition duration-300" src="4.jpeg" alt="Partenaire 4"></a>
+                        <a href="#" class="p-4 flex justify-center items-center flex-shrink-0 w-32 md:w-40" aria-label="Partenaire 5"><img class="h-12 w-auto grayscale opacity-70 hover:opacity-100 transition duration-300" src="5.png" alt="Partenaire 5"></a>
+                        <a href="#" class="p-4 flex justify-center items-center flex-shrink-0 w-32 md:w-40" aria-label="Partenaire 6"><img class="h-12 w-auto grayscale opacity-70 hover:opacity-100 transition duration-300" src="6.jpeg" alt="Partenaire 6"></a>
+                        <a href="#" class="p-4 flex justify-center items-center flex-shrink-0 w-32 md:w-40" aria-label="Partenaire 7"><img class="h-12 w-auto grayscale opacity-70 hover:opacity-100 transition duration-300" src="7.jpeg" alt="Partenaire 7"></a>
+                        <a href="#" class="p-4 flex justify-center items-center flex-shrink-0 w-32 md:w-40" aria-label="Partenaire 8"><img class="h-12 w-auto grayscale opacity-70 hover:opacity-100 transition duration-300" src="8.jpeg" alt="Partenaire 8"></a>
+                        <a href="#" class="p-4 flex justify-center items-center flex-shrink-0 w-32 md:w-40" aria-label="Partenaire 9"><img class="h-12 w-auto grayscale opacity-70 hover:opacity-100 transition duration-300" src="9.jpeg" alt="Partenaire 9"></a>
+                        <a href="#" class="p-4 flex justify-center items-center flex-shrink-0 w-32 md:w-40" aria-label="Partenaire 10"><img class="h-12 w-auto grayscale opacity-70 hover:opacity-100 transition duration-300" src="10.png" alt="Partenaire 10"></a>
+                        <a href="#" class="p-4 flex justify-center items-center flex-shrink-0 w-32 md:w-40" aria-label="Partenaire 11"><img class="h-12 w-auto grayscale opacity-70 hover:opacity-100 transition duration-300" src="https://placehold.co/150x50/f1f1f1/333333?text=Partenaire+11" alt="Partenaire 11"></a>
+                        <a href="#" class="p-4 flex justify-center items-center flex-shrink-0 w-32 md:w-40" aria-label="Partenaire 12"><img class="h-12 w-auto grayscale opacity-70 hover:opacity-100 transition duration-300" src="https://placehold.co/150x50/f1f1f1/333333?text=Partenaire+12" alt="Partenaire 12"></a>
+                        <a href="#" class="p-4 flex justify-center items-center flex-shrink-0 w-32 md:w-40" aria-label="Partenaire 13"><img class="h-12 w-auto grayscale opacity-70 hover:opacity-100 transition duration-300" src="https://placehold.co/150x50/f1f1f1/333333?text=Partenaire+13" alt="Partenaire 13"></a>
+                        <a href="#" class="p-4 flex justify-center items-center flex-shrink-0 w-32 md:w-40" aria-label="Partenaire 14"><img class="h-12 w-auto grayscale opacity-70 hover:opacity-100 transition duration-300" src="https://placehold.co/150x50/f1f1f1/333333?text=Partenaire+14" alt="Partenaire 14"></a>
+                        
+                        <a href="#" class="p-4 flex justify-center items-center flex-shrink-0 w-32 md:w-40" aria-label="Partenaire 1"><img class="h-12 w-auto grayscale opacity-70 hover:opacity-100 transition duration-300" src="1.png" alt="Partenaire 1"></a>
+                        <a href="#" class="p-4 flex justify-center items-center flex-shrink-0 w-32 md:w-40" aria-label="Partenaire 2"><img class="h-12 w-auto grayscale opacity-70 hover:opacity-100 transition duration-300" src="2.jpeg" alt="Partenaire 2"></a>
+                        <a href="#" class="p-4 flex justify-center items-center flex-shrink-0 w-32 md:w-40" aria-label="Partenaire 3"><img class="h-12 w-auto grayscale opacity-70 hover:opacity-100 transition duration-300" src="3.png" alt="Partenaire 3"></a>
+                        <a href="#" class="p-4 flex justify-center items-center flex-shrink-0 w-32 md:w-40" aria-label="Partenaire 4"><img class="h-12 w-auto grayscale opacity-70 hover:opacity-100 transition duration-300" src="4.jpeg" alt="Partenaire 4"></a>
+                        <a href="#" class="p-4 flex justify-center items-center flex-shrink-0 w-32 md:w-40" aria-label="Partenaire 5"><img class="h-12 w-auto grayscale opacity-70 hover:opacity-100 transition duration-300" src="5.png" alt="Partenaire 5"></a>
+                        <a href="#" class="p-4 flex justify-center items-center flex-shrink-0 w-32 md:w-40" aria-label="Partenaire 6"><img class="h-12 w-auto grayscale opacity-70 hover:opacity-100 transition duration-300" src="6.jpeg" alt="Partenaire 6"></a>
+                        <a href="#" class="p-4 flex justify-center items-center flex-shrink-0 w-32 md:w-40" aria-label="Partenaire 7"><img class="h-12 w-auto grayscale opacity-70 hover:opacity-100 transition duration-300" src="7.jpeg" alt="Partenaire 7"></a>
+                        <a href="#" class="p-4 flex justify-center items-center flex-shrink-0 w-32 md:w-40" aria-label="Partenaire 8"><img class="h-12 w-auto grayscale opacity-70 hover:opacity-100 transition duration-300" src="8.jpeg" alt="Partenaire 8"></a>
+                        <a href="#" class="p-4 flex justify-center items-center flex-shrink-0 w-32 md:w-40" aria-label="Partenaire 9"><img class="h-12 w-auto grayscale opacity-70 hover:opacity-100 transition duration-300" src="9.jpeg" alt="Partenaire 9"></a>
+                        <a href="#" class="p-4 flex justify-center items-center flex-shrink-0 w-32 md:w-40" aria-label="Partenaire 10"><img class="h-12 w-auto grayscale opacity-70 hover:opacity-100 transition duration-300" src="10.png" alt="Partenaire 10"></a>
+                        <a href="#" class="p-4 flex justify-center items-center flex-shrink-0 w-32 md:w-40" aria-label="Partenaire 11"><img class="h-12 w-auto grayscale opacity-70 hover:opacity-100 transition duration-300" src="https://placehold.co/150x50/f1f1f1/333333?text=Partenaire+11" alt="Partenaire 11"></a>
+                        <a href="#" class="p-4 flex justify-center items-center flex-shrink-0 w-32 md:w-40" aria-label="Partenaire 12"><img class="h-12 w-auto grayscale opacity-70 hover:opacity-100 transition duration-300" src="https://placehold.co/150x50/f1f1f1/333333?text=Partenaire+12" alt="Partenaire 12"></a>
+                        <a href="#" class="p-4 flex justify-center items-center flex-shrink-0 w-32 md:w-40" aria-label="Partenaire 13"><img class="h-12 w-auto grayscale opacity-70 hover:opacity-100 transition duration-300" src="https://placehold.co/150x50/f1f1f1/333333?text=Partenaire+13" alt="Partenaire 13"></a>
+                        <a href="#" class="p-4 flex justify-center items-center flex-shrink-0 w-32 md:w-40" aria-label="Partenaire 14"><img class="h-12 w-auto grayscale opacity-70 hover:opacity-100 transition duration-300" src="https://placehold.co/150x50/f1f1f1/333333?text=Partenaire+14" alt="Partenaire 14"></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="h-1 w-full bg-gradient-to-r from-red-500 via-yellow-500 to-blue-500"></div>
+
+**Insérez le nouveau code HTML ici :**
+
+```html
+<section id="direction" class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-4xl font-extrabold text-gray-900 mb-12 relative">
+            <span class="relative z-10">POUR LA DIRECTION NATIONALE</span>
+            <span class="absolute left-1/2 -bottom-2 w-32 h-1 bg-red-500 transform -translate-x-1/2"></span>
+            <span class="absolute left-1/2 -bottom-2 w-full h-px bg-gray-300 transform -translate-x-1/2"></span>
+        </h2>
+
+        <div class="grid md:grid-cols-3 gap-12 mt-16 text-left" id="direction-container">
+            </div>
+    </div>
+</section>
+
+<div class="h-1 w-full bg-gradient-to-r from-red-500 via-yellow-500 to-blue-500"></div>
+
+<section id="equipe" class="py-20" style="background-color: #e0f2fe;"> 
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="multi-color-blink text-3xl sm:text-5xl mb-12">
+                    L'Équipe de la Coordination Nationale
+                </h2>
+
+                <div class="relative inline-block p-4 bg-white rounded-full shadow-2xl mb-10">
+                    <img class="coordinator-photo w-48 h-48 sm:w-64 sm:h-64 object-cover rounded-full border-4 border-blue-400" 
+                        src="https://placehold.co/256x256/22d3ee/ffffff?text=Photo+Coordonnateur" 
+                        alt="Photo du Coordonnateur National">
+                    <p class="mt-4 text-2xl font-bold text-gray-800">Nom du Coordonnateur</p>
+                    <p class="text-blue-600">Coordonnateur National</p>
+                </div>
+
+                <h3 class="text-2xl font-semibold mt-10 mb-6 text-gray-700">Nos Membres Clés</h3>
+                
+                <div id="members-carousel" class="flex justify-start sm:justify-center overflow-x-auto relative pb-4">
+                    <div class="flex space-x-8" id="members-container">
+                        </div>
+                </div>
+            </div>
+        </section>
+
+       <a href="logo2.html" 
+   id="floating-help-button" 
+   class="custom-assist-button fixed bottom-8 right-8 w-16 h-16 rounded-full flex items-center justify-center text-white shadow-lg z-50 focus:outline-none"
+   title="Inscription"
+   target="_blank" 
+>
+    <img class="w-12 h-12 rounded-full object-cover" 
+        src="COP4.png" 
+        alt="Assistante Virtuelle">
+</a>
+
+        <footer id="contact" class="bg-gray-800 text-white py-10">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center text-center">
+                    
+                    <div class="text-center md:text-left">
+                        <h3 class="text-xl font-bold mb-3">Nous Contacter</h3>
+                        <div id="address-container" class="h-16 flex items-center justify-center md:justify-start">
+                            <p class="text-gray-400 typing-text-container" id="typing-address">
+                                Adresse : Av. Colonel Ebeya, n°195 Immeuble FONAREV 3ème étage/ local 311. C. Gombe / Kinshasa
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <img class="h-12 w-auto mx-auto mb-4" src="COP.png" alt="Logo COPEMECO">
+                        <p class="text-sm text-gray-500">Tous droits réservés © 2024 COPEMECO.</p>
+                    </div>
+
+                    <div class="text-center md:text-right">
+                        <h3 class="text-xl font-bold mb-3">Suivez-nous</h3>
+                        <div class="flex justify-center md:justify-end space-x-6 text-2xl">
+                            <a href="#" class="text-gray-400 hover:text-blue-600 exploding-icon transition" aria-label="Facebook">
+                                <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-3 7h-2.5v1.5h2.5v2h-2.5v4h-3v-4h-1.5v-2h1.5v-1.5c0-1.782.909-2.75 2.75-2.75h2.25v2.5z"/></svg>
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-green-500 exploding-icon transition" aria-label="WhatsApp">
+                                <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.031 3c-4.939 0-8.96 4.021-8.96 8.96 0 1.58.418 3.125 1.217 4.512l-1.282 4.673 4.821-1.258c1.378.784 2.923 1.18 4.168 1.18 4.939 0 8.96-4.021 8.96-8.96s-4.021-8.96-8.96-8.96zm4.551 11.232c-.158.423-.92.833-1.272.852-.352.018-.738-.135-1.124-.269s-.828-.328-1.581-.977c-.753-.65-1.517-1.46-2.138-2.26s-1.018-1.638-1.018-2.541c0-.85.342-1.353.694-1.666.352-.313.738-.471 1.09-.471.293 0 .586.018.799.037.19.018.423.018.656.406.233.388.753 1.834.829 1.989.076.155.122.342.018.53s-.342.85-.694 1.297c-.352.446-.72.883-1.09 1.297-.233.25-.47.464-.237.852.233.388.738 1.278 1.597 1.99s1.865 2.158 1.865 2.158c.25.138.446.092.597-.046.166-.145.539-.556.772-.888.233-.332.42-.313.587-.245.176.069.19.147.36.438.158.388.352.924.166 1.092z"/></svg>
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-red-500 exploding-icon transition" aria-label="Gmail">
+                                <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 12.713l-11.985-9.713h23.971l-11.986 9.713zm-5.471-7.713h10.943l-5.472 4.438-5.471-4.438zm-6.529 12.438v-9.438l12 9.713 12-9.713v9.438c0 1.104-.896 2-2 2h-20c-1.104 0-2-.896-2-2z"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-10 pt-6 border-t border-gray-700 text-center text-sm text-gray-500">
+                    La COPEMECO est le fer de lance du développement des PME en RDC.
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // --- LOGIQUE D'ANIMATION DU LOGO (Extrait de logo.html) ---
+            const armBlue = document.getElementById('armBlue');
+            const armRed = document.getElementById('armRed');
+            const redArc = document.getElementById('redArc');
+            const leaves = document.querySelectorAll('.laurel');
+            const gear = document.getElementById('gear');
+            const textGroup = document.getElementById('textGroup');
+            
+            const introScreen = document.getElementById('intro-screen');
+            const mainContent = document.getElementById('main-content');
+
+            // 1. LANCEMENT ANIMATION LOGO
+            setTimeout(() => { armBlue.classList.add('anim-arms-left'); armRed.classList.add('anim-arms-right'); }, 100);
+            setTimeout(() => { redArc.classList.add('anim-draw-arc'); }, 1100);
+            setTimeout(() => { redArc.classList.add('anim-shine'); }, 2600);
+            setTimeout(() => { leaves.forEach(leaf => leaf.classList.add('anim-draw-leaves')); }, 2600);
+            setTimeout(() => { gear.classList.add('anim-gear-entry'); }, 4000);
+            setTimeout(() => { textGroup.classList.add('anim-text-reveal'); }, 6000);
+
+            // 2. TRANSITION VERS LA PAGE D'ACCUEIL
+            // La transition démarre après 8 secondes pour laisser l'animation complète s'afficher.
+            setTimeout(() => {
+                // Disparition de l'écran d'intro
+                introScreen.classList.add('hidden');
+                
+                // Apparition du contenu principal
+                mainContent.classList.add('visible');
+
+                // Lancement des scripts de la page d'accueil (loga.html) APRÈS la transition
+                initializeHomePageScripts();
+
+                // Suppression de l'intro après la transition (pour alléger le DOM)
+                setTimeout(() => {
+                    introScreen.style.display = 'none';
+                    // S'assurer que le scroll est au début du contenu
+                    window.scrollTo(0, 0); 
+                }, 1000);
+
+            }, 8000); // 8000ms = 8 secondes
+
+            // --- FONCTION CONTENANT LES SCRIPTS DE loga.html ---
+            const initializeHomePageScripts = () => {
+
+                // --- NOUVEAU: 0. Logique de la Direction Nationale ---
+                const directionContainer = document.getElementById('direction-container');
+                const directionMembers = [
+                    { 
+                        name: "DODO BALU ANDRE", 
+                        title: "Président du Conseil d'Administration", 
+                        img: "URL_PHOTO_DODO_BALU", // REMPLACER CECI
+                        position: 'left' 
+                    },
+                    { 
+                        name: "MUAMBA TSHILUMBA SIMON", 
+                        title: "Administrateur Délégué", 
+                        img: "URL_PHOTO_MUAMBA_TSHILUMBA", // REMPLACER CECI
+                        position: 'center' 
+                    },
+                    { 
+                        name: "BUKASA KANUNDEYI RUBEN", 
+                        title: "Coordonnateur National Jeunes Entrepreneurs", 
+                        img: "URL_PHOTO_BUKASA_KANUNDEYI", // REMPLACER CECI
+                        position: 'right' 
+                    },
+                ];
+
+                const createDirectionCard = (member) => {
+                    const div = document.createElement('div');
+                    // Utilisation des classes pour aligner le texte/photo comme sur l'image fournie
+                    div.className = member.position === 'center' ? 'text-center' : (member.position === 'right' ? 'text-right md:pr-10' : 'text-left md:pl-10');
+                    
+                    // Ajustement de l'alignement pour l'élément de la photo et le texte
+                    const photoClass = member.position === 'center' ? 'mx-auto' : (member.position === 'right' ? 'ml-auto' : 'mr-auto');
+
+                    div.innerHTML = `
+                        <div class="flex items-center ${photoClass} mb-4" style="width: fit-content;">
+                            <div class="direction-photo-ring">
+                                <img src="${member.img}" alt="Photo de ${member.name}">
+                            </div>
+                        </div>
+                        <p class="text-sm text-red-500 font-semibold mb-1">${member.title}</p>
+                        <p class="font-extrabold text-xl text-gray-800">${member.name}</p>
+                    `;
+                    return div;
+                };
+
+                if (directionContainer) {
+                    directionMembers.forEach(member => {
+                        directionContainer.appendChild(createDirectionCard(member));
+                    });
+                }
+                
+                // --- FIN DE LA LOGIQUE DE LA DIRECTION NATIONALE ---
+                
+                // 1. Logique du Carrousel de Défense (9 Images, Zoom In/Out)
+                // 1. Logique du Carrousel de Défense (9 Images, Zoom In/Out)
+                const carouselContainer = document.getElementById('image-carousel-bg');
+                const economicInterestImages = [
+                    "nature.jpeg",
+                    "nature2.jpeg",
+                    "nature3.jpg",
+                    "trans1.jpeg",
+                    "trans3.jpeg",
+                    "https://placehold.co/1920x1080/38a169/ffffff?text=Image+Défense+06",
+                    "https://placehold.co/1920x1080/d69e2e/ffffff?text=Image+Défense+07",
+                    "https://placehold.co/1920x1080/9f7aea/ffffff?text=Image+Défense+08",
+                    "https://placehold.co/1920x1080/10b981/ffffff?text=Image+Défense+09",
+                ];
+                let currentIndex = 0;
+
+                const imageElements = economicInterestImages.map((src, index) => {
+                    const img = document.createElement('img');
+                    img.src = src;
+                    img.classList.add('slide-in-out');
+                    img.setAttribute('data-index', index);
+                    carouselContainer.appendChild(img);
+                    return img;
+                });
+
+                const updateSlide = () => {
+                    // 1. Désactiver toutes les images (transition to zoom out)
+                    imageElements.forEach(img => {
+                        img.classList.remove('slide-active');
+                        img.classList.add('slide-zoom-out');
+                    });
+
+                    // 2. Activer l'image courante (Zoom In)
+                    const currentImage = imageElements[currentIndex];
+                    currentImage.classList.remove('slide-zoom-out');
+                    currentImage.classList.add('slide-active');
+                    
+                    // 3. Préparer l'index suivant
+                    currentIndex = (currentIndex + 1) % economicInterestImages.length;
+                };
+
+                if (imageElements.length > 0) {
+                    // Afficher la première image immédiatement
+                    imageElements[0].classList.add('slide-active');
+                    currentIndex = 1;
+                    // Déclencher le changement toutes les 6 secondes
+                    setInterval(updateSlide, 6000); 
+                }
+
+                // 2. Logique du Pied de Page (Typing Effect)
+                // Le style et l'animation sont gérés entièrement par le CSS (typewriter keyframe)
+                
+
+                // 3. Logique du Scroll Reveal (Actualités)
+                const revealElements = document.querySelectorAll('.reveal-item');
+                const observerOptions = {
+                    root: null, // viewport
+                    rootMargin: '0px',
+                    threshold: 0.2 // Déclenche à 20% de visibilité
+                };
+
+                const observer = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            observer.unobserve(entry.target); // Arrête l'observation après l'affichage
+                        }
+                    });
+                }, observerOptions);
+
+                revealElements.forEach(el => {
+                    observer.observe(el);
+                });
+
+
+                // 4. Logique "Lire la suite" (Actualités) - VERSION AMÉLIORÉE
+                const characterLimit = 150;
+                
+                // 4.1 Initialisation du contenu tronqué
+                document.querySelectorAll('.news-content').forEach(p => {
+                    const fullText = p.getAttribute('data-full-text');
+                    
+                    // Si le texte est plus long que la limite, le tronquer
+                    if (fullText.length > characterLimit) {
+                         p.textContent = fullText.substring(0, characterLimit) + '...'; 
+                    } else {
+                        // Si le texte est court, on retire le bouton "Lire la suite"
+                        const card = p.closest('.news-article');
+                        const readMoreBtn = card ? card.querySelector('.read-more-btn') : null;
+                        if (readMoreBtn) {
+                            readMoreBtn.style.display = 'none';
+                        }
+                        // S'assurer que le contenu court est complet
+                        p.textContent = fullText;
+                    }
+                });
+
+                // 4.2 Gestion du clic sur "Lire la suite" / "Réduire"
+                document.querySelectorAll('.read-more-btn').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const targetId = e.target.getAttribute('data-target');
+                        const card = document.getElementById(targetId);
+                        const contentP = card.querySelector('.news-content');
+                        const isExpanded = contentP.classList.contains('expanded');
+                        const fullText = contentP.getAttribute('data-full-text');
+
+                        if (isExpanded) {
+                            // Rétracter
+                            contentP.textContent = fullText.substring(0, characterLimit) + '...';
+                            contentP.classList.remove('expanded');
+                            contentP.style.maxHeight = '4rem'; // Rétablit la hauteur tronquée (CSS)
+                            e.target.textContent = 'Lire la suite';
+                        } else {
+                            // Développer
+                            contentP.textContent = fullText;
+                            contentP.classList.add('expanded');
+                            // Définir la hauteur max sur la hauteur réelle du contenu pour la transition fluide
+                            // NOTE: Ceci doit être fait après l'ajout du texte complet
+                            contentP.style.maxHeight = contentP.scrollHeight + 'px'; 
+                            e.target.textContent = 'Réduire';
+                        }
+                    });
+                });
+                
+                // 5. Logique Carrousel des Membres (Équipe)
+                const membersContainer = document.getElementById('members-container');
+                const members = [
+                    { name: "Membre 1", title: "Secrétaire Général", img: "https://placehold.co/150x150/ef4444/ffffff?text=M1" },
+                    { name: "Membre 2", title: "Trésorier", img: "https://placehold.co/150x150/3b82f6/ffffff?text=M2" },
+                    { name: "Membre 3", title: "Chargé des Opérations", img: "https://placehold.co/150x150/10b981/ffffff?text=M3" },
+                    { name: "Membre 4", title: "Relations Publiques", img: "https://placehold.co/150x150/f59e0b/ffffff?text=M4" },
+                ];
+                
+                // Fonction pour créer un élément membre
+                const createMemberCard = (member) => {
+                    const div = document.createElement('div');
+                    div.className = 'flex-shrink-0 w-48 text-center p-4 bg-white rounded-xl shadow-lg transition duration-300 hover:shadow-2xl';
+                    div.innerHTML = `
+                        <img class="w-24 h-24 object-cover rounded-full mx-auto mb-3 border-2 border-sky-500" src="${member.img}" alt="Photo de ${member.name}">
+                        <p class="font-bold text-gray-800">${member.name}</p>
+                        <p class="text-sm text-gray-500">${member.title}</p>
+                    `;
+                    return div;
+                };
+
+                // Remplir le conteneur des membres
+                if (membersContainer) {
+                     members.forEach(member => {
+                        membersContainer.appendChild(createMemberCard(member));
+                    });
+                }
+                
+                // 6. Logique du Menu Mobile
+                const menuButton = document.getElementById('menu-button');
+                const mobileMenu = document.getElementById('mobile-menu');
+                const menuIconOpen = document.getElementById('menu-icon-open');
+                const menuIconClose = document.getElementById('menu-icon-close');
+
+                if (menuButton) {
+                    menuButton.addEventListener('click', () => {
+                        // Toggle the visibility of the mobile menu
+                        const isMenuOpen = mobileMenu.classList.toggle('hidden');
+                        
+                        // Toggle icons (hamburger <-> close)
+                        menuIconOpen.classList.toggle('hidden', !isMenuOpen);
+                        menuIconClose.classList.toggle('hidden', isMenuOpen);
+                    });
+                    
+                    // Hide menu after clicking a link (optional, but good practice)
+                    mobileMenu.querySelectorAll('a').forEach(link => {
+                         link.addEventListener('click', () => {
+                            mobileMenu.classList.add('hidden');
+                            menuIconOpen.classList.remove('hidden');
+                            menuIconClose.classList.add('hidden');
+                        });
+                    });
+                }
+
+
+            }; // Fin de initializeHomePageScripts
+
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
