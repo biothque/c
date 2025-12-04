@@ -265,6 +265,33 @@
             transition: all 0.3s ease;
         }
 
+        /* ------------------ NOUVEAUX STYLES POUR LA DIRECTION ------------------ */
+
+/* Style pour l'anneau extérieur rouge (simule la bordure décalée) */
+.direction-photo-ring {
+    position: relative;
+    width: 150px; /* Taille de base pour la photo */
+    height: 150px;
+    padding: 10px; /* Espace autour de la photo */
+    border-radius: 50%;
+    /* Simule le cercle extérieur rouge décalé */
+    background: radial-gradient(circle at 10% 10%, rgba(239, 68, 68, 0.2) 0%, transparent 40%),
+                radial-gradient(circle at 90% 90%, rgba(239, 68, 68, 0.2) 0%, transparent 40%),
+                #fef2f2; /* Fond très clair */
+    box-shadow: 0 0 0 4px #ef4444; /* Bordure rouge pour l'effet */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.direction-photo-ring img {
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border: 3px solid white; /* Bordure blanche interne */
+}
+
         /* 6. Styles pour l'effet d'explosion des icônes (Exploding Icons) dans le footer */
         .exploding-icon {
             display: inline-block;
@@ -581,7 +608,25 @@
 
         <div class="h-1 w-full bg-gradient-to-r from-red-500 via-yellow-500 to-blue-500"></div>
 
-        <section id="equipe" class="py-20" style="background-color: #e0f2fe;">
+**Insérez le nouveau code HTML ici :**
+
+```html
+<section id="direction" class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-4xl font-extrabold text-gray-900 mb-12 relative">
+            <span class="relative z-10">POUR LA DIRECTION NATIONALE</span>
+            <span class="absolute left-1/2 -bottom-2 w-32 h-1 bg-red-500 transform -translate-x-1/2"></span>
+            <span class="absolute left-1/2 -bottom-2 w-full h-px bg-gray-300 transform -translate-x-1/2"></span>
+        </h2>
+
+        <div class="grid md:grid-cols-3 gap-12 mt-16 text-left" id="direction-container">
+            </div>
+    </div>
+</section>
+
+<div class="h-1 w-full bg-gradient-to-r from-red-500 via-yellow-500 to-blue-500"></div>
+
+<section id="equipe" class="py-20" style="background-color: #e0f2fe;"> 
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                 <h2 class="multi-color-blink text-3xl sm:text-5xl mb-12">
                     L'Équipe de la Coordination Nationale
@@ -702,7 +747,59 @@
 
             // --- FONCTION CONTENANT LES SCRIPTS DE loga.html ---
             const initializeHomePageScripts = () => {
+
+                // --- NOUVEAU: 0. Logique de la Direction Nationale ---
+                const directionContainer = document.getElementById('direction-container');
+                const directionMembers = [
+                    { 
+                        name: "DODO BALU ANDRE", 
+                        title: "Président du Conseil d'Administration", 
+                        img: "URL_PHOTO_DODO_BALU", // REMPLACER CECI
+                        position: 'left' 
+                    },
+                    { 
+                        name: "MUAMBA TSHILUMBA SIMON", 
+                        title: "Administrateur Délégué", 
+                        img: "URL_PHOTO_MUAMBA_TSHILUMBA", // REMPLACER CECI
+                        position: 'center' 
+                    },
+                    { 
+                        name: "BUKASA KANUNDEYI RUBEN", 
+                        title: "Coordonnateur National Jeunes Entrepreneurs", 
+                        img: "URL_PHOTO_BUKASA_KANUNDEYI", // REMPLACER CECI
+                        position: 'right' 
+                    },
+                ];
+
+                const createDirectionCard = (member) => {
+                    const div = document.createElement('div');
+                    // Utilisation des classes pour aligner le texte/photo comme sur l'image fournie
+                    div.className = member.position === 'center' ? 'text-center' : (member.position === 'right' ? 'text-right md:pr-10' : 'text-left md:pl-10');
+                    
+                    // Ajustement de l'alignement pour l'élément de la photo et le texte
+                    const photoClass = member.position === 'center' ? 'mx-auto' : (member.position === 'right' ? 'ml-auto' : 'mr-auto');
+
+                    div.innerHTML = `
+                        <div class="flex items-center ${photoClass} mb-4" style="width: fit-content;">
+                            <div class="direction-photo-ring">
+                                <img src="${member.img}" alt="Photo de ${member.name}">
+                            </div>
+                        </div>
+                        <p class="text-sm text-red-500 font-semibold mb-1">${member.title}</p>
+                        <p class="font-extrabold text-xl text-gray-800">${member.name}</p>
+                    `;
+                    return div;
+                };
+
+                if (directionContainer) {
+                    directionMembers.forEach(member => {
+                        directionContainer.appendChild(createDirectionCard(member));
+                    });
+                }
                 
+                // --- FIN DE LA LOGIQUE DE LA DIRECTION NATIONALE ---
+                
+                // 1. Logique du Carrousel de Défense (9 Images, Zoom In/Out)
                 // 1. Logique du Carrousel de Défense (9 Images, Zoom In/Out)
                 const carouselContainer = document.getElementById('image-carousel-bg');
                 const economicInterestImages = [
@@ -887,6 +984,7 @@
     </script>
 </body>
 </html>
+
 
 
 
