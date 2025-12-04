@@ -15,7 +15,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>Génération de la Fiche d'Adhésion (Post-Enregistrement)</h1>
+        <h1>Génération de la Fiche d'Adhésion</h1>
 
         <label for="pmeIdentifier">Entrez le N° d'Adhésion ou le N° ID NAT :</label>
         <input type="text" id="pmeIdentifier" placeholder="Ex: ADH-20240101-1234 ou IDNAT12345" required>
@@ -29,7 +29,7 @@
     
     <script>
         // ==============================================
-        // CONFIGURATION BACKENDLESS
+        // 1. CONFIGURATION BACKENDLESS (À REMPLACER)
         // ==============================================
         const APP_ID = "3D3629AB-2B0E-49DE-AA35-4A0EFAB84AE7"; 
         const API_KEY = "B3C84FA1-67E6-40A2-8CA4-2E77E52E2EB4"; 
@@ -39,14 +39,31 @@
             Backendless.serverURL = "https://api.backendless.com";
             Backendless.initApp(APP_ID, API_KEY);
         } else {
-            document.getElementById('message').textContent = "Erreur: Le SDK Backendless n'est pas chargé.";
+            console.error("Le SDK Backendless n'est pas chargé.");
         }
 
         const { jsPDF } = window.jspdf;
         const messageEl = document.getElementById('message');
 
         // ==============================================
-        // FONCTIONS D'AIDE ET DE LOGIQUE PDF (REUTILISEES)
+        // 2. MODÈLE DE DONNÉES COMPLETES
+        // Utilisé pour garantir que TOUTES les clés sont présentes dans l'objet de données
+        // ==============================================
+        const FIELD_MODEL = {
+            denomination: "", rccm: "", idnat: "", impot: "", siege: "", tel: "", email: "", 
+            nationalite: "", siege_exploitation: "", province: "", forme_juridique: "", 
+            date_creation: "", nb_associés: "", objectif_social: "", act_principale: "", 
+            act_secondaire: "", produits: "", capital: "", nb_agents: "", ca_mensuel: "", 
+            masse_salariale: "", ipr: "", impots: "", nom_proprietaire: "", 
+            adresse_responsable: "", niveau_etudes: "", faculte_etudes: "", nom_gerant: "", 
+            nat_gerant: "", contact_gerant: "", genre_gerant: "", tranche_age_gerant: "", 
+            nat_associes: "", fournisseurs: "", clients: "", comptabilite: "", 
+            compta_reguliere: "", date_declaration: "", exercice: "", attentes: "", 
+            numero_adhesion: "", objectId: "", createdAt: "", updatedAt: "" 
+        };
+
+        // ==============================================
+        // 3. FONCTIONS D'AIDE
         // ==============================================
 
         // Fonction d'aide pour charger l'image (logo, filigrane)
@@ -61,18 +78,41 @@
             img.src = src; 
         });
 
-        // Fonction d'aide pour obtenir la valeur (doit être définie avant generatePDFExact)
-        const getValue = (key, formData) => formData[key] && formData[key].trim() !== 'Non précisé' ? formData[key] : 'Non précisé';
+        // Fonction d'aide pour obtenir la valeur (transforme "" ou "Non précisé" en "Non précisé")
+        const getValue = (key, formData) => {
+            const value = formData[key];
+            if (typeof value === 'string') {
+                const trimmedValue = value.trim();
+                return (trimmedValue === '' || trimmedValue === 'Non précisé') ? 'Non précisé' : trimmedValue;
+            }
+            return 'Non précisé';
+        }
 
 
-        // -------------------------------------------------
-        // Générateur PDF A4 fidèle (Copie de la fonction du script d'origine)
-        // -------------------------------------------------
+        // ==============================================
+        // 4. LOGIQUE DE RECUPERATION BACKENDLESS
+        // ==============================================
+        async function fetchPmeData(identifier) {
+            // Utiliser une requête OR pour chercher par numero_adhesion ou idnat
+            const whereClause = `numero_adhesion = '${identifier}' OR idnat = '${identifier}'`;
+            
+            const queryBuilder = Backendless.Data.of(TABLE).builder();
+            queryBuilder.setWhereClause(whereClause);
+            queryBuilder.setPageSize(1);
+
+            const result = await Backendless.Data.of(TABLE).find(queryBuilder);
+            
+            return result.length > 0 ? result[0] : null;
+        }
+
+        // ==============================================
+        // 5. FONCTION DE GÉNÉRATION PDF (Intégrée)
+        // ==============================================
         async function generatePDFExact(formData){
             const pdf = new jsPDF({ unit: 'mm', format: 'a4' });
             const pageWidth = 210, pageHeight = 297;
 
-            // Adaptez l'appel de getValue pour inclure formData en argument
+            // Alias pour appeler getValue avec formData
             const getVal = (key) => getValue(key, formData);
 
             let logoImg = null;
@@ -113,7 +153,6 @@
                 pdf.text(label.replace(':', '') + ' :', xLabel, y); 
                 
                 pdf.setFont('helvetica','normal');
-                // Utilise getVal (qui appelle getValue)
                 const display = getVal(value) || '................................................................................';
                 pdf.text(display, xValue, y, { maxWidth: pageWidth - xValue - 10 });
                 y += 7;
@@ -243,45 +282,23 @@
             pdf.text('Nom et Qualité', 120, sigY + 5);
             pdf.line(120, sigY + 15, 195, sigY + 15);
 
-            // Utilisez la date de création de la fiche si disponible, sinon la date du jour
             const creationDate = formData.createdAt ? new Date(formData.createdAt) : new Date();
             const dateStr = `${creationDate.getDate().toString().padStart(2, '0')}/${(creationDate.getMonth()+1).toString().padStart(2, '0')}/${creationDate.getFullYear()}`;
             pdf.text(`Fait à Kinshasa le ${dateStr}`, 15, 275);
 
             if(typeof QRious !== 'undefined'){
                 const qrCanvas = document.createElement('canvas');
-                // Génère le QR code avec le Numéro d'Adhésion
-                new QRious({ element: qrCanvas, value: formData.numero_adhesion || 'ADHESION_COPEMECO', size: 200 });
+                new QRious({ element: qrCanvas, value: getVal('numero_adhesion') || 'ADHESION_COPEMECO', size: 200 });
                 const qrData = qrCanvas.toDataURL('image/png');
                 pdf.addImage(qrData, 'PNG', 160, 260, 30, 30);
-            } else {
-                console.warn("La librairie QRious n'est pas chargée.");
             }
 
-            // Téléchargement du fichier
             const pdfFileName = `ADHESION_${getVal('denomination').replace(/\s/g, '_')}_${getVal('numero_adhesion')}.pdf`;
             pdf.save(pdfFileName);
         }
 
         // ==============================================
-        // LOGIQUE DE RECUPERATION BACKENDLESS
-        // ==============================================
-
-        async function fetchPmeData(identifier) {
-            // Utiliser une requête OR pour chercher par numero_adhesion ou idnat
-            const whereClause = `numero_adhesion = '${identifier}' OR idnat = '${identifier}'`;
-            
-            const queryBuilder = Backendless.Data.of(TABLE).builder();
-            queryBuilder.setWhereClause(whereClause);
-            queryBuilder.setPageSize(1); // On a besoin d'un seul résultat
-
-            const result = await Backendless.Data.of(TABLE).find(queryBuilder);
-            
-            return result.length > 0 ? result[0] : null;
-        }
-
-        // ==============================================
-        // GESTIONNAIRE D'EVENEMENT PRINCIPAL
+        // 6. GESTIONNAIRE D'EVENEMENT PRINCIPAL
         // ==============================================
         document.getElementById('generatePdfBtn').addEventListener('click', async function() {
             const identifier = document.getElementById('pmeIdentifier').value.trim();
@@ -297,23 +314,29 @@
             messageEl.textContent = `Recherche de la fiche pour "${identifier}" en cours...`;
 
             try {
-                const pmeData = await fetchPmeData(identifier);
+                const pmeDataFromDb = await fetchPmeData(identifier);
 
-                if (pmeData && pmeData.numero_adhesion) {
+                if (pmeDataFromDb && pmeDataFromDb.numero_adhesion) {
+                    
+                    // --- ÉTAPE CLÉ: Fusion des données pour garantir la structure complète ---
+                    const pmeData = { 
+                        ...FIELD_MODEL, // Assure la présence de toutes les clés
+                        ...pmeDataFromDb // Écrase avec les valeurs réelles de la base
+                    };
+                    
                     messageEl.style.color = 'green';
                     messageEl.textContent = `Fiche d'adhésion N° ${pmeData.numero_adhesion} trouvée. Génération du PDF...`;
                     
-                    // Appel de la fonction de génération avec les données de la base
                     await generatePDFExact(pmeData);
                     
                     messageEl.textContent = `✅ PDF de la fiche N° ${pmeData.numero_adhesion} généré et téléchargé !`;
                 } else {
                     messageEl.style.color = 'red';
-                    messageEl.textContent = `❌ Aucune fiche d'adhésion trouvée pour l'identifiant: ${identifier}`;
+                    messageEl.textContent = `❌ Aucune fiche d'adhésion trouvée pour l'identifiant: ${identifier}. Vérifiez le N° ou l'ID NAT.`;
                 }
             } catch (error) {
                 messageEl.style.color = 'red';
-                messageEl.textContent = "Erreur lors de la récupération des données ou de la génération du PDF.";
+                messageEl.textContent = "Erreur critique lors du processus. Consultez la console (F12).";
                 console.error("Erreur détaillée:", error);
             }
         });
