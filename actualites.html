@@ -119,7 +119,7 @@
             margin-bottom: 0.5rem;
         }
         
-        /* Couleurs des tags (Pour la démonstration, les vrais tags peuvent être dynamiques) */
+        /* Couleurs des tags (Gardé pour la cohérence) */
         .tag-Économie { background-color: #3b82f6; } /* blue-500 */
         .tag-Social { background-color: #ef4444; } /* red-500 */
         .tag-Finances { background-color: #10b981; } /* green-500 */
@@ -140,6 +140,17 @@
             color: white;
             font-weight: 700;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* CSS spécifique pour l'expansion du contenu */
+        .news-content {
+            /* Fixe une hauteur maximale par défaut (ajustez si 4rem n'est pas suffisant) */
+            /* overflow: hidden; /* À décommenter si vous ne voulez pas de transition animée */
+            /* max-height: 4rem; */
+            transition: max-height 0.5s ease-out; /* Pour une transition fluide */
+        }
+        .news-content.expanded {
+            /* max-height sera défini dynamiquement par JS pour l'expansion */
         }
 
     </style>
@@ -170,7 +181,7 @@
                     
                     <div class="flex items-center space-x-4">
                         <button class="text-gray-700 hover:text-blue-600 p-2 rounded-full hover:bg-gray-100 transition duration-150" title="Rechercher">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                         </button>
                         <button class="text-gray-700 hover:text-blue-600 text-sm font-medium">FR / EN</button>
                         
@@ -275,61 +286,59 @@
     </div>
 
     <script>
-        // Fichier images et autres informations à caractères identique sont conservés.
-        const actualitesData = [
-            // Note: Correction d'une date (2025-12-°6 -> 2025-12-06) pour la fiabilité du tri
-            { id: 1, title: "Soyons prêts", date: "2025-12-06", category: "Économie", snippet: "Un message de la direction concernant la préparation des PME aux défis de l'année à venir.", image: "W.jpg" },
-            { id: 2, title: "Découvrez Lowa", date: "2025-12-06", category: "Économie", snippet: "Découvrez LOWA, la pâte à tartiner au cacao qui transforme chaque moment en instant de plaisir. Créée pour les amoureux du goût, elle allie douceur, onctuosité et richesse en cacao pour offrir une expérience unique, irrésistible et mémorable...", image: "C.jpg" },
-            { id: 3, title: "Rappel de la journée de l'entrepreneuriat agricole", date: "2025-12-06", category: "Social", snippet: "Organiser une journée de l’entrepreneuriat agricole sous l’égide de la COPEMECO — destinée aux jeunes — permet de promouvoir l’agriculture comme véritable opportunité d’emploi et d’auto-entrepreneuriat, d’inciter les jeunes (18–35 ans), y compris les femmes, à se lancer dans la production, la transformation, le maraîchage et l’agro-business, d’offrir un cadre de formation, d’accompagnement, de financement, de mentorat et de formalisation pour structurer un secteur durable et productif, et de mettre en lumière les produits agricoles locaux afin de renforcer l’agriculture urbaine et péri-urbaine, contribuant ainsi à la sécurité alimentaire, à l’emploi et au développement économique local.", image: "Y.jpg" },
-            { id: 4, title: "Signature d'un Partenariat avec la Banque Centrale", date: "2025-11-15", category: "Finances", snippet: "Un accord historique pour faciliter l'accès au financement des PME et réduire les taux d'intérêt pour les petites entreprises.", image: "https://placehold.co/400x250/3b82f6/ffffff?text=Partenariat" },
-            { id: 5, title: "Webinaire: Se préparer aux nouvelles réglementations fiscales", date: "2025-11-01", category: "Finances", snippet: "Un point complet sur les changements fiscaux impactant les petites et moyennes entreprises pour l'année prochaine.", image: "https://placehold.co/400x250/fcd34d/000000?text=Fiscalite" },
-            { id: 6, title: "Nouveau bureau provincial à Lubumbashi", date: "2025-10-25", category: "Vie de la COPEMECO", snippet: "La COPEMECO étend sa couverture pour mieux servir les entrepreneurs du Haut-Katanga avec des services de proximité.", image: "https://placehold.co/400x250/06b6d4/ffffff?text=Bureaux" },
-            { id: 7, title: "Visite Ministérielle dans les Kivu", date: "2025-10-10", category: "Politique", snippet: "Le Ministre de l'Économie a rencontré les PME locales pour discuter des défis et des opportunités d'investissement dans la région.", image: "https://placehold.co/400x250/f97316/ffffff?text=Visite" },
-            { id: 8, title: "Atelier de Formation sur l'Exportation", date: "2025-09-05", category: "Économie", snippet: "Des sessions intensives pour préparer les PME à conquérir les marchés régionaux et internationaux.", image: "https://placehold.co/400x250/a855f7/ffffff?text=Formation" },
-        ];
-
-        // --- Nouvelle fonction pour simuler la lecture d'un article complet ---
-        /**
-         * Simule l'ouverture d'un article complet.
-         * @param {number} articleId - L'ID de l'article à lire.
-         */
-        window.readFullArticle = (articleId) => {
-            const article = actualitesData.find(item => item.id === articleId);
-            
-            if (article) {
-                // Pour une application réelle, vous redirigeriez vers une page de détail (ex: window.location.href = `article.html?id=${articleId}`);
-                // Pour cette démo, nous affichons les détails dans une alerte.
-                alert(`Ouverture de l'article ID ${articleId}:\n\nTitre: ${article.title}\n\nSnippet: ${article.snippet}\n\n(Dans une application complète, ceci ouvrirait la page de l'article.)`);
-                console.log(`Lecture de l'article complet: ${article.title}`, article);
-            } else {
-                alert("Article non trouvé.");
-            }
-        };
-        // -----------------------------------------------------------------------
-
-
         document.addEventListener('DOMContentLoaded', () => {
+
+            // --- VOS DONNÉES D'ACTUALITÉ (CONSERVÉES) ---
+            const actualitesData = [
+                // Note: Correction de l'image de l'article 3 pour correspondre à votre exemple HTML
+                { id: 1, title: "Soyons prêts", date: "2025-12-06", category: "Économie", snippet: "Un message de la direction concernant la préparation des PME aux défis de l'année à venir.", image: "W.jpg" },
+                { id: 2, title: "Découvrez Lowa", date: "2025-12-06", category: "Économie", snippet: "Découvrez LOWA, la pâte à tartiner au cacao qui transforme chaque moment en instant de plaisir. Créée pour les amoureux du goût, elle allie douceur, onctuosité et richesse en cacao pour offrir une expérience unique, irrésistible et mémorable. C'est le produit phare de nos PME en pleine croissance.", image: "C.jpg" },
+                { id: 3, title: "La journée de l'entrepreneuriat agricole", date: "2025-12-06", category: "Social", snippet: "Organiser une journée de l’entrepreneuriat agricole sous l’égide de la COPEMECO — destinée aux jeunes — permet de promouvoir l’agriculture comme véritable opportunité d’emploi et d’auto-entrepreneuriat, d’inciter les jeunes (18–35 ans), y compris les femmes, à se lancer dans la production, la transformation, le maraîchage et l’agro-business, d’offrir un cadre de formation, d’accompagnement, de financement, de mentorat et de formalisation pour structurer un secteur durable et productif, et de mettre en lumière les produits agricoles locaux afin de renforcer l’agriculture urbaine et péri-urbaine, contribuant ainsi à la sécurité alimentaire, à l’emploi et au développement économique local.", image: "X.jpg" },
+                { id: 4, title: "Signature d'un Partenariat avec la Banque Centrale", date: "2025-11-15", category: "Finances", snippet: "Un accord historique pour faciliter l'accès au financement des PME et réduire les taux d'intérêt pour les petites entreprises. Cela marque une étape majeure dans la politique d'inclusion financière.", image: "https://placehold.co/400x250/3b82f6/ffffff?text=Partenariat" },
+                { id: 5, title: "Webinaire: Se préparer aux nouvelles réglementations fiscales", date: "2025-11-01", category: "Finances", snippet: "Un point complet sur les changements fiscaux impactant les petites et moyennes entreprises pour l'année prochaine. Ne manquez pas cette session pour garantir votre conformité.", image: "https://placehold.co/400x250/fcd34d/000000?text=Fiscalite" },
+                { id: 6, title: "Nouveau bureau provincial à Lubumbashi", date: "2025-10-25", category: "Vie de la COPEMECO", snippet: "La COPEMECO étend sa couverture pour mieux servir les entrepreneurs du Haut-Katanga avec des services de proximité. Rendez-vous dans nos nouveaux locaux !", image: "https://placehold.co/400x250/06b6d4/ffffff?text=Bureaux" },
+                { id: 7, title: "Visite Ministérielle dans les Kivu", date: "2025-10-10", category: "Politique", snippet: "Le Ministre de l'Économie a rencontré les PME locales pour discuter des défis et des opportunités d'investissement dans la région, promettant un soutien accru.", image: "https://placehold.co/400x250/f97316/ffffff?text=Visite" },
+                { id: 8, title: "Atelier de Formation sur l'Exportation", date: "2025-09-05", category: "Économie", snippet: "Des sessions intensives pour préparer les PME à conquérir les marchés régionaux et internationaux, avec des experts en logistique et douane.", image: "https://placehold.co/400x250/a855f7/ffffff?text=Formation" },
+            ];
+
             const newsContainer = document.getElementById('news-container');
             const filterButtonsContainer = document.getElementById('filter-buttons');
             let currentFilter = 'Tous'; 
+            const characterLimit = 150; // Limite de caractères pour la troncation
 
             /**
              * Formate une date YYYY-MM-DD en DD/MM/YYYY
              */
             const formatDate = (dateString) => {
-                const [year, month, day] = dateString.split('-');
-                return `${day}/${month}/${year}`;
+                // S'assurer que le format est valide, même en cas de '0' manquant
+                const parts = dateString.split('-');
+                if (parts.length === 3) {
+                    return `${parts[2]}/${parts[1]}/${parts[0]}`;
+                }
+                return dateString;
             };
 
             /**
-             * Génère une carte d'actualité HTML.
+             * Génère une carte d'actualité HTML avec le bouton "Lire la suite"
              */
             const createNewsCard = (newsItem) => {
                 const formattedDate = formatDate(newsItem.date);
                 const tagClass = `tag-${newsItem.category.replace(/ /g, '-')}`; 
+                
+                // On utilise le snippet comme full-text pour cette implémentation
+                const fullText = newsItem.snippet; 
+                
+                // Par défaut, le contenu affiché est le snippet complet
+                let initialContent = fullText;
+                let isExpandable = fullText.length > characterLimit;
+
+                // Si c'est trop long, on tronque et on prépare le bouton
+                if (isExpandable) {
+                    initialContent = fullText.substring(0, characterLimit) + '...';
+                }
 
                 return `
-                    <div class="news-card">
+                    <div id="actu-${newsItem.id}" class="news-card">
                         <img class="news-image" src="${newsItem.image}" alt="Image pour ${newsItem.title}">
                         <div class="p-6">
                             <span class="category-tag ${tagClass}">${newsItem.category}</span>
@@ -338,10 +347,16 @@
                                 <svg class="w-4 h-4 mr-1 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                                 Publié le ${formattedDate}
                             </p>
-                            <p class="text-gray-700 mb-4">${newsItem.snippet}</p>
-                            <a href="javascript:void(0);" onclick="readFullArticle(${newsItem.id})" class="text-blue-600 font-semibold hover:text-blue-800 transition duration-150">
-                                Lire l'article complet →
-                            </a>
+                            
+                            <p class="text-gray-700 mb-4 news-content" data-full-text="${fullText.replace(/"/g, '&quot;')}" style="max-height: ${isExpandable ? '4.5rem' : 'none'}; overflow: hidden;">
+                                ${initialContent}
+                            </p>
+
+                            ${isExpandable ? `
+                                <button class="mt-2 text-blue-600 font-semibold hover:text-blue-800 transition duration-150 read-more-btn" data-target="actu-${newsItem.id}">
+                                    Lire la suite
+                                </button>
+                            ` : ''}
                         </div>
                     </div>
                 `;
@@ -365,12 +380,17 @@
                 // 3. AFFICHAGE
                 if (filteredNews.length === 0) {
                     newsContainer.innerHTML = '<p class="text-center col-span-full text-xl text-gray-500 p-10">Aucune actualité trouvée pour cette catégorie.</p>';
-                    return;
+                } else {
+                    filteredNews.forEach(item => {
+                        newsContainer.innerHTML += createNewsCard(item);
+                    });
                 }
+                
+                // ******************************************************
+                // 4. Lancement de la logique "Lire la suite" après le rendu
+                // ******************************************************
+                setupReadMoreLogic();
 
-                filteredNews.forEach(item => {
-                    newsContainer.innerHTML += createNewsCard(item);
-                });
 
                 // Mettre à jour l'état des boutons de filtre
                 document.querySelectorAll('.filter-button').forEach(btn => {
@@ -380,6 +400,45 @@
                         btn.classList.add('active', 'bg-blue-700');
                         btn.classList.remove('bg-blue-50', 'text-blue-600', 'hover:bg-blue-100');
                     }
+                });
+            };
+
+            /**
+             * Contient votre logique de "Lire la suite" et "Réduire".
+             * Cette fonction doit être appelée APRÈS que les cartes sont chargées.
+             */
+            const setupReadMoreLogic = () => {
+                
+                // 4.2 Gestion du clic sur "Lire la suite" / "Réduire"
+                document.querySelectorAll('.read-more-btn').forEach(button => {
+                    // Supprimer les anciens écouteurs d'événements pour éviter la duplication
+                    button.onclick = null; 
+                    
+                    button.addEventListener('click', (e) => {
+                        const targetId = e.target.getAttribute('data-target');
+                        const card = document.getElementById(targetId);
+                        const contentP = card.querySelector('.news-content');
+                        
+                        // Récupérer l'état actuel (si le contenu est déployé)
+                        const isExpanded = contentP.classList.contains('expanded');
+                        const fullText = contentP.getAttribute('data-full-text');
+
+                        if (isExpanded) {
+                            // Rétracter
+                            contentP.textContent = fullText.substring(0, characterLimit) + '...';
+                            contentP.classList.remove('expanded');
+                            // Rétablit la hauteur tronquée (vous pouvez ajuster '4.5rem')
+                            contentP.style.maxHeight = '4.5rem'; 
+                            e.target.textContent = 'Lire la suite';
+                        } else {
+                            // Développer
+                            contentP.textContent = fullText;
+                            contentP.classList.add('expanded');
+                            // Définir la hauteur max sur la hauteur réelle du contenu pour la transition fluide
+                            contentP.style.maxHeight = contentP.scrollHeight + 'px'; 
+                            e.target.textContent = 'Réduire';
+                        }
+                    });
                 });
             };
 
@@ -403,9 +462,9 @@
 
             // Lancement initial
             setupFilterButtons();
-            renderActualites('Tous'); 
+            renderActualites('Tous'); // Affiche toutes les actualités triées par date récente au chargement
 
-            // Logique du Menu Mobile
+            // Logique du Menu Mobile (CONSERVÉE)
             const menuButton = document.getElementById('menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
             const menuIconOpen = document.getElementById('menu-icon-open');
