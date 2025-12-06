@@ -275,28 +275,46 @@
     </div>
 
     <script>
+        // Fichier images et autres informations à caractères identique sont conservés.
+        const actualitesData = [
+            // Note: Correction d'une date (2025-12-°6 -> 2025-12-06) pour la fiabilité du tri
+            { id: 1, title: "Soyons prêts", date: "2025-12-06", category: "Économie", snippet: "Un message de la direction concernant la préparation des PME aux défis de l'année à venir.", image: "W.jpg" },
+            { id: 2, title: "Découvrez Lowa", date: "2025-12-06", category: "Économie", snippet: "Découvrez LOWA, la pâte à tartiner au cacao qui transforme chaque moment en instant de plaisir. Créée pour les amoureux du goût, elle allie douceur, onctuosité et richesse en cacao pour offrir une expérience unique, irrésistible et mémorable...", image: "C.jpg" },
+            { id: 3, title: "Rappel de la journée de l'entrepreneuriat agricole", date: "2025-12-06", category: "Social", snippet: "Organiser une journée de l’entrepreneuriat agricole sous l’égide de la COPEMECO — destinée aux jeunes — permet de promouvoir l’agriculture comme véritable opportunité d’emploi et d’auto-entrepreneuriat, d’inciter les jeunes (18–35 ans), y compris les femmes, à se lancer dans la production, la transformation, le maraîchage et l’agro-business, d’offrir un cadre de formation, d’accompagnement, de financement, de mentorat et de formalisation pour structurer un secteur durable et productif, et de mettre en lumière les produits agricoles locaux afin de renforcer l’agriculture urbaine et péri-urbaine, contribuant ainsi à la sécurité alimentaire, à l’emploi et au développement économique local.", image: "Y.jpg" },
+            { id: 4, title: "Signature d'un Partenariat avec la Banque Centrale", date: "2025-11-15", category: "Finances", snippet: "Un accord historique pour faciliter l'accès au financement des PME et réduire les taux d'intérêt pour les petites entreprises.", image: "https://placehold.co/400x250/3b82f6/ffffff?text=Partenariat" },
+            { id: 5, title: "Webinaire: Se préparer aux nouvelles réglementations fiscales", date: "2025-11-01", category: "Finances", snippet: "Un point complet sur les changements fiscaux impactant les petites et moyennes entreprises pour l'année prochaine.", image: "https://placehold.co/400x250/fcd34d/000000?text=Fiscalite" },
+            { id: 6, title: "Nouveau bureau provincial à Lubumbashi", date: "2025-10-25", category: "Vie de la COPEMECO", snippet: "La COPEMECO étend sa couverture pour mieux servir les entrepreneurs du Haut-Katanga avec des services de proximité.", image: "https://placehold.co/400x250/06b6d4/ffffff?text=Bureaux" },
+            { id: 7, title: "Visite Ministérielle dans les Kivu", date: "2025-10-10", category: "Politique", snippet: "Le Ministre de l'Économie a rencontré les PME locales pour discuter des défis et des opportunités d'investissement dans la région.", image: "https://placehold.co/400x250/f97316/ffffff?text=Visite" },
+            { id: 8, title: "Atelier de Formation sur l'Exportation", date: "2025-09-05", category: "Économie", snippet: "Des sessions intensives pour préparer les PME à conquérir les marchés régionaux et internationaux.", image: "https://placehold.co/400x250/a855f7/ffffff?text=Formation" },
+        ];
+
+        // --- Nouvelle fonction pour simuler la lecture d'un article complet ---
+        /**
+         * Simule l'ouverture d'un article complet.
+         * @param {number} articleId - L'ID de l'article à lire.
+         */
+        window.readFullArticle = (articleId) => {
+            const article = actualitesData.find(item => item.id === articleId);
+            
+            if (article) {
+                // Pour une application réelle, vous redirigeriez vers une page de détail (ex: window.location.href = `article.html?id=${articleId}`);
+                // Pour cette démo, nous affichons les détails dans une alerte.
+                alert(`Ouverture de l'article ID ${articleId}:\n\nTitre: ${article.title}\n\nSnippet: ${article.snippet}\n\n(Dans une application complète, ceci ouvrirait la page de l'article.)`);
+                console.log(`Lecture de l'article complet: ${article.title}`, article);
+            } else {
+                alert("Article non trouvé.");
+            }
+        };
+        // -----------------------------------------------------------------------
+
+
         document.addEventListener('DOMContentLoaded', () => {
-
-            const actualitesData = [
-                // Note: Utilisation du format YYYY-MM-DD pour un tri facile et fiable.
-                { id: 1, title: "Soyons prêts", date: "2025-12-06", category: "Economie", snippet: "", image: "W.jpg" },
-                { id: 2, title: "Découvrez Lowa", date: "2025-12-06", category: "Économie", snippet: "Découvrez LOWA, la pâte à tartiner au cacao qui transforme chaque moment en instant de plaisir. Créée pour les amoureux du goût, elle allie douceur, onctuosité et richesse en cacao pour offrir une expérience unique, irrésistible et mémorable...", image: "C.jpg" },
-                { id: 3, title: "Rappel de la journée de l'entrepreneuriat agricole", date: "2025-12-°6", category: "Social", snippet: "Organiser une journée de l’entrepreneuriat agricole sous l’égide de la COPEMECO — destinée aux jeunes — permet de promouvoir l’agriculture comme véritable opportunité d’emploi et d’auto-entrepreneuriat, d’inciter les jeunes (18–35 ans), y compris les femmes, à se lancer dans la production, la transformation, le maraîchage et l’agro-business, d’offrir un cadre de formation, d’accompagnement, de financement, de mentorat et de formalisation pour structurer un secteur durable et productif, et de mettre en lumière les produits agricoles locaux afin de renforcer l’agriculture urbaine et péri-urbaine, contribuant ainsi à la sécurité alimentaire, à l’emploi et au développement économique local.", image: "Y.jpg" },
-                { id: 4, title: "Signature d'un Partenariat avec la Banque Centrale", date: "2025-11-15", category: "Finances", snippet: "Un accord historique pour faciliter l'accès au financement des PME et réduire les taux d'intérêt pour les petites entreprises.", image: "https://placehold.co/400x250/3b82f6/ffffff?text=Partenariat" },
-                { id: 5, title: "Webinaire: Se préparer aux nouvelles réglementations fiscales", date: "2025-11-01", category: "Finances", snippet: "Un point complet sur les changements fiscaux impactant les petites et moyennes entreprises pour l'année prochaine.", image: "https://placehold.co/400x250/fcd34d/000000?text=Fiscalite" },
-                { id: 6, title: "Nouveau bureau provincial à Lubumbashi", date: "2025-10-25", category: "Vie de la COPEMECO", snippet: "La COPEMECO étend sa couverture pour mieux servir les entrepreneurs du Haut-Katanga avec des services de proximité.", image: "https://placehold.co/400x250/06b6d4/ffffff?text=Bureaux" },
-                { id: 7, title: "Visite Ministérielle dans les Kivu", date: "2025-10-10", category: "Politique", snippet: "Le Ministre de l'Économie a rencontré les PME locales pour discuter des défis et des opportunités d'investissement dans la région.", image: "https://placehold.co/400x250/f97316/ffffff?text=Visite" },
-                { id: 8, title: "Atelier de Formation sur l'Exportation", date: "2025-09-05", category: "Économie", snippet: "Des sessions intensives pour préparer les PME à conquérir les marchés régionaux et internationaux.", image: "https://placehold.co/400x250/a855f7/ffffff?text=Formation" },
-            ];
-
             const newsContainer = document.getElementById('news-container');
             const filterButtonsContainer = document.getElementById('filter-buttons');
-            let currentFilter = 'Tous'; // Filtre par défaut
+            let currentFilter = 'Tous'; 
 
             /**
              * Formate une date YYYY-MM-DD en DD/MM/YYYY
-             * @param {string} dateString 
-             * @returns {string}
              */
             const formatDate = (dateString) => {
                 const [year, month, day] = dateString.split('-');
@@ -305,12 +323,9 @@
 
             /**
              * Génère une carte d'actualité HTML.
-             * @param {object} newsItem 
-             * @returns {string}
              */
             const createNewsCard = (newsItem) => {
                 const formattedDate = formatDate(newsItem.date);
-                // Le nom de la catégorie est utilisé pour générer la classe CSS du tag
                 const tagClass = `tag-${newsItem.category.replace(/ /g, '-')}`; 
 
                 return `
@@ -324,7 +339,7 @@
                                 Publié le ${formattedDate}
                             </p>
                             <p class="text-gray-700 mb-4">${newsItem.snippet}</p>
-                            <a href="#" class="text-blue-600 font-semibold hover:text-blue-800 transition duration-150">
+                            <a href="javascript:void(0);" onclick="readFullArticle(${newsItem.id})" class="text-blue-600 font-semibold hover:text-blue-800 transition duration-150">
                                 Lire l'article complet →
                             </a>
                         </div>
@@ -334,7 +349,6 @@
 
             /**
              * Fonction principale pour trier et afficher les actualités.
-             * @param {string} filterCategory 
              */
             const renderActualites = (filterCategory = 'Tous') => {
                 currentFilter = filterCategory;
@@ -389,7 +403,7 @@
 
             // Lancement initial
             setupFilterButtons();
-            renderActualites('Tous'); // Affiche toutes les actualités triées par date récente au chargement
+            renderActualites('Tous'); 
 
             // Logique du Menu Mobile
             const menuButton = document.getElementById('menu-button');
