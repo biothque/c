@@ -31,38 +31,27 @@ function generateMembershipNumber() {
     return `ADH-${year}${month}${day}-${random}`;
 }
 
-// Fonction pour collecter TOUTES les données du formulaire avec VALIDER LES CHAMPS OBLIGATOIRES
+// Fonction pour collecter TOUTES les données du formulaire
 function collectFormData() {
     const data = {};
     const elements = document.querySelectorAll('input, textarea, select');
-    let missingField = null;
+    // Note : La vérification 'missingField' est retirée pour permettre les champs vides
 
     elements.forEach(el => {
         if (el.name) {
             let value = el.value.trim();
             
-            // Validation des champs requis (déjà gérée par checkValidity, mais maintenue ici pour la logique de secours)
-            if (el.required && value === '') {
-                missingField = el; 
-            }
-
-            // Remplacer par "Non précisé" si le champ est vide (seulement pour l'enregistrement/affichage PDF)
+            // Remplacer par "Non précisé" si le champ est vide
             data[el.name] = value === '' ? 'Non précisé' : value;
         }
     });
     
-    // Si un champ requis est manquant, lance une exception ou retourne l'élément manquant
-    if (missingField) {
-        return { error: true, field: missingField };
-    }
-
-
-    // Ajouter les métadonnées
+    // Ajout des métadonnées
     data.createdAt = new Date().toISOString();
     // Génère le numéro d'adhésion
     data.numero_adhesion = data.numero_adhesion || generateMembershipNumber(); 
 
-    return data;
+    return data; // Retourne toujours les données, même incomplètes
 }
 
 // Fonction vibration pour retour utilisateur
@@ -282,16 +271,12 @@ async function generatePDFExact(formData){
 // Gestionnaire de Soumission (Submit)
 // ----------------------------------------------
 submitBtn.addEventListener('click', async (event) => {
-    // 🔥 CORRECTION : Empêche l'action par défaut (rechargement) en premier
+    // Empêche l'action par défaut (rechargement)
     event.preventDefault(); 
     vibrate();
 
-    // Permet au navigateur de gérer la validation HTML5 native (champs required)
-    if (!document.querySelector('.a4').checkValidity()) {
-        // Le navigateur a affiché l'erreur et on a empêché le rechargement. On sort.
-        return; 
-    }
-
+    // 🔥 MODIFICATION : Suppression de la vérification checkValidity() pour autoriser les champs vides.
+    
     if (typeof Backendless === 'undefined' || !Backendless.initApp) {
         alert("Erreur: Le SDK Backendless n'est pas disponible. Vérifiez la connexion et l'index.html.");
         return;
@@ -301,7 +286,7 @@ submitBtn.addEventListener('click', async (event) => {
     submitBtn.textContent = "Enregistrement...";
 
     try {
-        // Collecte les données
+        // Collecte les données (la fonction accepte désormais les champs vides)
         const formData = collectFormData();
         
         // --- 1. ENREGISTREMENT DANS BACKENDLESS ---
@@ -312,7 +297,7 @@ submitBtn.addEventListener('click', async (event) => {
         
         // --- 3. CRÉATION DU LIEN DE TÉLÉCHARGEMENT ---
         const pdfUrl = URL.createObjectURL(pdfBlob);
-        const pdfFileName = `ADHESION_${formData.denomination.replace(/\s/g, '_')}_${formData.numero_adhesion}.pdf`;
+        const pdfFileName = `ADHESION_${(formData.denomination || 'PME').replace(/\s/g, '_')}_${formData.numero_adhesion}.pdf`;
 
         // Création du message de succès et du bouton de téléchargement
         const successMessage = document.createElement('div');
@@ -375,12 +360,6 @@ submitBtn.addEventListener('click', async (event) => {
         submitBtn.textContent = "Soumettre";
     }
 
-    // Le bouton est désactivé seulement après le bloc try/catch initial
-    // pour éviter de le laisser dans un état désactivé après une erreur non bloquante.
-    // Il est préférable de le laisser désactivé jusqu'à la fin du bloc try/catch.
-    // Le code suivant est redondant car géré dans le catch/success
-    // submitBtn.disabled = false;
-    // submitBtn.textContent = "Soumettre";
 });
 
 // ----------------------------------------------
