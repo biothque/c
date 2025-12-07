@@ -1,7 +1,7 @@
 // ==============================================
 // Backendless configuration
 // ==============================================
-// ** IMPORTANT : Remplacez les valeurs par vos clés API et App ID ! **
+// ** IMPORTANT : Vos informations conservées ! **
 const APP_ID = "3D3629AB-2B0E-49DE-AA35-4A0EFAB84AE7";
 const API_KEY = "B3C84FA1-67E6-40A2-8CA4-2E77E52E2EB4"; // JavaScript API Key
 const TABLE = "futur_entrepreneur"; // NOM DE TABLE
@@ -20,37 +20,6 @@ const submitBtn = document.getElementById('submitBtn');
 const resetBtn = document.getElementById('resetBtn');
 const formActions = document.querySelector('.form-actions');
 
-// ----------------------------------------------
-// Nouvelle Fonction de Validation du Formulaire
-// ----------------------------------------------
-function validateForm(formData) {
-    const requiredFields = {
-        'noms_entrepreneur': "NOMS complets de l'entrepreneur",
-        'adresse_entrepreneur': "Adresse de l'entrepreneur",
-        'telephone': "Numéro de Téléphone",
-        'genre': "Genre",
-        'tranche_age': "Tranche d'âge",
-        'secteur_domaine': "Secteur ou domaine d'activité",
-        'type_entreprise': "Type d'entreprise (Forme juridique OHADA)",
-        'description_projet': "Description du projet",
-        'objectifs_projet': "Objectifs (Court et Long terme)",
-        'besoin_financement': "Besoin de financement",
-        'montant_investissement': "Montant d'investissement initial prévu",
-        'lieu_implantation': "Lieu d'implantation du projet",
-        'motivation_implantation': "Motivation d'implantation",
-    };
-
-    for (const fieldName in requiredFields) {
-        if (!formData[fieldName] || String(formData[fieldName]).trim() === "") {
-            // Vibre et renvoie l'erreur
-            vibrate();
-            return { valid: false, message: `Le champ **"${requiredFields[fieldName]}"** est obligatoire. Veuillez le renseigner.` };
-        }
-    }
-
-    return { valid: true };
-}
-
 // Fonction pour générer un numéro d’inscription unique
 function generateMembershipNumber() {
     const date = new Date();
@@ -67,26 +36,37 @@ function collectFormData() {
     const elements = document.querySelectorAll('input, textarea, select');
 
     elements.forEach(el => {
-        if (el.name) data[el.name] = el.value.trim();
+        if (el.name) {
+             let value = el.value.trim();
+             if (el.tagName === 'SELECT' && value === "--Choisir--") {
+                 data[el.name] = "";
+             } else {
+                 data[el.name] = value;
+             }
+        }
     });
 
     // Ajouter les métadonnées
     data.createdAt = new Date().toISOString();
     // Génère le numéro d'inscription seulement s'il n'existe pas déjà
     data.numero_inscription = data.numero_inscription || generateMembershipNumber();
-    
-    // Remplacer les champs vides non cruciaux par "Non précisé"
-    const fieldsToSanitize = [
-        'province_origine', 'produits_precises', 'nb_employes_envisages', 
-        'duree_financement', 'formation_academique', 'experience_pro', 
+    
+    // Remplacer les champs qui sont **encore vides** (après collecte) par "Non précisé"
+    const fieldsToSanitizeForPDF = [
+        'noms_entrepreneur', 'adresse_entrepreneur', 'telephone', 'genre', 'tranche_age',
+        'secteur_domaine', 'type_entreprise', 'description_projet', 'objectifs_projet',
+        'besoin_financement', 'montant_investissement', 'lieu_implantation', 'motivation_implantation',
+        'province_origine', 'produits_precises', 'nb_employes_envisages', 
+        'duree_financement', 'formation_academique', 'experience_pro', 
         'motivation_personnelle', 'ressources_reseau', 'autres_commentaires'
     ];
 
-    fieldsToSanitize.forEach(fieldName => {
-        if (!data[fieldName] || String(data[fieldName]).trim() === "" || String(data[fieldName]).trim() === "--Choisir--") {
+    fieldsToSanitizeForPDF.forEach(fieldName => {
+        if (!data[fieldName] || String(data[fieldName]).trim() === "") {
             data[fieldName] = "Non précisé";
         }
     });
+
 
     return data;
 }
@@ -155,7 +135,8 @@ async function generatePDFExact(formData){
         pdf.text(label.replace(':', '') + ' :', xLabel, y);
 
         pdf.setFont('helvetica','normal');
-        const display = (value && String(value).trim() !== '') ? String(value) : '................................................................................';
+        // Le champ est déjà 'Non précisé' si vide grâce à collectFormData
+        const display = value || '................................................................................';
         pdf.text(display, xValue, y, { maxWidth: pageWidth - xValue - 10 });
         y += 7;
     }
@@ -181,18 +162,18 @@ async function generatePDFExact(formData){
     pdf.text('2. INFORMATION DE VOTRE PROJET', 15, y); y += 6;
     pdf.setFont('helvetica','normal');
     drawLineField('Secteur ou domaine d\'activité', formData.secteur_domaine);
-    drawLineField('Veuillez préciser les produits', formData.produits_precises); // Nouveau champ
+    drawLineField('Veuillez préciser les produits', formData.produits_precises); 
     drawLineField('Type d\'entreprise (Forme juridique OHADA)', formData.type_entreprise);
 
 
     pdf.setFont('helvetica','bold');
-    pdf.text('Description du projet (Max 500 caractères) :', 15, y); y += 6;
+    pdf.text('Description du projet :', 15, y); y += 6;
     pdf.setFont('helvetica','normal');
     pdf.text(formData.description_projet || 'Non précisé', 15, y, { maxWidth: 180 });
     y += 18; // Espace pour 3 lignes
 
     pdf.setFont('helvetica','bold');
-    pdf.text('Objectifs (Court et Long terme) (Max 500 caractères) :', 15, y); y += 6;
+    pdf.text('Objectifs (Court et Long terme) :', 15, y); y += 6;
     pdf.setFont('helvetica','normal');
     pdf.text(formData.objectifs_projet || 'Non précisé', 15, y, { maxWidth: 180 });
     y += 18; // Espace pour 3 lignes
@@ -206,13 +187,13 @@ async function generatePDFExact(formData){
     y += 4;
 
     pdf.setFont('helvetica','bold');
-    pdf.text('Lieu d\'implantation du projet (Max 500 caractères) :', 15, y); y += 6;
+    pdf.text('Lieu d\'implantation du projet :', 15, y); y += 6;
     pdf.setFont('helvetica','normal');
     pdf.text(formData.lieu_implantation || 'Non précisé', 15, y, { maxWidth: 180 });
     y += 12; // Espace pour 2 lignes
 
     pdf.setFont('helvetica','bold');
-    pdf.text('Motivation d\'implantation (Pourquoi ce lieu ?) (Max 500 caractères) :', 15, y); y += 6;
+    pdf.text('Motivation d\'implantation (Pourquoi ce lieu ?) :', 15, y); y += 6;
     pdf.setFont('helvetica','normal');
     pdf.text(formData.motivation_implantation || 'Non précisé', 15, y, { maxWidth: 180 });
     y += 12; // Espace pour 2 lignes
@@ -250,25 +231,25 @@ async function generatePDFExact(formData){
     y += 4;
 
     pdf.setFont('helvetica','bold');
-    pdf.text('Expérience professionnelle (Postes occupés, durée, secteur) (Max 500 caractères) :', 15, y); y += 6;
+    pdf.text('Expérience professionnelle (Postes occupés, durée, secteur) :', 15, y); y += 6;
     pdf.setFont('helvetica','normal');
     pdf.text(formData.experience_pro || 'Non précisé', 15, y, { maxWidth: 180 });
     y += 18; // Espace pour 3 lignes
 
     pdf.setFont('helvetica','bold');
-    pdf.text('Motivation ou vision personnelle : Pourquoi souhaitez-vous créer cette entreprise ? (Max 500 caractères) :', 15, y); y += 6;
+    pdf.text('Motivation ou vision personnelle : Pourquoi souhaitez-vous créer cette entreprise ? :', 15, y); y += 6;
     pdf.setFont('helvetica','normal');
     pdf.text(formData.motivation_personnelle || 'Non précisé', 15, y, { maxWidth: 180 });
     y += 18; // Espace pour 3 lignes
 
     pdf.setFont('helvetica','bold');
-    pdf.text('Ressources personnelles ou réseau (Atouts, compétences, contacts clés) (Max 500 caractères) :', 15, y); y += 6;
+    pdf.text('Ressources personnelles ou réseau (Atouts, compétences, contacts clés) :', 15, y); y += 6;
     pdf.setFont('helvetica','normal');
     pdf.text(formData.ressources_reseau || 'Non précisé', 15, y, { maxWidth: 180 });
     y += 18; // Espace pour 3 lignes
 
     pdf.setFont('helvetica','bold');
-    pdf.text('Autres commentaires ou informations pertinents (Max 500 caractères) :', 15, y); y += 6;
+    pdf.text('Autres commentaires ou informations pertinents :', 15, y); y += 6;
     pdf.setFont('helvetica','normal');
     pdf.text(formData.autres_commentaires || 'Non précisé', 15, y, { maxWidth: 180 });
     y += 18; // Espace pour 3 lignes
@@ -314,41 +295,47 @@ submitBtn.addEventListener('click', async (event) => {
         return;
     }
 
-    // Collecte initiale des données pour la validation
-    const rawFormData = collectFormData(); 
-    const validationResult = validateForm(rawFormData);
-
-    if (!validationResult.valid) {
-        alert(`⚠️ Champs Manquants !\n\n${validationResult.message}`);
-        return; // Arrête le processus si la validation échoue
-    }
-
+    // 1. Collecte des données pour l'enregistrement (formData contiendra "Non précisé" pour les champs vides)
+    const formData = collectFormData(); 
 
     submitBtn.disabled = true;
-    submitBtn.textContent = "Enregistrement...";
+    submitBtn.textContent = "Génération PDF...";
 
     try {
-        // Utilise les données collectées et sanitisées (avec "Non précisé")
-        const formData = rawFormData; 
+        // 2. GÉNÉRATION DU PDF (Blob)
+        const pdfBlob = await generatePDFExact(formData);
+        
+        // Construction du nom du fichier
+        const baseName = formData.noms_entrepreneur && formData.noms_entrepreneur !== "Non précisé" ? formData.noms_entrepreneur : 'Futur_Entrepreneur';
+        const safeName = baseName.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+        const pdfFileName = `INSCRIPTION_${safeName}_${formData.numero_inscription}.pdf`;
+        
+        // 3. UPLOAD DU PDF VERS BACKENDLESS FILE STORAGE
+        submitBtn.textContent = "Téléchargement du fichier...";
+        const uploadResult = await Backendless.Files.upload(pdfBlob, 'fiches_entrepreneurs/' + pdfFileName, true);
 
-        // --- 1. ENREGISTREMENT DANS BACKENDLESS ---
+        // La propriété fileURL contient le lien permanent pour le téléchargement
+        const permanentFileUrl = uploadResult.fileURL;
+        
+        // 4. MISE À JOUR DE L'OBJET AVEC L'URL PERMANENTE
+        // On crée un objet de données propre pour la DB (en retirant les valeurs "Non précisé" si on veut des champs vides dans la DB)
+        // Mais pour la simplicité, nous allons ajouter le champ à l'objet existant.
+        formData.lien_telechargement_pdf = permanentFileUrl;
+
+        // 5. ENREGISTREMENT FINAL DANS BACKENDLESS (avec l'URL du PDF)
+        submitBtn.textContent = "Enregistrement final...";
         await Backendless.Data.of(TABLE).save(formData);
 
-        // --- 2. GÉNÉRATION DU PDF ---
-        const pdfBlob = await generatePDFExact(formData);
-
-        // --- 3. CRÉATION DU LIEN DE TÉLÉCHARGEMENT ---
-        const pdfUrl = URL.createObjectURL(pdfBlob);
-        const safeName = formData.noms_entrepreneur.replace(/[^a-z0-9]/gi, '_').toLowerCase();
-        const pdfFileName = `INSCRIPTION_${safeName}_${formData.numero_inscription}.pdf`;
-
+        // 6. CRÉATION DU LIEN DE TÉLÉCHARGEMENT POUR L'UTILISATEUR (utilise le lien permanent)
+        
         // Création du message de succès et du bouton de téléchargement
         const successMessage = document.createElement('div');
         successMessage.innerHTML = `
             <h3 style="color: green;">✅ Succès de l'enregistrement !</h3>
             <p>Vos informations ont été enregistrées sous le numéro: <strong>${formData.numero_inscription}</strong>.</p>
+            <p>Le lien permanent pour vous et la COPEMECO est: <strong>${permanentFileUrl}</strong></p>
             <p>Veuillez télécharger votre fiche d'inscription :</p>
-            <a id="downloadLink" href="${pdfUrl}" download="${pdfFileName}" style="
+            <a id="downloadLink" href="${permanentFileUrl}" download="${pdfFileName}" style="
                 padding: 10px 20px;
                 background-color: #007BFF;
                 color: white;
@@ -358,6 +345,16 @@ submitBtn.addEventListener('click', async (event) => {
                 margin-top: 10px;
                 font-weight: bold;
             ">Télécharger la Fiche PDF</a>
+             <button id="newFormBtn" type="button" style="
+                padding: 10px 20px;
+                background-color: #6c757d;
+                color: white;
+                border-radius: 5px;
+                margin-left: 10px;
+                font-weight: bold;
+                border: none;
+                cursor: pointer;
+            ">Nouveau Formulaire</button>
         `;
 
         // Remplacement du bouton Soumettre par le message de succès et le lien
@@ -366,21 +363,16 @@ submitBtn.addEventListener('click', async (event) => {
 
         // Nettoyage des champs du formulaire après succès
         document.querySelectorAll('input, textarea, select').forEach(el => el.value = "");
-
-        // L'URL Blob doit être révoquée (libérée) une fois le téléchargement terminé pour éviter les fuites de mémoire.
-        setTimeout(() => {
-             const dlLink = document.getElementById('downloadLink');
-             if(dlLink) {
-                 dlLink.addEventListener('click', () => {
-                     setTimeout(() => URL.revokeObjectURL(pdfUrl), 100);
-                 });
-             }
-        }, 500);
+        
+        // Ajout d'un bouton pour recommencer le formulaire
+        document.getElementById('newFormBtn').addEventListener('click', () => {
+             location.reload(); 
+        });
 
 
     } catch (error) {
-        console.error("Erreur lors de l'enregistrement ou de la génération PDF :", error);
-        alert(`❌ Erreur lors de l'enregistrement. Veuillez réessayer. Détail : ${error.message || error}`);
+        console.error("Erreur lors de l'enregistrement ou de la génération/upload PDF :", error);
+        alert(`❌ Erreur critique. Veuillez vérifier Backendless File Storage et réessayer. Détail : ${error.message || error}`);
 
         // Restaure les boutons en cas d'erreur
         formActions.innerHTML = '';
@@ -388,8 +380,8 @@ submitBtn.addEventListener('click', async (event) => {
         formActions.appendChild(resetBtn);
     }
 
-    submitBtn.disabled = false;
-    submitBtn.textContent = "Soumettre";
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Soumettre";
 });
 
 // ----------------------------------------------
@@ -398,5 +390,4 @@ submitBtn.addEventListener('click', async (event) => {
 resetBtn.addEventListener('click', () => {
     vibrate();
     document.querySelectorAll('input, textarea, select').forEach(el => el.value = "");
-
 });
