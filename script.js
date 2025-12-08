@@ -376,3 +376,4 @@ resetBtn.addEventListener('click', () => {
     vibrate();
     document.querySelectorAll('input, textarea, select').forEach(el => el.value = "");
 });
+
