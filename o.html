@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accès aux Formulaires</title>
+    
+    <style>
+        /* --- Palettes de Couleurs (Basées sur le design précédent) --- */
+        :root {
+            --green-primary: #3c9c2f; /* Vert vif */
+            --green-dark: #1e712c; /* Vert foncé/Bouton */
+            --orange-primary: #f28b2a; /* Orange/Accent */
+            --bg-light: #f4f4f4; /* Fond très léger */
+            --text-dark: #333333;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-light);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        /* --- STYLE DU FILIGRANE VIDÉO --- */
+        #watermark-video {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            /* Centrage et couverture de l'écran */
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            z-index: -1; /* Placer la vidéo derrière le contenu */
+            opacity: 0.15; /* Très faible opacité pour l'effet filigrane */
+            object-fit: cover; /* Assure que la vidéo couvre sans déformation */
+            cursor: pointer; /* Indiquer que la vidéo est interactive */
+            transition: transform 0.1s ease-out; /* Transition de base pour l'effet de mouvement */
+        }
+        
+        /* Effet de mouvement (pulse) au clic */
+        .pulse-effect {
+            animation: pulse 0.4s ease-out forwards;
+        }
+        
+        @keyframes pulse {
+            0% { transform: translate(-50%, -50%) scale(1) rotate(0deg); }
+            50% { transform: translate(-50%, -50%) scale(1.02) rotate(1deg); }
+            100% { transform: translate(-50%, -50%) scale(1) rotate(0deg); }
+        }
+
+        .container {
+            width: 95%;
+            max-width: 400px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            padding: 0;
+            text-align: center;
+            z-index: 1; /* S'assurer que le contenu est au-dessus du filigrane */
+            position: relative;
+        }
+
+        /* --- En-tête (Utilise le vert principal) --- */
+        .header {
+            background-color: var(--green-primary);
+            color: white;
+            padding: 30px 20px;
+            border-bottom: 5px solid var(--orange-primary); /* Petite touche d'orange */
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 1.8em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 900;
+        }
+
+        .header p {
+            margin-top: 5px;
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        /* --- Section des Boutons --- */
+        .form-links {
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            padding: 18px 25px;
+            font-size: 1.1em;
+            font-weight: bold;
+            border-radius: 10px;
+            text-transform: uppercase;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* Style 1: Vert Vif */
+        .btn-green-primary {
+            background-color: var(--green-primary);
+            color: white;
+        }
+        
+        /* Style 2: Vert Foncé (pour le contraste) */
+        .btn-green-dark {
+            background-color: var(--green-dark);
+            color: white;
+        }
+
+        /* Style 3: Orange (pour l'accentuation) */
+        .btn-orange-accent {
+            background-color: var(--orange-primary);
+            color: white;
+        }
+        
+        /* Icônes de formulaire (utilisation d'emojis pour la simplicité) */
+        .icon {
+            margin-right: 10px;
+            font-size: 1.5em;
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- 1. FILIGRANE VIDÉO EN ARRIÈRE-PLAN -->
+    <video id="watermark-video" loop autoplay muted>
+        <!-- 
+            !!! REMPLACEZ CETTE SOURCE PAR L'URL DE VOTRE VIDÉO !!!
+            La vidéo doit être silencieuse et courte pour un bon effet de filigrane.
+            Pour l'exemple, j'utilise un placeholder.
+        -->
+        <source src="ouverture.mp4" type="video/mp4">
+        Votre navigateur ne supporte pas la balise vidéo.
+    </video>
+
+    <!-- 2. CONTENU PRINCIPAL (Formulaire) -->
+    <div class="container">
+        
+        <!-- En-tête stylisé avec la couleur principale -->
+        <div class="header">
+            <h1>Espace Candidature</h1>
+            <p>Veuillez choisir le formulaire qui correspond à votre profil.</p>
+        </div>
+        
+        <!-- Liens vers les formulaires -->
+        <div class="form-links">
+            
+            <!-- Lien 1: Formulaire principal (Vert Vif) -->
+            <!-- Le lien pointe maintenant vers un fichier HTML nommé 'formulaire-agripreneur.html' -->
+            <a href="formulaire-agripreneur.html" class="form-button btn-green-primary">
+                <span class="icon">🧑‍🌾</span>Inscription Agri-preneur
+            </a>
+            
+            <!-- Lien 2: Formulaire partenaire (Orange Accent) -->
+            <!-- Le lien pointe maintenant vers un fichier HTML nommé 'formulaire-partenaire.html' -->
+            <a href="formulaire-partenaire.html" class="form-button btn-orange-accent">
+                <span class="icon">🌲🌴🧑‍🌾🌳🌾</span>Devenir un Agri-preneur
+            </a>
+            
+            <!-- Lien 3: Formulaire de contact / info (Vert Foncé) -->
+            <!-- Le lien pointe maintenant vers un fichier HTML nommé 'formulaire-contact.html' -->
+            <a href="formulaire-contact.html" class="form-button btn-green-dark">
+                <span class="icon">🎇🤹🎇</span>Postuler au concours 
+            </a>
+            
+        </div>
+        
+    </div>
+    
+    <!-- 3. SCRIPT POUR L'INTERACTION VIDÉO -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const videoElement = document.getElementById('watermark-video');
+
+            videoElement.addEventListener('click', () => {
+                // Ajouter la classe pour déclencher l'animation de 'pulse'
+                videoElement.classList.add('pulse-effect');
+                
+                // Retirer la classe après l'animation pour permettre de la rejouer
+                setTimeout(() => {
+                    videoElement.classList.remove('pulse-effect');
+                }, 400); // Doit correspond à la durée de l'animation CSS (0.4s)
+                
+                console.log("Mouvement de la vidéo déclenché par le clic.");
+            });
+        });
+    </script>
+
+</body>
+</html>
+
