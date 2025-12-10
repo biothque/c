@@ -8,12 +8,12 @@
     <style>
         /* --- 1. VARIABLES ET BASE --- */
         :root {
-            /* Couleurs ajustées pour coller à l'image */
-            --green-primary: #3c9c2f; /* Vert vif du logo et du titre */
-            --green-dark: #1e712c; /* Vert foncé des bordures et du texte */
-            --green-section: #194d25; /* Couleur de fond vert très foncé de la section de sélection */
-            --orange-primary: #f28b2a; /* Orange des étoiles et du bouton PIMENT (Couleur 'dorée' du logo) */
+            --green-primary: #3c9c2f; 
+            --green-dark: #1e712c; 
+            --green-section: #194d25; 
+            --orange-primary: #f28b2a; 
             --bg-color-top: #ffffff;
+            --red-text: #ff0000; /* Nouvelle variable pour le texte rouge */
         }
 
         body {
@@ -23,8 +23,85 @@
             background-color: #f0f0f0;
             display: flex;
             justify-content: center;
+            min-height: 100vh; /* Assure que le body couvre toute la hauteur pour la vidéo */
+        }
+        
+        /* --- STYLE DU FILIGRANE VIDÉO (AJOUTÉ ET CORRIGÉ) --- */
+        #watermark-video {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            z-index: -1; /* Place la vidéo derrière tout */
+            opacity: 0.15; /* Très peu visible */
+            object-fit: cover; 
+            cursor: pointer; 
+            transition: transform 0.1s ease-out; 
+        }
+        
+        /* Effet de mouvement (pulse) au clic pour la vidéo */
+        .pulse-effect {
+            animation: pulse 0.4s ease-out forwards;
+        }
+        
+        @keyframes pulse {
+            0% { transform: translate(-50%, -50%) scale(1) rotate(0deg); }
+            50% { transform: translate(-50%, -50%) scale(1.02) rotate(1deg); }
+            100% { transform: translate(-50%, -50%) scale(1) rotate(0deg); }
         }
 
+        /* --- NOUVEAU HEADER FIXE (LOGO + TEXTE) --- */
+        .top-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: rgba(255, 255, 255, 0.95); /* Arrière-plan semi-transparent pour lisibilité */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 100; /* Assure qu'il est au-dessus de tout */
+        }
+        
+        .logo-section {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-section img {
+            width: 50px; /* Taille légèrement augmentée */
+            height: 50px;
+            object-fit: contain; /* Conserve la forme sans rogner */
+            border-radius: 5px;
+        }
+        
+        .logo-text {
+            margin-left: 10px;
+            text-align: left;
+            line-height: 1.1;
+            font-size: 0.9em;
+        }
+        
+        .logo-text .coord-line {
+            color: var(--red-text); /* Coordination Nationale en Rouge */
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 1.1em;
+        }
+        
+        .logo-text .copemeco-line {
+            color: var(--green-dark); 
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+
+
+        /* --- CONTENU PRINCIPAL DE LA CARTE --- */
         .container {
             width: 100%;
             max-width: 450px;
@@ -32,9 +109,11 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
             overflow: hidden;
             position: relative;
+            margin-top: 75px; /* Décale le conteneur principal sous le header fixe */
+            margin-bottom: 20px;
         }
 
-        /* --- 2. HAUT DE PAGE (LOGOS, TITRES, ARC) --- */
+        /* --- 2. HAUT DE PAGE (ARC) --- */
         .header {
             text-align: center;
             padding-top: 10px;
@@ -42,7 +121,22 @@
             position: relative;
         }
         
-        /* Séparateur 'doré' ajouté pour plus de proéminence (comme dans l'image originale) */
+        /* Les anciens drapeaux d'angle ne sont plus nécessaires avec le header fixe, mais on conserve le drapeau droit pour l'esthétique. */
+        
+        .flag-right {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 80px; 
+            height: 80px;
+            z-index: 50;
+            background: linear-gradient(to top left, #0000FF 0%, #FFFF00 50%, #FF0000 100%); 
+            clip-path: polygon(0% 0%, 100% 0%, 100% 100%); 
+            border: 2px solid rgba(0,0,0,0.1); 
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+        }
+
+        /* Le reste du CSS (arc, séparateurs, boutons, etc.) est conservé */
         .golden-separator {
             width: 80%;
             height: 3px;
@@ -51,46 +145,10 @@
             border-radius: 5px;
         }
         
-        /* Conteneurs pour simuler les drapeaux/logos aux extrémités (haut gauche et haut droit) */
-        .flag-left, .flag-right {
-            position: absolute;
-            top: 0;
-            width: 80px; 
-            height: 80px;
-            z-index: 50;
-        }
-        
-        /* Logo Gauche (Remplacement du drapeau par un logo placeholder) */
-        .flag-left {
-            left: 0;
-            background-color: transparent;
-            clip-path: none; 
-            border: none;
-            box-shadow: none;
-        }
-        
-        .flag-left img {
-            width: 70px;
-            height: 70px;
-            clip-path: polygon(0% 0%, 100% 0%, 0% 100%); /* Forme triangulaire pour le logo d'angle */
-            object-fit: cover;
-        }
-        
-        /* Drapeau Droit (Triangle/Motif d'angle) */
-        .flag-right {
-            right: 0;
-            background: linear-gradient(to top left, #0000FF 0%, #FFFF00 50%, #FF0000 100%); /* Simuler B-J-R */
-            clip-path: polygon(0% 0%, 100% 0%, 100% 100%); /* Forme triangulaire nette */
-            border: 2px solid rgba(0,0,0,0.1); 
-            box-shadow: 0 0 5px rgba(0,0,0,0.1);
-        }
-
-        /* L'Arc de cercle vert principal */
         .arc-container {
             width: 90%; 
             margin: 20px auto 10px;
             position: relative;
-            
             height: 180px; 
             border: 5px solid var(--green-primary); 
             border-top: none; 
@@ -98,7 +156,6 @@
             overflow: hidden;
         }
         
-        /* Fond de l'Arc (la zone intérieure très claire) */
         .arc-inner-bg {
              background-color: #e8f5e9; 
              height: 100%;
@@ -106,7 +163,6 @@
              position: relative;
         }
 
-        /* Base de l'herbe/colline */
         .hill-base {
             position: absolute;
             bottom: -5px; 
@@ -119,7 +175,6 @@
             border-bottom: none;
         }
         
-        /* Le cercle de texte CONCOURS NATIONAL DES JEUNES */
         .arc-text {
             position: absolute;
             top: 25px; 
@@ -144,10 +199,9 @@
         .logo-center img {
             width: 70px; 
             height: 70px;
-            border-radius: 50%; /* Rendre le logo central circulaire */
+            border-radius: 50%; 
         }
         
-        /* Les étoiles orange/doré */
         .stars {
             position: absolute;
             bottom: 30px; 
@@ -181,6 +235,14 @@
         }
         
         /* --- 3. SECTION FILIÈRE (BAS DE PAGE) --- */
+        .selection-section {
+            background-color: var(--green-section); 
+            color: white;
+            padding: 30px 20px 0; 
+            text-align: center;
+            position: relative; 
+            margin-top: -30px; 
+        }
         
         .selection-section::before {
             content: '';
@@ -191,20 +253,9 @@
             height: 50px;
             background-color: var(--green-section);
             z-index: 1; 
-            
-            /* Découpe Triangulaire/Vague Inversée Améliorée */
             clip-path: polygon(0 40%, 100% 0, 100% 100%, 0 100%); 
             background: var(--green-section);
             margin-top: -20px;
-        }
-        
-        .selection-section {
-            background-color: var(--green-section); 
-            color: white;
-            padding: 30px 20px 0; 
-            text-align: center;
-            position: relative; 
-            margin-top: -30px; 
         }
 
         .selection-title {
@@ -233,31 +284,19 @@
             text-transform: uppercase;
             transition: transform 0.1s, box-shadow 0.1s;
             display: flex;
-            flex-direction: column; /* Organiser l'icône et le texte verticalement */
+            flex-direction: column; 
             align-items: center;
             justify-content: center;
-            height: 100px; /* Hauteur fixe pour mieux centrer le contenu */
+            height: 100px; 
         }
         
-        /* Style pour l'icône/emoji du fruit */
         .filiere-icon {
             font-size: 30px;
             margin-bottom: 5px;
         }
         
-        /* Ajustement des couleurs des boutons pour être plus précis */
-        .btn-green {
-            background-color: var(--green-dark); 
-            color: white;
-            border-color: var(--green-dark); 
-        }
-
-        .btn-white {
-            background-color: white;
-            color: var(--green-dark);
-            border-color: white; 
-        }
-
+        .btn-green { background-color: var(--green-dark); color: white; border-color: var(--green-dark); }
+        .btn-white { background-color: white; color: var(--green-dark); border-color: white; }
         .btn-orange {
             grid-column: span 2;
             background-color: var(--orange-primary);
@@ -265,7 +304,6 @@
             border-color: var(--orange-primary);
         }
         
-        /* Style pour le bouton actif (cliqué) */
         .filiere-button.active {
             box-shadow: 0 0 10px 2px var(--orange-primary); 
             transform: scale(0.98);
@@ -288,7 +326,6 @@
             font-size: 1.2em;
         }
         
-        /* La bande sous les infos contact */
         .photo-strip {
             display: flex;
             justify-content: space-around;
@@ -307,13 +344,30 @@
 </head>
 <body>
     
+    <!-- 1. FILIGRANE VIDÉO EN ARRIÈRE-PLAN (Conservé et ajouté à ce fichier) -->
+    <!-- N'oubliez pas de remplacer le 'src' par votre propre vidéo -->
+    <video id="watermark-video" loop autoplay muted>
+        <source src="concours.mp4" type="video/mp4">
+        Votre navigateur ne supporte pas la balise vidéo.
+    </video>
+
+    <!-- 2. NOUVEAU HEADER FIXE (Logo + Texte d'identification) -->
+    <div class="top-bar">
+        <div class="logo-section">
+            <!-- Logo non coupé (Utilisation de votre image 'COP.png' ou un placeholder si elle n'est pas chargée) -->
+            <img src="COP.png" onerror="this.onerror=null; this.src='https://placehold.co/50x50/3c9c2f/ffffff?text=COP'" alt="Logo COPEMECO">
+            <div class="logo-text">
+                <!-- Texte d'identification -->
+                <div class="coord-line">Coordination Nationale</div>
+                <div class="copemeco-line">Jeunes de COPEMECO</div>
+            </div>
+        </div>
+    </div>
+    
     <div class="container">
         
-        <!-- Logo/Motif Haut Gauche (Le logo demandé) -->
-        <div class="flag-left">
-            <img src="COP.png" alt="Logo Haut Gauche">
-        </div>
-        <!-- Drapeau/Motif Haut Droit -->
+        <!-- L'ancien logo d'angle est retiré (car remplacé par le header fixe) -->
+        <!-- Le drapeau/motif d'angle droit est conservé pour l'esthétique -->
         <div class="flag-right"></div>
         
         <div class="header">
@@ -321,22 +375,17 @@
                 COORD. NATIONALE DES JEUNES ENTREPRENEURS
             </div>
             
-            <!-- Séparateur Orange/Doré (Ligne Dorée) -->
             <div class="golden-separator"></div>
             
-            <!-- Arc de Cercle et Logo Central -->
             <div class="arc-container">
                  <div class="arc-inner-bg">
-                     <!-- Texte dans l'arc (simulé) -->
                      <div class="arc-text">CONCOURS NATIONAL DES JEUNES</div>
                     
-                    <!-- Logo au centre (Le logo central demandé) -->
                     <div class="logo-center">
-                         <img src="concours.png" alt="Logo Agri-preneurs">
+                         <!-- Utilisation de votre image 'concours.png' ou un placeholder si elle n'est pas chargée -->
+                         <img src="concours.png" onerror="this.onerror=null; this.src='https://placehold.co/70x70/3c9c2f/ffffff?text=Logo'" alt="Logo Agri-preneurs">
                     </div>
-                    <!-- Base de la colline/herbe -->
                     <div class="hill-base"></div>
-                    <!-- Étoiles (une de chaque côté) -->
                     <div class="stars">
                         <span class="star">★</span>
                         <span class="star">★</span>
@@ -350,12 +399,12 @@
         </div>
         
 
-        <!-- Section Choix de Filière (fond vert foncé) -->
+        <!-- Section Choix de Filière (Conservation des liens/boutons existants) -->
         <div class="selection-section">
             <h3 class="selection-title">CHOISISSEZ VOTRE FILIÈRE</h3>
             
             <div class="filiere-grid">
-                <!-- Boutons des filières avec les icônes de fruits/produits -->
+                <!-- Les liens (boutons) sont conservés avec leurs données -->
                 <button class="filiere-button btn-green" data-filiere="cafe">
                     <span class="filiere-icon">☕</span>CAFÉ
                 </button>
@@ -378,28 +427,27 @@
             </div>
         </div>
         
-        <!-- Section Photos des Agri-preneurs (bas de page) -->
+        <!-- Section Photos des Agri-preneurs (bas de page conservé) -->
         <div class="photo-strip">
-             <!-- Placeholders pour les images des entrepreneurs (à remplacer par vos images) -->
+             <!-- Placeholders conservés (à remplacer par vos images) -->
              <img src="https://placehold.co/225x200/194d25/ffffff?text=Entrepreneur+Homme" alt="Entrepreneur homme">
             <img src="https://placehold.co/225x200/194d25/ffffff?text=Entrepreneuse+Femme" alt="Entrepreneuse femme">
         </div>
 
     </div>
 
-    <!-- SCRIPT (JavaScript) pour l'interactivité -->
+    <!-- SCRIPT (JavaScript) pour l'interactivité des boutons et de la vidéo -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const buttons = document.querySelectorAll('.filiere-button');
+            const videoElement = document.getElementById('watermark-video');
 
+            // 1. Script d'interaction des boutons
             buttons.forEach(button => {
                 button.addEventListener('click', (event) => {
-                    // Désactiver tous les autres boutons
                     buttons.forEach(btn => {
                         btn.classList.remove('active');
                     });
-
-                    // Activer le bouton cliqué (ajoute une ombre orange/dorée)
                     event.currentTarget.classList.add('active');
                     
                     const filiere = event.currentTarget.getAttribute('data-filiere');
@@ -408,6 +456,20 @@
                     // TODO: Ajouter ici la redirection vers le formulaire d'inscription
                 });
             });
+            
+            // 2. Script d'interaction vidéo (clic)
+            videoElement.addEventListener('click', () => {
+                videoElement.classList.add('pulse-effect');
+                setTimeout(() => {
+                    videoElement.classList.remove('pulse-effect');
+                }, 400); 
+                console.log("Mouvement de la vidéo déclenché par le clic.");
+            });
+            
+            // NOTE IMPORTANTE SUR LA VIDÉO: 
+            // Si la vidéo ne s'affiche toujours pas, vérifiez le chemin de la source. 
+            // Le "src" actuel est un placeholder : https://assets.mixkit.co/videos/preview/mixkit-waving-wheat-in-the-sun-5534-large.mp4
+            // Veuillez remplacer cette URL par le chemin d'accès à votre propre fichier vidéo.
         });
     </script>
 
