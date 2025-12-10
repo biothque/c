@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concours Agri-preneurs (Identique)</title>
+    
+    <style>
+        /* --- 1. VARIABLES ET BASE --- */
+        :root {
+            /* Couleurs ajustées pour coller à l'image */
+            --green-primary: #3c9c2f; /* Vert vif du logo et du titre */
+            --green-dark: #1e712c; /* Vert foncé des bordures et du texte */
+            --green-section: #194d25; /* Couleur de fond vert très foncé de la section de sélection */
+            --orange-primary: #f28b2a; /* Orange des étoiles et du bouton PIMENT (Couleur 'dorée' du logo) */
+            --bg-color-top: #ffffff;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 450px;
+            background-color: var(--bg-color-top);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* --- 2. HAUT DE PAGE (LOGOS, TITRES, ARC) --- */
+        .header {
+            text-align: center;
+            padding-top: 10px;
+            padding-bottom: 20px;
+            position: relative;
+        }
+        
+        /* Séparateur 'doré' ajouté pour plus de proéminence (comme dans l'image originale) */
+        .golden-separator {
+            width: 80%;
+            height: 3px;
+            background-color: var(--orange-primary);
+            margin: 0 auto 15px auto;
+            border-radius: 5px;
+        }
+        
+        /* Conteneurs pour simuler les drapeaux/logos aux extrémités (haut gauche et haut droit) */
+        .flag-left, .flag-right {
+            position: absolute;
+            top: 0;
+            width: 80px; 
+            height: 80px;
+            z-index: 50;
+        }
+        
+        /* Logo Gauche (Remplacement du drapeau par un logo placeholder) */
+        .flag-left {
+            left: 0;
+            background-color: transparent;
+            clip-path: none; 
+            border: none;
+            box-shadow: none;
+        }
+        
+        .flag-left img {
+            width: 70px;
+            height: 70px;
+            clip-path: polygon(0% 0%, 100% 0%, 0% 100%); /* Forme triangulaire pour le logo d'angle */
+            object-fit: cover;
+        }
+        
+        /* Drapeau Droit (Triangle/Motif d'angle) */
+        .flag-right {
+            right: 0;
+            background: linear-gradient(to top left, #0000FF 0%, #FFFF00 50%, #FF0000 100%); /* Simuler B-J-R */
+            clip-path: polygon(0% 0%, 100% 0%, 100% 100%); /* Forme triangulaire nette */
+            border: 2px solid rgba(0,0,0,0.1); 
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+        }
+
+        /* L'Arc de cercle vert principal */
+        .arc-container {
+            width: 90%; 
+            margin: 20px auto 10px;
+            position: relative;
+            
+            height: 180px; 
+            border: 5px solid var(--green-primary); 
+            border-top: none; 
+            border-radius: 0 0 50% 50%; 
+            overflow: hidden;
+        }
+        
+        /* Fond de l'Arc (la zone intérieure très claire) */
+        .arc-inner-bg {
+             background-color: #e8f5e9; 
+             height: 100%;
+             width: 100%;
+             position: relative;
+        }
+
+        /* Base de l'herbe/colline */
+        .hill-base {
+            position: absolute;
+            bottom: -5px; 
+            left: 0;
+            right: 0;
+            height: 40px; 
+            background-color: var(--green-primary);
+            border-radius: 50% 50% 0 0 / 100% 100% 0 0; 
+            border: 2px solid var(--green-dark); 
+            border-bottom: none;
+        }
+        
+        /* Le cercle de texte CONCOURS NATIONAL DES JEUNES */
+        .arc-text {
+            position: absolute;
+            top: 25px; 
+            left: 5%;
+            right: 5%;
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--green-dark);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-shadow: 0px 1px 0px rgba(0,0,0,0.1); 
+        }
+        
+        .logo-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+        }
+        
+        .logo-center img {
+            width: 70px; 
+            height: 70px;
+            border-radius: 50%; /* Rendre le logo central circulaire */
+        }
+        
+        /* Les étoiles orange/doré */
+        .stars {
+            position: absolute;
+            bottom: 30px; 
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 10%;
+        }
+
+        .star {
+            color: var(--orange-primary);
+            font-size: 35px; 
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2); 
+        }
+
+        .title-text {
+            color: var(--green-dark);
+            font-weight: bold;
+            text-transform: uppercase;
+            line-height: 1.1;
+            font-size: 14px; 
+        }
+
+        .agri-preneurs {
+            font-size: 38px; 
+            font-weight: 900;
+            color: var(--green-primary);
+            letter-spacing: 2px;
+            margin-top: 10px;
+        }
+        
+        /* --- 3. SECTION FILIÈRE (BAS DE PAGE) --- */
+        
+        .selection-section::before {
+            content: '';
+            position: absolute;
+            top: -30px; 
+            left: 0;
+            right: 0;
+            height: 50px;
+            background-color: var(--green-section);
+            z-index: 1; 
+            
+            /* Découpe Triangulaire/Vague Inversée Améliorée */
+            clip-path: polygon(0 40%, 100% 0, 100% 100%, 0 100%); 
+            background: var(--green-section);
+            margin-top: -20px;
+        }
+        
+        .selection-section {
+            background-color: var(--green-section); 
+            color: white;
+            padding: 30px 20px 0; 
+            text-align: center;
+            position: relative; 
+            margin-top: -30px; 
+        }
+
+        .selection-title {
+            margin-bottom: 25px;
+            font-weight: bold;
+            font-size: 1.2em;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3); 
+        }
+
+        .filiere-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+            z-index: 2;
+            position: relative;
+        }
+
+        .filiere-button {
+            padding: 15px 10px;
+            border: 2px solid white; 
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 5px;
+            text-transform: uppercase;
+            transition: transform 0.1s, box-shadow 0.1s;
+            display: flex;
+            flex-direction: column; /* Organiser l'icône et le texte verticalement */
+            align-items: center;
+            justify-content: center;
+            height: 100px; /* Hauteur fixe pour mieux centrer le contenu */
+        }
+        
+        /* Style pour l'icône/emoji du fruit */
+        .filiere-icon {
+            font-size: 30px;
+            margin-bottom: 5px;
+        }
+        
+        /* Ajustement des couleurs des boutons pour être plus précis */
+        .btn-green {
+            background-color: var(--green-dark); 
+            color: white;
+            border-color: var(--green-dark); 
+        }
+
+        .btn-white {
+            background-color: white;
+            color: var(--green-dark);
+            border-color: white; 
+        }
+
+        .btn-orange {
+            grid-column: span 2;
+            background-color: var(--orange-primary);
+            color: white;
+            border-color: var(--orange-primary);
+        }
+        
+        /* Style pour le bouton actif (cliqué) */
+        .filiere-button.active {
+            box-shadow: 0 0 10px 2px var(--orange-primary); 
+            transform: scale(0.98);
+        }
+
+        /* --- 4. CONTACT ET PHOTOS --- */
+        .contact-info {
+            padding: 20px 0;
+            text-align: center;
+            color: white;
+            font-size: 1.0em;
+            background-color: var(--green-section); 
+            z-index: 2;
+            position: relative;
+        }
+        
+        .contact-info strong {
+            color: white;
+            text-decoration: none; 
+            font-size: 1.2em;
+        }
+        
+        /* La bande sous les infos contact */
+        .photo-strip {
+            display: flex;
+            justify-content: space-around;
+            background-color: var(--green-section);
+            position: relative;
+            padding-top: 0;
+        }
+        
+        .photo-strip img {
+            width: 50%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="container">
+        
+        <!-- Logo/Motif Haut Gauche (Le logo demandé) -->
+        <div class="flag-left">
+            <img src="COP.png" alt="Logo Haut Gauche">
+        </div>
+        <!-- Drapeau/Motif Haut Droit -->
+        <div class="flag-right"></div>
+        
+        <div class="header">
+            <div class="title-text">
+                COORD. NATIONALE DES JEUNES ENTREPRENEURS
+            </div>
+            
+            <!-- Séparateur Orange/Doré (Ligne Dorée) -->
+            <div class="golden-separator"></div>
+            
+            <!-- Arc de Cercle et Logo Central -->
+            <div class="arc-container">
+                 <div class="arc-inner-bg">
+                     <!-- Texte dans l'arc (simulé) -->
+                     <div class="arc-text">CONCOURS NATIONAL DES JEUNES</div>
+                    
+                    <!-- Logo au centre (Le logo central demandé) -->
+                    <div class="logo-center">
+                         <img src="concours.png" alt="Logo Agri-preneurs">
+                    </div>
+                    <!-- Base de la colline/herbe -->
+                    <div class="hill-base"></div>
+                    <!-- Étoiles (une de chaque côté) -->
+                    <div class="stars">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                    </div>
+                 </div>
+            </div>
+            
+            <div class="agri-preneurs">
+                AGRI-PRENEURS
+            </div>
+        </div>
+        
+
+        <!-- Section Choix de Filière (fond vert foncé) -->
+        <div class="selection-section">
+            <h3 class="selection-title">CHOISISSEZ VOTRE FILIÈRE</h3>
+            
+            <div class="filiere-grid">
+                <!-- Boutons des filières avec les icônes de fruits/produits -->
+                <button class="filiere-button btn-green" data-filiere="cafe">
+                    <span class="filiere-icon">☕</span>CAFÉ
+                </button>
+                <button class="filiere-button btn-white" data-filiere="cacao">
+                    <span class="filiere-icon">🍫</span>CACAO
+                </button>
+                <button class="filiere-button btn-green" data-filiere="gingembre">
+                    <span class="filiere-icon">🫚</span>GINGEMBRE
+                </button>
+                <button class="filiere-button btn-white" data-filiere="huile-de-palme">
+                    <span class="filiere-icon">🌴</span>HUILE DE PALME
+                </button>
+                <button class="filiere-button btn-orange" data-filiere="piment">
+                    <span class="filiere-icon">🌶️</span>PIMENT
+                </button>
+            </div>
+            
+            <div class="contact-info">
+                POUR PLUS D'INFOS <br><strong>+243 994 884 690</strong>
+            </div>
+        </div>
+        
+        <!-- Section Photos des Agri-preneurs (bas de page) -->
+        <div class="photo-strip">
+             <!-- Placeholders pour les images des entrepreneurs (à remplacer par vos images) -->
+             <img src="https://placehold.co/225x200/194d25/ffffff?text=Entrepreneur+Homme" alt="Entrepreneur homme">
+            <img src="https://placehold.co/225x200/194d25/ffffff?text=Entrepreneuse+Femme" alt="Entrepreneuse femme">
+        </div>
+
+    </div>
+
+    <!-- SCRIPT (JavaScript) pour l'interactivité -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const buttons = document.querySelectorAll('.filiere-button');
+
+            buttons.forEach(button => {
+                button.addEventListener('click', (event) => {
+                    // Désactiver tous les autres boutons
+                    buttons.forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+
+                    // Activer le bouton cliqué (ajoute une ombre orange/dorée)
+                    event.currentTarget.classList.add('active');
+                    
+                    const filiere = event.currentTarget.getAttribute('data-filiere');
+                    console.log(`Filière sélectionnée : ${filiere.toUpperCase()}`);
+                    
+                    // TODO: Ajouter ici la redirection vers le formulaire d'inscription
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
+
