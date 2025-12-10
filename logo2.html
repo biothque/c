@@ -140,6 +140,52 @@
             margin-right: 10px;
             font-size: 1.5em;
         }
+        .floating-btn {
+            position: fixed; 
+            bottom: 30px;
+            right: 30px;
+            background-color: #e74c3c; /* Rouge vif */
+            color: white;
+            width: 50px; 
+            height: 50px;
+            border-radius: 50%;
+            text-align: center;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            cursor: pointer;
+            
+            /* Centrage de l'icône SVG */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            /* Démarrage de l'animation de clignotement */
+            animation: pulse-red 1.5s infinite;
+        }
+
+        .floating-btn svg {
+            width: 60%; 
+            height: 60%;
+            fill: none;
+            stroke: white; /* Icône blanche */
+            stroke-width: 2.5; 
+        }
+
+        /* Définition de l'animation de clignotement en Rouge */
+        @keyframes pulse-red {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7);
+            }
+            70% {
+                transform: scale(1.1);
+                box-shadow: 0 0 0 15px rgba(231, 76, 60, 0); 
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
     </style>
 </head>
 <body>
@@ -184,6 +230,14 @@
             <a href="concours.html" class="form-button btn-green-dark">
                 <span class="icon">🎇🤹🎇</span>Postuler au concours 
             </a>
+
+            <a href="information.html" class="floating-btn" title="Informations">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+        </svg>
+            </a>
             
         </div>
         
@@ -207,7 +261,9 @@
             });
         });
     </script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+<script src="https://api.backendless.com/sdk/js/latest/backendless.min.js"></script>
 </body>
 </html>
 
