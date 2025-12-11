@@ -1048,76 +1048,83 @@ C’est parti pour une semaine de savoir, de pratique et d’innovation au servi
                             mobileMenu.classList.add('hidden');
                             menuIconOpen.classList.remove('hidden');
                             menuIconClose.classList.add('hidden');
+                       });
+                    });
+                }
+                
+                              // --- NOUVEAU: 1. Logique du Carrousel des Provinces (VERSION COMPLÈTE & CORRIGÉE) ---
+                // Le setTimeout est conservé pour garantir l'exécution après le chargement du DOM.
+                setTimeout(() => {
+                    const provincesCarouselContainer = document.querySelector('.scrolling-provinces-container');
+
+                    // 1. Tableau des 26 provinces (avec placeholders pour l'image)
+                    const provincesData = [
+                        { name: "Kinshasa", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/34d399/FFFFFF?text=Kinshasa" },
+                        { name: "Kongo Central", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/0047AB/FFFFFF?text=Kongo+C." },
+                        { name: "Kwango", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/E60000/FFFFFF?text=Kwango" },
+                        { name: "Kwilu", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/FFEC00/333333?text=Kwilu" },
+                        { name: "Mai-Ndombe", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/1d95ad/FFFFFF?text=Mai-N." },
+                        { name: "Équateur", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/0099DD/FFFFFF?text=Equateur" },
+                        { name: "Nord-Ubangi", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/ef4444/FFFFFF?text=N.Ubangi" },
+                        { name: "Mongala", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/f59e0b/FFFFFF?text=Mongala" },
+                        { name: "Tshuapa", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/10b981/FFFFFF?text=Tshuapa" },
+                        { name: "Bas-Uele", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/3b82f6/FFFFFF?text=Bas-Uele" },
+                        { name: "Haut-Uele", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/ef4444/FFFFFF?text=Haut-Uele" },
+                        { name: "Ituri", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/34d399/FFFFFF?text=Ituri" },
+                        { name: "Tshopo", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/0047AB/FFFFFF?text=Tshopo" },
+                        { name: "Nord-Kivu", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/E60000/FFFFFF?text=N.Kivu" },
+                        { name: "Sud-Kivu", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/FFEC00/333333?text=S.Kivu" },
+                        { name: "Maniema", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/1d95ad/FFFFFF?text=Maniema" },
+                        { name: "Tanganyika", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/0099DD/FFFFFF?text=Tanganyika" },
+                        { name: "Haut-Lomami", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/ef4444/FFFFFF?text=H.Lomami" },
+                        { name: "Lualaba", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/f59e0b/FFFFFF?text=Lualaba" },
+                        { name: "Haut-Katanga", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/10b981/FFFFFF?text=H.Katanga" },
+                        { name: "Kasaï", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/3b82f6/FFFFFF?text=Kasaï" },
+                        { name: "Kasaï Central", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/ef4444/FFFFFF?text=Kasaï+C." },
+                        { name: "Kasaï Oriental", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/34d399/FFFFFF?text=Kasaï+O." },
+                        { name: "Lomami", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/0047AB/FFFFFF?text=Lomami" },
+                        { name: "Sankuru", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/E60000/FFFFFF?text=Sankuru" },
+                        { name: "Sud-Ubangi", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/FFEC00/333333?text=S.Ubangi" },
+                    ];
+                    
+                    // Répéter les données (52 éléments) pour permettre la boucle infinie CSS
+                    const repeatedProvincesData = [...provincesData, ...provincesData];
+
+                    // 2. Fonction de création de la carte (pour éviter le blocage)
+                    const createProvinceCard = (province) => {
+                        const div = document.createElement('div');
+                        div.className = 'province-card';
+                        
+                        // L'image est actuellement un placeholder
+                        const imageSrc = province.img; 
+                        
+                        div.innerHTML = `
+                            <img src="${imageSrc}" 
+                                 alt="Photo de ${province.name}" 
+                                 class="province-photo"
+                            >
+                            <p class="province-name">${province.name}</p>
+                            <p class="province-title">${province.title}</p>
+                        `;
+                        return div;
+                    };
+
+                    // 3. Injection dans le DOM
+                    if (provincesCarouselContainer) {
+                        repeatedProvincesData.forEach(province => {
+                            provincesCarouselContainer.appendChild(createProvinceCard(province));
                         });
-                    });
-                }
-                                // --- NOUVEAU: 1. Logique du Carrousel des Provinces (Fixe les 2 provinces seulement) ---
-                const provincesCarouselContainer = document.querySelector('.scrolling-provinces-container');
-                const provincesData = [
-                    // LES 26 PROVINCES DOIVENT ÊTRE ICI
-                    { name: "Kinshasa", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/34d399/FFFFFF?text=Kinshasa" },
-                    { name: "Kongo Central", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/0047AB/FFFFFF?text=Kongo+C." },
-                    { name: "Kwango", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/E60000/FFFFFF?text=Kwango" },
-                    { name: "Kwilu", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/FFEC00/333333?text=Kwilu" },
-                    { name: "Mai-Ndombe", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/1d95ad/FFFFFF?text=Mai-N." },
-                    { name: "Équateur", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/0099DD/FFFFFF?text=Equateur" },
-                    { name: "Nord-Ubangi", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/ef4444/FFFFFF?text=N.Ubangi" },
-                    { name: "Mongala", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/f59e0b/FFFFFF?text=Mongala" },
-                    { name: "Tshuapa", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/10b981/FFFFFF?text=Tshuapa" },
-                    { name: "Bas-Uele", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/3b82f6/FFFFFF?text=Bas-Uele" },
-                    { name: "Haut-Uele", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/ef4444/FFFFFF?text=Haut-Uele" },
-                    { name: "Ituri", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/34d399/FFFFFF?text=Ituri" },
-                    { name: "Tshopo", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/0047AB/FFFFFF?text=Tshopo" },
-                    { name: "Nord-Kivu", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/E60000/FFFFFF?text=N.Kivu" },
-                    { name: "Sud-Kivu", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/FFEC00/333333?text=S.Kivu" },
-                    { name: "Maniema", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/1d95ad/FFFFFF?text=Maniema" },
-                    { name: "Tanganyika", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/0099DD/FFFFFF?text=Tanganyika" },
-                    { name: "Haut-Lomami", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/ef4444/FFFFFF?text=H.Lomami" },
-                    { name: "Lualaba", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/f59e0b/FFFFFF?text=Lualaba" },
-                    { name: "Haut-Katanga", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/10b981/FFFFFF?text=H.Katanga" },
-                    { name: "Kasaï", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/3b82f6/FFFFFF?text=Kasaï" },
-                    { name: "Kasaï Central", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/ef4444/FFFFFF?text=Kasaï+C." },
-                    { name: "Kasaï Oriental", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/34d399/FFFFFF?text=Kasaï+O." },
-                    { name: "Lomami", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/0047AB/FFFFFF?text=Lomami" },
-                    { name: "Sankuru", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/E60000/FFFFFF?text=Sankuru" },
-                    { name: "Sud-Ubangi", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/FFEC00/333333?text=S.Ubangi" },
-                ];
-                
-                // Répéter les données (52 éléments) pour le défilement infini
-                const repeatedProvincesData = [...provincesData, ...provincesData];
-
-                const createProvinceCard = (province) => {
-                    const div = document.createElement('div');
-                    div.className = 'province-card';
-                    
-                    const imageSrc = province.img; 
-                    
-                    div.innerHTML = `
-                        <img src="${imageSrc}" 
-                             alt="Photo de ${province.name}" 
-                             class="province-photo"
-                        >
-                        <p class="province-name">${province.name}</p>
-                        <p class="province-title">${province.title}</p>
-                    `;
-                    return div;
-                };
-
-                if (provincesCarouselContainer) {
-                    repeatedProvincesData.forEach(province => {
-                        provincesCarouselContainer.appendChild(createProvinceCard(province));
-                    });
-                }
-                
+                    }
+                }, 100);
                 // --- FIN DE LA LOGIQUE DU CARROUSEL DES PROVINCES ---
-                     
-
+                            
             }; // Fin de initializeHomePageScripts
 
         });
     </script>
 </body>
 </html>
+
 
 
 
