@@ -371,15 +371,15 @@
                 height: 80%;
             }
 
-                /* 10. Styles pour le Carrousel des Provinces */
+            
+           /* 10. Styles pour le Carrousel des Provinces (Fixe la non-animation) */
         .scrolling-provinces-container {
             display: flex;
             overflow: hidden;
             white-space: nowrap;
             padding: 20px 0;
-            animation: scroll-provinces 60s linear infinite; /* Animation plus lente */
-            /* Pour assurer que l'animation fonctionne bien en boucle */
-            width: 200%; 
+            animation: scroll-provinces 60s linear infinite; /* Active le défilement automatique et infini */
+            width: 200%; /* Permet de dupliquer le contenu pour la boucle infinie */
         }
 
         /* Animation pour le défilement horizontal infini des provinces */
@@ -394,8 +394,8 @@
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
-            width: 150px; /* Largeur fixe pour chaque carte */
-            margin-right: 3rem; /* Espacement entre les éléments */
+            width: 150px; 
+            margin-right: 3rem;
             text-align: center;
         }
 
@@ -404,27 +404,27 @@
             height: 100px;
             border-radius: 50%;
             object-fit: cover;
-            border: 4px solid #0099DD; /* Bordure bleue */
+            border: 4px solid #0099DD; 
             transition: transform 0.3s ease;
         }
 
         .province-card:hover .province-photo {
             transform: scale(1.1);
-            border-color: #ef4444; /* Bordure rouge au survol */
+            border-color: #ef4444; 
         }
         
         .province-name {
             margin-top: 0.5rem;
-            font-size: 0.875rem; /* text-sm */
+            font-size: 0.875rem; 
             font-weight: 600;
-            color: #374151; /* gray-700 */
+            color: #374151; 
         }
         
         .province-title {
-            font-size: 0.75rem; /* text-xs */
-            color: #ef4444; /* red-500 */
+            font-size: 0.75rem; 
+            color: #ef4444; 
             line-height: 1.2;
-        }
+            }
         }
     </style>
 </head>
@@ -705,6 +705,21 @@ C’est parti pour une semaine de savoir, de pratique et d’innovation au servi
                 </div>
             </div>
         </section>
+        
+        <div class="h-1 w-full bg-gradient-to-r from-red-500 via-yellow-500 to-blue-500"></div>
+
+<section id="direction" class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-4xl font-extrabold text-gray-900 mb-12 relative">
+            <span class="relative z-10">POUR LA DIRECTION NATIONALE</span>
+            <span class="absolute left-1/2 -bottom-2 w-32 h-1 bg-red-500 transform -translate-x-1/2"></span>
+            <span class="absolute left-1/2 -bottom-2 w-full h-px bg-gray-300 transform -translate-x-1/2"></span>
+        </h2>
+
+        <div class="grid md:grid-cols-3 gap-12 mt-16 text-left" id="direction-container">
+            </div>
+    </div>
+</section>
 
         <div class="h-1 w-full bg-gradient-to-r from-red-500 via-yellow-500 to-blue-500"></div>
 
@@ -731,22 +746,6 @@ C’est parti pour une semaine de savoir, de pratique et d’innovation au servi
                 </div>
         </div>
         
-    </div>
-</section>
-        
-
-        <div class="h-1 w-full bg-gradient-to-r from-red-500 via-yellow-500 to-blue-500"></div>
-
-<section id="direction" class="py-20 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 class="text-4xl font-extrabold text-gray-900 mb-12 relative">
-            <span class="relative z-10">POUR LA DIRECTION NATIONALE</span>
-            <span class="absolute left-1/2 -bottom-2 w-32 h-1 bg-red-500 transform -translate-x-1/2"></span>
-            <span class="absolute left-1/2 -bottom-2 w-full h-px bg-gray-300 transform -translate-x-1/2"></span>
-        </h2>
-
-        <div class="grid md:grid-cols-3 gap-12 mt-16 text-left" id="direction-container">
-            </div>
     </div>
 </section>
 
@@ -901,66 +900,7 @@ C’est parti pour une semaine de savoir, de pratique et d’innovation au servi
                 }
                 
                 // --- FIN DE LA LOGIQUE DE LA DIRECTION NATIONALE ---
-                                // --- NOUVEAU: 1. Logique du Carrousel des Provinces ---
-                const provincesCarouselContainer = document.querySelector('.scrolling-provinces-container');
-                const provincesData = [
-                    { name: "Kinshasa", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/34d399/FFFFFF?text=Kinshasa" },
-                    { name: "Kongo Central", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/0047AB/FFFFFF?text=Kongo+C." },
-                    { name: "Kwango", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/E60000/FFFFFF?text=Kwango" },
-                    { name: "Kwilu", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/FFEC00/333333?text=Kwilu" },
-                    { name: "Mai-Ndombe", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/1d95ad/FFFFFF?text=Mai-N." },
-                    { name: "Équateur", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/0099DD/FFFFFF?text=Equateur" },
-                    { name: "Nord-Ubangi", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/ef4444/FFFFFF?text=N.Ubangi" },
-                    { name: "Mongala", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/f59e0b/FFFFFF?text=Mongala" },
-                    { name: "Tshuapa", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/10b981/FFFFFF?text=Tshuapa" },
-                    { name: "Bas-Uele", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/3b82f6/FFFFFF?text=Bas-Uele" },
-                    { name: "Haut-Uele", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/ef4444/FFFFFF?text=Haut-Uele" },
-                    { name: "Ituri", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/34d399/FFFFFF?text=Ituri" },
-                    { name: "Tshopo", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/0047AB/FFFFFF?text=Tshopo" },
-                    { name: "Nord-Kivu", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/E60000/FFFFFF?text=N.Kivu" },
-                    { name: "Sud-Kivu", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/FFEC00/333333?text=S.Kivu" },
-                    { name: "Maniema", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/1d95ad/FFFFFF?text=Maniema" },
-                    { name: "Tanganyika", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/0099DD/FFFFFF?text=Tanganyika" },
-                    { name: "Haut-Lomami", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/ef4444/FFFFFF?text=H.Lomami" },
-                    { name: "Lualaba", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/f59e0b/FFFFFF?text=Lualaba" },
-                    { name: "Haut-Katanga", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/10b981/FFFFFF?text=H.Katanga" },
-                    { name: "Kasaï", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/3b82f6/FFFFFF?text=Kasaï" },
-                    { name: "Kasaï Central", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/ef4444/FFFFFF?text=Kasaï+C." },
-                    { name: "Kasaï Oriental", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/34d399/FFFFFF?text=Kasaï+O." },
-                    { name: "Lomami", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/0047AB/FFFFFF?text=Lomami" },
-                    { name: "Sankuru", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/E60000/FFFFFF?text=Sankuru" },
-                    { name: "Sud-Ubangi", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/FFEC00/333333?text=S.Ubangi" },
-                ];
-                
-                // Répéter les données pour le défilement infini (nécessaire pour l'animation CSS)
-                const repeatedProvincesData = [...provincesData, ...provincesData];
-
-                const createProvinceCard = (province) => {
-                    const div = document.createElement('div');
-                    div.className = 'province-card';
-                    
-                    // Utilise une image placeholder pour l'instant (affichant le nom de la province)
-                    const imageSrc = province.img; 
-                    
-                    // Le contenu de la carte
-                    div.innerHTML = `
-                        <img src="${imageSrc}" 
-                             alt="Photo de ${province.name}" 
-                             class="province-photo"
-                        >
-                        <p class="province-name">${province.name}</p>
-                        <p class="province-title">${province.title}</p>
-                    `;
-                    return div;
-                };
-
-                if (provincesCarouselContainer) {
-                    repeatedProvincesData.forEach(province => {
-                        provincesCarouselContainer.appendChild(createProvinceCard(province));
-                    });
-                }
-                
-                // --- FIN DE LA LOGIQUE DU CARROUSEL DES PROVINCES ---
+                                
                 
                 // 1. Logique du Carrousel de Défense (9 Images, Zoom In/Out)
                 // 1. Logique du Carrousel de Défense (9 Images, Zoom In/Out)
@@ -1111,7 +1051,66 @@ C’est parti pour une semaine de savoir, de pratique et d’innovation au servi
                         });
                     });
                 }
+                                // --- NOUVEAU: 1. Logique du Carrousel des Provinces (Fixe les 2 provinces seulement) ---
+                const provincesCarouselContainer = document.querySelector('.scrolling-provinces-container');
+                const provincesData = [
+                    // LES 26 PROVINCES DOIVENT ÊTRE ICI
+                    { name: "Kinshasa", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/34d399/FFFFFF?text=Kinshasa" },
+                    { name: "Kongo Central", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/0047AB/FFFFFF?text=Kongo+C." },
+                    { name: "Kwango", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/E60000/FFFFFF?text=Kwango" },
+                    { name: "Kwilu", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/FFEC00/333333?text=Kwilu" },
+                    { name: "Mai-Ndombe", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/1d95ad/FFFFFF?text=Mai-N." },
+                    { name: "Équateur", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/0099DD/FFFFFF?text=Equateur" },
+                    { name: "Nord-Ubangi", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/ef4444/FFFFFF?text=N.Ubangi" },
+                    { name: "Mongala", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/f59e0b/FFFFFF?text=Mongala" },
+                    { name: "Tshuapa", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/10b981/FFFFFF?text=Tshuapa" },
+                    { name: "Bas-Uele", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/3b82f6/FFFFFF?text=Bas-Uele" },
+                    { name: "Haut-Uele", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/ef4444/FFFFFF?text=Haut-Uele" },
+                    { name: "Ituri", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/34d399/FFFFFF?text=Ituri" },
+                    { name: "Tshopo", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/0047AB/FFFFFF?text=Tshopo" },
+                    { name: "Nord-Kivu", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/E60000/FFFFFF?text=N.Kivu" },
+                    { name: "Sud-Kivu", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/FFEC00/333333?text=S.Kivu" },
+                    { name: "Maniema", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/1d95ad/FFFFFF?text=Maniema" },
+                    { name: "Tanganyika", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/0099DD/FFFFFF?text=Tanganyika" },
+                    { name: "Haut-Lomami", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/ef4444/FFFFFF?text=H.Lomami" },
+                    { name: "Lualaba", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/f59e0b/FFFFFF?text=Lualaba" },
+                    { name: "Haut-Katanga", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/10b981/FFFFFF?text=H.Katanga" },
+                    { name: "Kasaï", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/3b82f6/FFFFFF?text=Kasaï" },
+                    { name: "Kasaï Central", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/ef4444/FFFFFF?text=Kasaï+C." },
+                    { name: "Kasaï Oriental", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/34d399/FFFFFF?text=Kasaï+O." },
+                    { name: "Lomami", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/0047AB/FFFFFF?text=Lomami" },
+                    { name: "Sankuru", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/E60000/FFFFFF?text=Sankuru" },
+                    { name: "Sud-Ubangi", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/FFEC00/333333?text=S.Ubangi" },
+                ];
+                
+                // Répéter les données (52 éléments) pour le défilement infini
+                const repeatedProvincesData = [...provincesData, ...provincesData];
 
+                const createProvinceCard = (province) => {
+                    const div = document.createElement('div');
+                    div.className = 'province-card';
+                    
+                    const imageSrc = province.img; 
+                    
+                    div.innerHTML = `
+                        <img src="${imageSrc}" 
+                             alt="Photo de ${province.name}" 
+                             class="province-photo"
+                        >
+                        <p class="province-name">${province.name}</p>
+                        <p class="province-title">${province.title}</p>
+                    `;
+                    return div;
+                };
+
+                if (provincesCarouselContainer) {
+                    repeatedProvincesData.forEach(province => {
+                        provincesCarouselContainer.appendChild(createProvinceCard(province));
+                    });
+                }
+                
+                // --- FIN DE LA LOGIQUE DU CARROUSEL DES PROVINCES ---
+                     
 
             }; // Fin de initializeHomePageScripts
 
@@ -1119,6 +1118,7 @@ C’est parti pour une semaine de savoir, de pratique et d’innovation au servi
     </script>
 </body>
 </html>
+
 
 
 
