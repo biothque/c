@@ -277,29 +277,29 @@
 
         /* ------------------ NOUVEAUX STYLES POUR LA DIRECTION ------------------ */
 
-/* Style pour l'anneau extérieur rouge (simule la bordure décalée) */
-.direction-photo-ring {
-    position: relative;
-    width: 150px; /* Taille de base pour la photo */
-    height: 150px;
-    padding: 10px; /* Espace autour de la photo */
-    border-radius: 50%;
+       /* Style pour l'anneau extérieur rouge (simule la bordure décalée) */
+       .direction-photo-ring {
+        position: relative;
+        width: 150px; /* Taille de base pour la photo */
+        height: 150px;
+        padding: 10px; /* Espace autour de la photo */
+        border-radius: 50%;
     /* Simule le cercle extérieur rouge décalé */
-    background: radial-gradient(circle at 10% 10%, rgba(239, 68, 68, 0.2) 0%, transparent 40%),
+        background: radial-gradient(circle at 10% 10%, rgba(239, 68, 68, 0.2) 0%, transparent 40%),
                 radial-gradient(circle at 90% 90%, rgba(239, 68, 68, 0.2) 0%, transparent 40%),
                 #fef2f2; /* Fond très clair */
-    box-shadow: 0 0 0 4px #ef4444; /* Bordure rouge pour l'effet */
-    display: flex;
-    justify-content: center;
-    align-items: center;
+        box-shadow: 0 0 0 4px #ef4444; /* Bordure rouge pour l'effet */
+        display: flex;
+        justify-content: center;
+        align-items: center;
 }
 
-.direction-photo-ring img {
-    border-radius: 50%;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border: 3px solid white; /* Bordure blanche interne */
+    .direction-photo-ring img {
+      border-radius: 50%;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border: 3px solid white; /* Bordure blanche interne */
 }
 
         /* 6. Styles pour l'effet d'explosion des icônes (Exploding Icons) dans le footer */
@@ -395,7 +395,8 @@
 
   /* Pause on hover (pratique pour mobile/tactile on utilisera :active ) */
   #carousel-wrapper:hover #carousel-provinces,
-  #carousel-wrapper:focus-within #carousel-provinces {
+  #carousel-wrapper:focus-within 
+  #carousel-provinces {
     animation-play-state: paused;
   }
 
@@ -404,7 +405,6 @@
     .province-card { width: 120px; }
     .province-card .w-40 { width: 120px; height: 120px; }
   }
-        }
     </style>
 </head>
 <body class="antialiased">
@@ -757,7 +757,6 @@ C’est parti pour une semaine de savoir, de pratique et d’innovation au servi
               <div class="text-sm text-blue-700 font-bold mt-1" data-province="Province 1">Province 1</div>
             </div>
           </div>
-
           <div class="province-card w-40 flex-shrink-0 text-center">
             <div class="w-40 h-40 rounded-xl overflow-hidden shadow-md">
               <img src="p2.jpg" alt="Province 2" class="w-full h-full object-cover">
@@ -768,124 +767,98 @@ C’est parti pour une semaine de savoir, de pratique et d’innovation au servi
               <div class="text-sm text-blue-700 font-bold mt-1" data-province="Province 2">Province 2</div>
             </div>
           </div>
-
-          <!-- ... Répète/duplique / remplace ci-dessous jusqu'à 26 cartes ... -->
-          <!-- Pour gagner du temps je fournis 26 placeholders ci-dessous -->
           <div class="province-card w-40 flex-shrink-0 text-center">
             <div class="w-40 h-40 rounded-xl overflow-hidden shadow-md"><img src="p3.jpg" alt="Province 3" class="w-full h-full object-cover"></div>
             <div class="mt-3"><div class="text-sm font-semibold">Nom Coordonnateur 3</div><div class="text-xs text-gray-500">Coordonnateur Provincial</div><div class="text-sm text-blue-700 font-bold mt-1">Province 3</div></div>
           </div>
-
           <div class="province-card w-40 flex-shrink-0 text-center">
             <div class="w-40 h-40 rounded-xl overflow-hidden shadow-md"><img src="p4.jpg" alt="Province 4" class="w-full h-full object-cover"></div>
             <div class="mt-3"><div class="text-sm font-semibold">Nom Coordonnateur 4</div><div class="text-xs text-gray-500">Coordonnateur Provincial</div><div class="text-sm text-blue-700 font-bold mt-1">Province 4</div></div>
           </div>
-
           <div class="province-card w-40 flex-shrink-0 text-center">
             <div class="w-40 h-40 rounded-xl overflow-hidden shadow-md"><img src="p5.jpg" alt="Province 5" class="w-full h-full object-cover"></div>
             <div class="mt-3"><div class="text-sm font-semibold">Nom Coordonnateur 5</div><div class="text-xs text-gray-500">Coordonnateur Provincial</div><div class="text-sm text-blue-700 font-bold mt-1">Province 5</div></div>
           </div>
-
           <div class="province-card w-40 flex-shrink-0 text-center">
             <div class="w-40 h-40 rounded-xl overflow-hidden shadow-md"><img src="p6.jpg" alt="Province 6" class="w-full h-full object-cover"></div>
             <div class="mt-3"><div class="text-sm font-semibold">Nom Coordonnateur 6</div><div class="text-xs text-gray-500">Coordonnateur Provincial</div><div class="text-sm text-blue-700 font-bold mt-1">Province 6</div></div>
           </div>
-
           <div class="province-card w-40 flex-shrink-0 text-center">
             <div class="w-40 h-40 rounded-xl overflow-hidden shadow-md"><img src="p7.jpg" alt="Province 7" class="w-full h-full object-cover"></div>
             <div class="mt-3"><div class="text-sm font-semibold">Nom Coordonnateur 7</div><div class="text-xs text-gray-500">Coordonnateur Provincial</div><div class="text-sm text-blue-700 font-bold mt-1">Province 7</div></div>
           </div>
-
           <div class="province-card w-40 flex-shrink-0 text-center">
             <div class="w-40 h-40 rounded-xl overflow-hidden shadow-md"><img src="p8.jpg" alt="Province 8" class="w-full h-full object-cover"></div>
             <div class="mt-3"><div class="text-sm font-semibold">Nom Coordonnateur 8</div><div class="text-xs text-gray-500">Coordonnateur Provincial</div><div class="text-sm text-blue-700 font-bold mt-1">Province 8</div></div>
           </div>
-
           <div class="province-card w-40 flex-shrink-0 text-center">
             <div class="w-40 h-40 rounded-xl overflow-hidden shadow-md"><img src="p9.jpg" alt="Province 9" class="w-full h-full object-cover"></div>
             <div class="mt-3"><div class="text-sm font-semibold">Nom Coordonnateur 9</div><div class="text-xs text-gray-500">Coordonnateur Provincial</div><div class="text-sm text-blue-700 font-bold mt-1">Province 9</div></div>
           </div>
-
           <div class="province-card w-40 flex-shrink-0 text-center">
             <div class="w-40 h-40 rounded-xl overflow-hidden shadow-md"><img src="p10.jpg" alt="Province 10" class="w-full h-full object-cover"></div>
             <div class="mt-3"><div class="text-sm font-semibold">Nom Coordonnateur 10</div><div class="text-xs text-gray-500">Coordonnateur Provincial</div><div class="text-sm text-blue-700 font-bold mt-1">Province 10</div></div>
           </div>
-
           <div class="province-card w-40 flex-shrink-0 text-center">
             <div class="w-40 h-40 rounded-xl overflow-hidden shadow-md"><img src="p11.jpg" alt="Province 11" class="w-full h-full object-cover"></div>
             <div class="mt-3"><div class="text-sm font-semibold">Nom Coordonnateur 11</div><div class="text-xs text-gray-500">Coordonnateur Provincial</div><div class="text-sm text-blue-700 font-bold mt-1">Province 11</div></div>
           </div>
-
           <div class="province-card w-40 flex-shrink-0 text-center">
             <div class="w-40 h-40 rounded-xl overflow-hidden shadow-md"><img src="p12.jpg" alt="Province 12" class="w-full h-full object-cover"></div>
             <div class="mt-3"><div class="text-sm font-semibold">Nom Coordonnateur 12</div><div class="text-xs text-gray-500">Coordonnateur Provincial</div><div class="text-sm text-blue-700 font-bold mt-1">Province 12</div></div>
           </div>
-
           <div class="province-card w-40 flex-shrink-0 text-center">
             <div class="w-40 h-40 rounded-xl overflow-hidden shadow-md"><img src="p13.jpg" alt="Province 13" class="w-full h-full object-cover"></div>
             <div class="mt-3"><div class="text-sm font-semibold">Nom Coordonnateur 13</div><div class="text-xs text-gray-500">Coordonnateur Provincial</div><div class="text-sm text-blue-700 font-bold mt-1">Province 13</div></div>
           </div>
-
           <div class="province-card w-40 flex-shrink-0 text-center">
             <div class="w-40 h-40 rounded-xl overflow-hidden shadow-md"><img src="p14.jpg" alt="Province 14" class="w-full h-full object-cover"></div>
             <div class="mt-3"><div class="text-sm font-semibold">Nom Coordonnateur 14</div><div class="text-xs text-gray-500">Coordonnateur Provincial</div><div class="text-sm text-blue-700 font-bold mt-1">Province 14</div></div>
           </div>
-
           <div class="province-card w-40 flex-shrink-0 text-center">
             <div class="w-40 h-40 rounded-xl overflow-hidden shadow-md"><img src="p15.jpg" alt="Province 15" class="w-full h-full object-cover"></div>
             <div class="mt-3"><div class="text-sm font-semibold">Nom Coordonnateur 15</div><div class="text-xs text-gray-500">Coordonnateur Provincial</div><div class="text-sm text-blue-700 font-bold mt-1">Province 15</div></div>
           </div>
-
           <div class="province-card w-40 flex-shrink-0 text-center">
             <div class="w-40 h-40 rounded-xl overflow-hidden shadow-md"><img src="p16.jpg" alt="Province 16" class="w-full h-full object-cover"></div>
             <div class="mt-3"><div class="text-sm font-semibold">Nom Coordonnateur 16</div><div class="text-xs text-gray-500">Coordonnateur Provincial</div><div class="text-sm text-blue-700 font-bold mt-1">Province 16</div></div>
           </div>
-
           <div class="province-card w-40 flex-shrink-0 text-center">
             <div class="w-40 h-40 rounded-xl overflow-hidden shadow-md"><img src="p17.jpg" alt="Province 17" class="w-full h-full object-cover"></div>
             <div class="mt-3"><div class="text-sm font-semibold">Nom Coordonnateur 17</div><div class="text-xs text-gray-500">Coordonnateur Provincial</div><div class="text-sm text-blue-700 font-bold mt-1">Province 17</div></div>
           </div>
-
           <div class="province-card w-40 flex-shrink-0 text-center">
             <div class="w-40 h-40 rounded-xl overflow-hidden shadow-md"><img src="p18.jpg" alt="Province 18" class="w-full h-full object-cover"></div>
             <div class="mt-3"><div class="text-sm font-semibold">Nom Coordonnateur 18</div><div class="text-xs text-gray-500">Coordonnateur Provincial</div><div class="text-sm text-blue-700 font-bold mt-1">Province 18</div></div>
           </div>
-
           <div class="province-card w-40 flex-shrink-0 text-center">
             <div class="w-40 h-40 rounded-xl overflow-hidden shadow-md"><img src="p19.jpg" alt="Province 19" class="w-full h-full object-cover"></div>
             <div class="mt-3"><div class="text-sm font-semibold">Nom Coordonnateur 19</div><div class="text-xs text-gray-500">Coordonnateur Provincial</div><div class="text-sm text-blue-700 font-bold mt-1">Province 19</div></div>
           </div>
-
           <div class="province-card w-40 flex-shrink-0 text-center">
             <div class="w-40 h-40 rounded-xl overflow-hidden shadow-md"><img src="p20.jpg" alt="Province 20" class="w-full h-full object-cover"></div>
             <div class="mt-3"><div class="text-sm font-semibold">Nom Coordonnateur 20</div><div class="text-xs text-gray-500">Coordonnateur Provincial</div><div class="text-sm text-blue-700 font-bold mt-1">Province 20</div></div>
           </div>
-
           <div class="province-card w-40 flex-shrink-0 text-center">
             <div class="w-40 h-40 rounded-xl overflow-hidden shadow-md"><img src="p21.jpg" alt="Province 21" class="w-full h-full object-cover"></div>
             <div class="mt-3"><div class="text-sm font-semibold">Nom Coordonnateur 21</div><div class="text-xs text-gray-500">Coordonnateur Provincial</div><div class="text-sm text-blue-700 font-bold mt-1">Province 21</div></div>
           </div>
-
           <div class="province-card w-40 flex-shrink-0 text-center">
             <div class="w-40 h-40 rounded-xl overflow-hidden shadow-md"><img src="p22.jpg" alt="Province 22" class="w-full h-full object-cover"></div>
             <div class="mt-3"><div class="text-sm font-semibold">Nom Coordonnateur 22</div><div class="text-xs text-gray-500">Coordonnateur Provincial</div><div class="text-sm text-blue-700 font-bold mt-1">Province 22</div></div>
           </div>
-
           <div class="province-card w-40 flex-shrink-0 text-center">
             <div class="w-40 h-40 rounded-xl overflow-hidden shadow-md"><img src="p23.jpg" alt="Province 23" class="w-full h-full object-cover"></div>
             <div class="mt-3"><div class="text-sm font-semibold">Nom Coordonnateur 23</div><div class="text-xs text-gray-500">Coordonnateur Provincial</div><div class="text-sm text-blue-700 font-bold mt-1">Province 23</div></div>
           </div>
-
           <div class="province-card w-40 flex-shrink-0 text-center">
             <div class="w-40 h-40 rounded-xl overflow-hidden shadow-md"><img src="p24.jpg" alt="Province 24" class="w-full h-full object-cover"></div>
             <div class="mt-3"><div class="text-sm font-semibold">Nom Coordonnateur 24</div><div class="text-xs text-gray-500">Coordonnateur Provincial</div><div class="text-sm text-blue-700 font-bold mt-1">Province 24</div></div>
           </div>
-
           <div class="province-card w-40 flex-shrink-0 text-center">
             <div class="w-40 h-40 rounded-xl overflow-hidden shadow-md"><img src="p25.jpg" alt="Province 25" class="w-full h-full object-cover"></div>
             <div class="mt-3"><div class="text-sm font-semibold">Nom Coordonnateur 25</div><div class="text-xs text-gray-500">Coordonnateur Provincial</div><div class="text-sm text-blue-700 font-bold mt-1">Province 25</div></div>
           </div>
-
           <div class="province-card w-40 flex-shrink-0 text-center">
             <div class="w-40 h-40 rounded-xl overflow-hidden shadow-md"><img src="p26.jpg" alt="Province 26" class="w-full h-full object-cover"></div>
             <div class="mt-3"><div class="text-sm font-semibold">Nom Coordonnateur 26</div><div class="text-xs text-gray-500">Coordonnateur Provincial</div><div class="text-sm text-blue-700 font-bold mt-1">Province 26</div></div>
@@ -896,7 +869,122 @@ C’est parti pour une semaine de savoir, de pratique et d’innovation au servi
 
         <!-- Dupliquer le même bloc pour une animation infinie plus fluide (CSS seul) -->
         <div id="carousel-provinces-duplicate" class="flex items-start gap-6 mt-6 -translate-y-[calc(100%+1rem)] opacity-0 pointer-events-none" aria-hidden="true">
-          <!-- Duplique visuellement les mêmes images pour la boucle -->
+          <div class="province-card w-40 flex-shrink-0 text-center">
+            <div class="w-40 h-40 rounded-xl overflow-hidden shadow-md">
+              <img src="p1.jpg" alt="Province 1" class="w-full h-full object-cover">
+            </div>
+            <div class="mt-3">
+              <div class="text-sm font-semibold" data-name="Nom Coordonnateur 1">Nom Coordonnateur 1</div>
+              <div class="text-xs text-gray-500">Coordonnateur Provincial</div>
+              <div class="text-sm text-blue-700 font-bold mt-1" data-province="Province 1">Province 1</div>
+            </div>
+          </div>
+          <div class="province-card w-40 flex-shrink-0 text-center">
+            <div class="w-40 h-40 rounded-xl overflow-hidden shadow-md">
+              <img src="p2.jpg" alt="Province 2" class="w-full h-full object-cover">
+            </div>
+            <div class="mt-3">
+              <div class="text-sm font-semibold" data-name="Nom Coordonnateur 2">Nom Coordonnateur 2</div>
+              <div class="text-xs text-gray-500">Coordonnateur Provincial</div>
+              <div class="text-sm text-blue-700 font-bold mt-1" data-province="Province 2">Province 2</div>
+            </div>
+          </div>
+          <div class="province-card w-40 flex-shrink-0 text-center">
+            <div class="w-40 h-40 rounded-xl overflow-hidden shadow-md"><img src="p3.jpg" alt="Province 3" class="w-full h-full object-cover"></div>
+            <div class="mt-3"><div class="text-sm font-semibold">Nom Coordonnateur 3</div><div class="text-xs text-gray-500">Coordonnateur Provincial</div><div class="text-sm text-blue-700 font-bold mt-1">Province 3</div></div>
+          </div>
+          <div class="province-card w-40 flex-shrink-0 text-center">
+            <div class="w-40 h-40 rounded-xl overflow-hidden shadow-md"><img src="p4.jpg" alt="Province 4" class="w-full h-full object-cover"></div>
+            <div class="mt-3"><div class="text-sm font-semibold">Nom Coordonnateur 4</div><div class="text-xs text-gray-500">Coordonnateur Provincial</div><div class="text-sm text-blue-700 font-bold mt-1">Province 4</div></div>
+          </div>
+          <div class="province-card w-40 flex-shrink-0 text-center">
+            <div class="w-40 h-40 rounded-xl overflow-hidden shadow-md"><img src="p5.jpg" alt="Province 5" class="w-full h-full object-cover"></div>
+            <div class="mt-3"><div class="text-sm font-semibold">Nom Coordonnateur 5</div><div class="text-xs text-gray-500">Coordonnateur Provincial</div><div class="text-sm text-blue-700 font-bold mt-1">Province 5</div></div>
+          </div>
+          <div class="province-card w-40 flex-shrink-0 text-center">
+            <div class="w-40 h-40 rounded-xl overflow-hidden shadow-md"><img src="p6.jpg" alt="Province 6" class="w-full h-full object-cover"></div>
+            <div class="mt-3"><div class="text-sm font-semibold">Nom Coordonnateur 6</div><div class="text-xs text-gray-500">Coordonnateur Provincial</div><div class="text-sm text-blue-700 font-bold mt-1">Province 6</div></div>
+          </div>
+          <div class="province-card w-40 flex-shrink-0 text-center">
+            <div class="w-40 h-40 rounded-xl overflow-hidden shadow-md"><img src="p7.jpg" alt="Province 7" class="w-full h-full object-cover"></div>
+            <div class="mt-3"><div class="text-sm font-semibold">Nom Coordonnateur 7</div><div class="text-xs text-gray-500">Coordonnateur Provincial</div><div class="text-sm text-blue-700 font-bold mt-1">Province 7</div></div>
+          </div>
+          <div class="province-card w-40 flex-shrink-0 text-center">
+            <div class="w-40 h-40 rounded-xl overflow-hidden shadow-md"><img src="p8.jpg" alt="Province 8" class="w-full h-full object-cover"></div>
+            <div class="mt-3"><div class="text-sm font-semibold">Nom Coordonnateur 8</div><div class="text-xs text-gray-500">Coordonnateur Provincial</div><div class="text-sm text-blue-700 font-bold mt-1">Province 8</div></div>
+          </div>
+            <div class="province-card w-40 flex-shrink-0 text-center">
+            <div class="w-40 h-40 rounded-xl overflow-hidden shadow-md"><img src="p9.jpg" alt="Province 9" class="w-full h-full object-cover"></div>
+            <div class="mt-3"><div class="text-sm font-semibold">Nom Coordonnateur 9</div><div class="text-xs text-gray-500">Coordonnateur Provincial</div><div class="text-sm text-blue-700 font-bold mt-1">Province 9</div></div>
+          </div>
+          <div class="province-card w-40 flex-shrink-0 text-center">
+            <div class="w-40 h-40 rounded-xl overflow-hidden shadow-md"><img src="p10.jpg" alt="Province 10" class="w-full h-full object-cover"></div>
+            <div class="mt-3"><div class="text-sm font-semibold">Nom Coordonnateur 10</div><div class="text-xs text-gray-500">Coordonnateur Provincial</div><div class="text-sm text-blue-700 font-bold mt-1">Province 10</div></div>
+          </div>
+          <div class="province-card w-40 flex-shrink-0 text-center">
+            <div class="w-40 h-40 rounded-xl overflow-hidden shadow-md"><img src="p11.jpg" alt="Province 11" class="w-full h-full object-cover"></div>
+            <div class="mt-3"><div class="text-sm font-semibold">Nom Coordonnateur 11</div><div class="text-xs text-gray-500">Coordonnateur Provincial</div><div class="text-sm text-blue-700 font-bold mt-1">Province 11</div></div>
+          </div>
+          <div class="province-card w-40 flex-shrink-0 text-center">
+            <div class="w-40 h-40 rounded-xl overflow-hidden shadow-md"><img src="p12.jpg" alt="Province 12" class="w-full h-full object-cover"></div>
+            <div class="mt-3"><div class="text-sm font-semibold">Nom Coordonnateur 12</div><div class="text-xs text-gray-500">Coordonnateur Provincial</div><div class="text-sm text-blue-700 font-bold mt-1">Province 12</div></div>
+          </div>
+          <div class="province-card w-40 flex-shrink-0 text-center">
+            <div class="w-40 h-40 rounded-xl overflow-hidden shadow-md"><img src="p13.jpg" alt="Province 13" class="w-full h-full object-cover"></div>
+            <div class="mt-3"><div class="text-sm font-semibold">Nom Coordonnateur 13</div><div class="text-xs text-gray-500">Coordonnateur Provincial</div><div class="text-sm text-blue-700 font-bold mt-1">Province 13</div></div>
+          </div>
+          <div class="province-card w-40 flex-shrink-0 text-center">
+            <div class="w-40 h-40 rounded-xl overflow-hidden shadow-md"><img src="p14.jpg" alt="Province 14" class="w-full h-full object-cover"></div>
+            <div class="mt-3"><div class="text-sm font-semibold">Nom Coordonnateur 14</div><div class="text-xs text-gray-500">Coordonnateur Provincial</div><div class="text-sm text-blue-700 font-bold mt-1">Province 14</div></div>
+          </div>
+          <div class="province-card w-40 flex-shrink-0 text-center">
+            <div class="w-40 h-40 rounded-xl overflow-hidden shadow-md"><img src="p15.jpg" alt="Province 15" class="w-full h-full object-cover"></div>
+            <div class="mt-3"><div class="text-sm font-semibold">Nom Coordonnateur 15</div><div class="text-xs text-gray-500">Coordonnateur Provincial</div><div class="text-sm text-blue-700 font-bold mt-1">Province 15</div></div>
+          </div>
+          <div class="province-card w-40 flex-shrink-0 text-center">
+            <div class="w-40 h-40 rounded-xl overflow-hidden shadow-md"><img src="p16.jpg" alt="Province 16" class="w-full h-full object-cover"></div>
+            <div class="mt-3"><div class="text-sm font-semibold">Nom Coordonnateur 16</div><div class="text-xs text-gray-500">Coordonnateur Provincial</div><div class="text-sm text-blue-700 font-bold mt-1">Province 16</div></div>
+          </div>
+          <div class="province-card w-40 flex-shrink-0 text-center">
+            <div class="w-40 h-40 rounded-xl overflow-hidden shadow-md"><img src="p17.jpg" alt="Province 17" class="w-full h-full object-cover"></div>
+            <div class="mt-3"><div class="text-sm font-semibold">Nom Coordonnateur 17</div><div class="text-xs text-gray-500">Coordonnateur Provincial</div><div class="text-sm text-blue-700 font-bold mt-1">Province 17</div></div>
+          </div>
+          <div class="province-card w-40 flex-shrink-0 text-center">
+            <div class="w-40 h-40 rounded-xl overflow-hidden shadow-md"><img src="p18.jpg" alt="Province 18" class="w-full h-full object-cover"></div>
+            <div class="mt-3"><div class="text-sm font-semibold">Nom Coordonnateur 18</div><div class="text-xs text-gray-500">Coordonnateur Provincial</div><div class="text-sm text-blue-700 font-bold mt-1">Province 18</div></div>
+          </div>
+          <div class="province-card w-40 flex-shrink-0 text-center">
+            <div class="w-40 h-40 rounded-xl overflow-hidden shadow-md"><img src="p19.jpg" alt="Province 19" class="w-full h-full object-cover"></div>
+            <div class="mt-3"><div class="text-sm font-semibold">Nom Coordonnateur 19</div><div class="text-xs text-gray-500">Coordonnateur Provincial</div><div class="text-sm text-blue-700 font-bold mt-1">Province 19</div></div>
+          </div>
+          <div class="province-card w-40 flex-shrink-0 text-center">
+            <div class="w-40 h-40 rounded-xl overflow-hidden shadow-md"><img src="p20.jpg" alt="Province 20" class="w-full h-full object-cover"></div>
+            <div class="mt-3"><div class="text-sm font-semibold">Nom Coordonnateur 20</div><div class="text-xs text-gray-500">Coordonnateur Provincial</div><div class="text-sm text-blue-700 font-bold mt-1">Province 20</div></div>
+          </div>
+          <div class="province-card w-40 flex-shrink-0 text-center">
+            <div class="w-40 h-40 rounded-xl overflow-hidden shadow-md"><img src="p21.jpg" alt="Province 21" class="w-full h-full object-cover"></div>
+            <div class="mt-3"><div class="text-sm font-semibold">Nom Coordonnateur 21</div><div class="text-xs text-gray-500">Coordonnateur Provincial</div><div class="text-sm text-blue-700 font-bold mt-1">Province 21</div></div>
+          </div>
+          <div class="province-card w-40 flex-shrink-0 text-center">
+            <div class="w-40 h-40 rounded-xl overflow-hidden shadow-md"><img src="p22.jpg" alt="Province 22" class="w-full h-full object-cover"></div>
+            <div class="mt-3"><div class="text-sm font-semibold">Nom Coordonnateur 22</div><div class="text-xs text-gray-500">Coordonnateur Provincial</div><div class="text-sm text-blue-700 font-bold mt-1">Province 22</div></div>
+          </div>
+          <div class="province-card w-40 flex-shrink-0 text-center">
+            <div class="w-40 h-40 rounded-xl overflow-hidden shadow-md"><img src="p23.jpg" alt="Province 23" class="w-full h-full object-cover"></div>
+            <div class="mt-3"><div class="text-sm font-semibold">Nom Coordonnateur 23</div><div class="text-xs text-gray-500">Coordonnateur Provincial</div><div class="text-sm text-blue-700 font-bold mt-1">Province 23</div></div>
+          </div>
+          <div class="province-card w-40 flex-shrink-0 text-center">
+            <div class="w-40 h-40 rounded-xl overflow-hidden shadow-md"><img src="p24.jpg" alt="Province 24" class="w-full h-full object-cover"></div>
+            <div class="mt-3"><div class="text-sm font-semibold">Nom Coordonnateur 24</div><div class="text-xs text-gray-500">Coordonnateur Provincial</div><div class="text-sm text-blue-700 font-bold mt-1">Province 24</div></div>
+          </div>
+            <div class="province-card w-40 flex-shrink-0 text-center">
+            <div class="w-40 h-40 rounded-xl overflow-hidden shadow-md"><img src="p25.jpg" alt="Province 25" class="w-full h-full object-cover"></div>
+            <div class="mt-3"><div class="text-sm font-semibold">Nom Coordonnateur 25</div><div class="text-xs text-gray-500">Coordonnateur Provincial</div><div class="text-sm text-blue-700 font-bold mt-1">Province 25</div></div>
+          </div>
+          <div class="province-card w-40 flex-shrink-0 text-center">
+            <div class="w-40 h-40 rounded-xl overflow-hidden shadow-md"><img src="p26.jpg" alt="Province 26" class="w-full h-full object-cover"></div>
+            <div class="mt-3"><div class="text-sm font-semibold">Nom Coordonnateur 26</div><div class="text-xs text-gray-500">Coordonnateur Provincial</div><div class="text-sm text-blue-700 font-bold mt-1">Province 26</div></div>
+          </div><!-- Duplique visuellement les mêmes images pour la boucle -->
           <!-- (Tu peux laisser vide ; la duplication sera gérée par CSS/JS si tu préfères. 
                ici on laisse juste pour compatibilité ; l'animation principale suffit.) -->
         </div>
@@ -1202,6 +1290,7 @@ C’est parti pour une semaine de savoir, de pratique et d’innovation au servi
     </script>
 </body>
 </html>
+
 
 
 
