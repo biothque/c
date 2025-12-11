@@ -373,58 +373,51 @@
 
             
            /* 10. Styles pour le Carrousel des Provinces (Fixe la non-animation) */
-        .scrolling-provinces-container {
-            display: flex;
-            overflow: hidden;
-            white-space: nowrap;
-            padding: 20px 0;
-            animation: scroll-provinces 60s linear infinite; /* Active le défilement automatique et infini */
-            width: 200%; /* Permet de dupliquer le contenu pour la boucle infinie */
-        }
-
-        /* Animation pour le défilement horizontal infini des provinces */
+                /* Keyframes pour l'animation de défilement des provinces */
         @keyframes scroll-provinces {
             0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); } /* Défilement de la moitié du contenu */
-        }
-        
-        .province-card {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            width: 150px; 
-            margin-right: 3rem;
-            text-align: center;
+            100% { transform: translateX(-50%); } 
         }
 
+        /* Styles pour le Carrousel des Provinces (Active le défilement) */
+        .scrolling-provinces-container {
+            display: flex;
+            white-space: nowrap;
+            padding: 20px 0;
+            width: 200%; /* ESSENTIEL pour défiler le double du contenu */
+            /* Application de l'animation */
+            animation: scroll-provinces 70s linear infinite; 
+        }
+        .province-card {
+            display: inline-block;
+            width: 150px; /* Largeur fixe pour chaque carte */
+            flex-shrink: 0;
+            margin-right: 24px;
+            text-align: center;
+            padding: 10px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
         .province-photo {
-            width: 100px;
-            height: 100px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
             object-fit: cover;
-            border: 4px solid #0099DD; 
-            transition: transform 0.3s ease;
+            margin: 0 auto 8px auto;
+            border: 3px solid #3b82f6; 
         }
-
-        .province-card:hover .province-photo {
-            transform: scale(1.1);
-            border-color: #ef4444; 
-        }
-        
         .province-name {
-            margin-top: 0.5rem;
-            font-size: 0.875rem; 
-            font-weight: 600;
-            color: #374151; 
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: #1f2937;
         }
-        
         .province-title {
-            font-size: 0.75rem; 
-            color: #ef4444; 
-            line-height: 1.2;
-            }
+            font-size: 0.75rem;
+            color: #ef4444;
+            margin-top: 2px;
+        }
+            
         }
     </style>
 </head>
@@ -723,31 +716,20 @@ C’est parti pour une semaine de savoir, de pratique et d’innovation au servi
 
         <div class="h-1 w-full bg-gradient-to-r from-red-500 via-yellow-500 to-blue-500"></div>
 
-<section id="coordination-nationale" class="py-20 bg-gray-100">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 class="text-4xl font-extrabold text-gray-900 mb-16 relative">
+<section id="coordination-provinces" class="py-12 bg-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-900 text-center mb-8 relative">
             <span class="multi-color-blink relative z-10">L'ÉQUIPE DE LA COORDINATION NATIONALE</span>
-            <span class="absolute left-1/2 -bottom-2 w-32 h-1 bg-blue-500 transform -translate-x-1/2"></span>
             <span class="absolute left-1/2 -bottom-2 w-full h-px bg-gray-300 transform -translate-x-1/2"></span>
         </h2>
         
-        <div class="mb-16">
-            <div class="coordinator-photo w-64 h-64 mx-auto border-8 border-yellow-500 rounded-full overflow-hidden shadow-2xl transform hover:scale-105 transition duration-500">
-                <img src="https://placehold.co/256x256/0099DD/FFFFFF?text=COORDONNATEUR+NAT." alt="Photo du Coordonnateur National" class="w-full h-full object-cover">
-            </div>
-            <p class="mt-4 text-xl font-bold text-gray-800">BUKASA KANUNDEYI RUBEN</p>
-            <p class="text-lg font-semibold text-red-500">Coordonnateur National Jeunes Entrepreneurs</p>
-        </div>
-        
-        <h3 class="text-2xl font-bold text-gray-700 mb-8">Nos Coordinateurs Provinciaux</h3>
-
-        <div id="provinces-carousel" class="relative overflow-hidden w-full">
-            <div class="scrolling-provinces-container flex space-x-12 p-4">
+        <div class="overflow-hidden whitespace-nowrap py-4">
+            <div class="scrolling-provinces-container flex space-x-6">
                 </div>
         </div>
-        
     </div>
 </section>
+        
 
 <div class="h-1 w-full bg-gradient-to-r from-red-500 via-yellow-500 to-blue-500"></div>
 
@@ -1026,7 +1008,7 @@ C’est parti pour une semaine de savoir, de pratique et d’innovation au servi
                     });
                 });
                 
-                // 5. Logique du Menu Mobile
+                                // --- DÉBUT : 5. Logique du Menu Mobile (VERSION CORRIGÉE) ---
                 const menuButton = document.getElementById('menu-button');
                 const mobileMenu = document.getElementById('mobile-menu');
                 const menuIconOpen = document.getElementById('menu-icon-open');
@@ -1034,30 +1016,31 @@ C’est parti pour une semaine de savoir, de pratique et d’innovation au servi
 
                 if (menuButton) {
                     menuButton.addEventListener('click', () => {
-                        // Toggle the visibility of the mobile menu
                         const isMenuOpen = mobileMenu.classList.toggle('hidden');
-                        
-                        // Toggle icons (hamburger <-> close)
                         menuIconOpen.classList.toggle('hidden', !isMenuOpen);
                         menuIconClose.classList.toggle('hidden', isMenuOpen);
                     });
                     
-                    // Hide menu after clicking a link (optional, but good practice)
+                    // Hide menu after clicking a link 
                     mobileMenu.querySelectorAll('a').forEach(link => {
                          link.addEventListener('click', () => {
                             mobileMenu.classList.add('hidden');
                             menuIconOpen.classList.remove('hidden');
                             menuIconClose.classList.add('hidden');
+                         }); 
                        });
                     });
-                }
+                } 
+                // --- FIN : Logique du Menu Mobile ---
+
+
+                // --- DÉBUT : 6. Logique du Carrousel des Provinces ---
                 
-                              // --- NOUVEAU: 1. Logique du Carrousel des Provinces (VERSION COMPLÈTE & CORRIGÉE) ---
-                // Le setTimeout est conservé pour garantir l'exécution après le chargement du DOM.
+                // Le setTimeout est CRUCIAL pour que le DOM soit chargé.
                 setTimeout(() => {
                     const provincesCarouselContainer = document.querySelector('.scrolling-provinces-container');
 
-                    // 1. Tableau des 26 provinces (avec placeholders pour l'image)
+                    // 1. Tableau des 26 provinces
                     const provincesData = [
                         { name: "Kinshasa", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/34d399/FFFFFF?text=Kinshasa" },
                         { name: "Kongo Central", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/0047AB/FFFFFF?text=Kongo+C." },
@@ -1087,15 +1070,14 @@ C’est parti pour une semaine de savoir, de pratique et d’innovation au servi
                         { name: "Sud-Ubangi", title: "Coordonnateur Provincial", img: "https://placehold.co/100x100/FFEC00/333333?text=S.Ubangi" },
                     ];
                     
-                    // Répéter les données (52 éléments) pour permettre la boucle infinie CSS
+                    // Répéter les données pour la boucle infinie CSS
                     const repeatedProvincesData = [...provincesData, ...provincesData];
 
-                    // 2. Fonction de création de la carte (pour éviter le blocage)
+                    // Fonction de création de la carte 
                     const createProvinceCard = (province) => {
                         const div = document.createElement('div');
                         div.className = 'province-card';
                         
-                        // L'image est actuellement un placeholder
                         const imageSrc = province.img; 
                         
                         div.innerHTML = `
@@ -1109,14 +1091,16 @@ C’est parti pour une semaine de savoir, de pratique et d’innovation au servi
                         return div;
                     };
 
-                    // 3. Injection dans le DOM
+                    // Injection des cartes dans le conteneur HTML
                     if (provincesCarouselContainer) {
+                        provincesCarouselContainer.innerHTML = ''; // Vider avant d'ajouter
                         repeatedProvincesData.forEach(province => {
                             provincesCarouselContainer.appendChild(createProvinceCard(province));
                         });
                     }
                 }, 100);
-                // --- FIN DE LA LOGIQUE DU CARROUSEL DES PROVINCES ---
+                
+                // --- FIN : LOGIQUE DU CARROUSEL DES PROVINCES ---
                             
             }; // Fin de initializeHomePageScripts
 
@@ -1124,6 +1108,7 @@ C’est parti pour une semaine de savoir, de pratique et d’innovation au servi
     </script>
 </body>
 </html>
+
 
 
 
