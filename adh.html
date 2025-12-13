@@ -22,7 +22,7 @@
       <h2>IDENTIFICATION</h2>
 
       <label class="field">
-        <span class="label-text">Dénomination / Raison sociale</span>
+        <span class="label-text">Dénomination / Raison sociale (max 25 lettres)</span>
         <input type="text" name="denomination" class="line-input" placeholder="....................................................................." required>
       </label>
 
@@ -113,6 +113,7 @@
             <option>Société Anonyme (SA)</option>
             <option>Société en Nom Collectif (SNC)</option>
             <option>Société en Commandite Simple (SCS)</option>
+               <option>Société par Actions Simplifiée (SAS)</option>
             <option>Société Unipersonnelle (SU)</option>
             <option>Groupement d'Intérêt Économique (GIE)</option>
           </select>
@@ -132,7 +133,7 @@
       <h2>ACTIVITES ECONOMIQUES OU COMMERCIALES</h2>
 
       <label class="field">
-        <span class="label-text">Objectif Social</span>
+        <span class="label-text">Objectif Social (1)</span>
         <input type="text" name="objectif_social" class="line-input" required>
       </label>
 
@@ -158,7 +159,7 @@
           </select>
         </label>
         <label class="small-field">
-          <span class="label-text">Activité Secondaire</span>
+          <span class="label-text">Veuillez préciser la filière</span>
           <input type="text" name="act_secondaire" class="short-input" required>
         </label>
       </div>
@@ -171,7 +172,7 @@
       <div class="row">
         <label class="small-field">
           <span class="label-text">Capital social</span>
-          <input type="text" name="capital" class="short-input" required>
+          <input type="number" name="capital" class="short-input" required>
         </label>
         <label class="small-field">
           <span class="label-text">Nombre d’agents</span>
@@ -182,22 +183,22 @@
       <div class="row">
         <label class="small-field">
           <span class="label-text">Chiffre d’affaires mensuel (en $)</span>
-          <input type="text" name="ca_mensuel" class="short-input" required>
+          <input type="number" name="ca_mensuel" class="short-input" required>
         </label>
         <label class="small-field">
           <span class="label-text">Masse salariale payée mensuellement (en $)</span>
-          <input type="text" name="masse_salariale" class="short-input" required>
+          <input type="number" name="masse_salariale" class="short-input" required>
         </label>
       </div>
 
       <div class="row">
         <label class="small-field">
           <span class="label-text">Volume de l’IPR payé mensuellement (en $)</span>
-          <input type="text" name="ipr" class="short-input" required>
+          <input type="number" name="ipr" class="short-input" required>
         </label>
         <label class="small-field">
-          <span class="label-text">Volume d’Impôts & taxes payés mensuellement (en $)</span>
-          <input type="text" name="impots" class="short-input" required>
+          <span class="label-text">Volume d’Impôts (en $)</span>
+          <input type="number" name="impots" class="short-input" required>
         </label>
       </div>
 
@@ -224,10 +225,10 @@
         <span class="label-text">Niveau d’études</span>
         <select name="niveau_etudes" class="short-input" required>
           <option value="">--Choisir--</option>
-          <option>Primaire</option>
-          <option>Secondaire</option>
-          <option>Supérieur</option>
-          <option>Autre</option>
+          <option>Diplôme d'État</option>
+          <option>Diplôme de Licence</option>
+          <option>Master</option>
+          <option>Doctorat</option>
         </select>
       </label>
     </div>
@@ -249,8 +250,8 @@
 
     <div class="row">
       <label class="small-field">
-        <span class="label-text">Tél / Email du Gérant</span>
-        <input type="text" name="contact_gerant" class="short-input" required>
+        <span class="label-text">Tél du Gérant</span>
+        <input type="number" name="contact_gerant" class="short-input" required>
       </label>
       <label class="small-field">
         <span class="label-text">Genre du Gérant</span>
@@ -280,13 +281,13 @@
     </label>
     
     <div class="field">
-      <span class="label-text">Noms et Adresses de fournisseurs (Un par ligne)</span>
-      <textarea name="fournisseurs" rows="3" placeholder="1. Nom / Adresse\n2. Nom / Adresse\n3. Nom / Adresse" required></textarea>
+      <span class="label-text">Noms et Adresses de fournisseurs (Une par ligne)</span>
+      <textarea name="fournisseurs" rows="3" placeholder="1. Nom / Adresse" required></textarea>
     </div>
 
     <div class="field">
       <span class="label-text">Noms et Adresses de clients (Un par ligne)</span>
-      <textarea name="clients" rows="3" placeholder="1. Nom / Adresse\n2. Nom / Adresse\n3. Nom / Adresse" required></textarea>
+      <textarea name="clients" rows="3" placeholder="1. Nom / Adresse" required></textarea>
     </div>
 
     <div class="row">
@@ -312,20 +313,20 @@
     </div>
 
     <div class="field">
-      <span class="label-text">Qu’est-ce que la PME attend de la COPEMECO ? (Max 500 caractères)</span>
+      <span class="label-text">Qu’est-ce que la PME attend de la COPEMECO ? (Max 50 lettres)</span>
       <textarea name="attentes" rows="3" maxlength="500" required></textarea>
     </div>
 
     <div class="sign-block">
       <div>
         <div>Pour la PME</div>
-        <div class="sign-line">Nom et Qualité</div>
+        <div class="sign-line">Nom</div>
         <div class="sign-line">Signature</div>
       </div>
 
       <div>
         <div>Pour la COPEMECO</div>
-        <div class="sign-line">Nom et Qualité</div>
+        <div class="sign-line">BUKASA KANUNDEYI RUBENS et Coordonnateur National</div>
         <div class="sign-line">Signature</div>
       </div>
     </div>
@@ -344,4 +345,5 @@
 </body>
 
 </html>
+
 
