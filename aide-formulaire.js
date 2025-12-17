@@ -82,7 +82,7 @@ driverJS.onload = () => {
                 element: '#informations_projet', 
                 popover: { 
                     title: 'Détails du Projet', 
-                    description: 'Décrivez ici votre secteur d\'activité et vos besoins de financement.', 
+                    description: 'En une phrase simple, Décrivez ici votre secteur d\'activité et vos besoins de financement.', 
                     side: "top" 
                 } 
             },
@@ -90,7 +90,7 @@ driverJS.onload = () => {
                 element: '#page2', 
                 popover: { 
                     title: 'Profil et Vision', 
-                    description: 'Complétez vos informations académiques et votre motivation sur cette deuxième page.', 
+                    description: 'En une phrase simple, Complétez vos informations académiques et votre motivation sur cette deuxième page.', 
                     side: "top" 
                 } 
             },
@@ -98,7 +98,7 @@ driverJS.onload = () => {
                 element: '#submitBtn', 
                 popover: { 
                     title: 'Prêt à envoyer ?', 
-                    description: 'Une fois que tout est correct, cliquez ici pour soumettre votre dossier.', 
+                    description: 'Ne surcharez pas le formulaire avec de long paragraphe, décrivez vos souhaits avec de petites phrases simples pour que vos données soient envoyées, Une fois que tout est correct, cliquez ici pour soumettre votre dossier, veuillez cliquer sur le lien afin de télécharger votre formulaire après la sa soumission.', 
                     side: "top" 
                 } 
             }
@@ -111,7 +111,7 @@ driverJS.onload = () => {
     // Lancer automatiquement si c'est la première fois
     if (!localStorage.getItem('copemeco_tour_done')) {
         setTimeout(() => {
-            if(confirm("Bienvenue ! Souhaitez-vous une visite guidée pour remplir votre fiche d'inscription ?")) {
+            if(confirm("la Coordination Nationale de Jeunes Entrepreneurs vous la Bienvenue ! Souhaitez-vous une visite guidée pour remplir votre fiche d'inscription ?")) {
                 tour.drive();
             }
             localStorage.setItem('copemeco_tour_done', 'true');
