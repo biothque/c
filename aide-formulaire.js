@@ -98,7 +98,7 @@ driverJS.onload = () => {
                 element: '#submitBtn', 
                 popover: { 
                     title: 'Prêt à envoyer ?', 
-                    description: 'Ne surcharez pas le formulaire avec de long paragraphe, décrivez vos souhaits avec de petites phrases simples pour que vos données soient envoyées, Une fois que tout est correct, cliquez ici pour soumettre votre dossier, veuillez cliquer sur le lien afin de télécharger votre formulaire après la sa soumission.', 
+                    description: 'Ne surcharez pas le formulaire avec de long paragraphe, décrivez vos souhaits avec de petites phrases simples pour que vos données soient envoyées, Une fois que tout est correct, cliquez ici pour soumettre votre dossier, veuillez cliquer sur le lien afin de télécharger votre formulaire après la sa soumission. Un conseil où le formulaire refuse de soumettre faute de surcharge des des phrases, veuillez donc réduire les différentes phrases,si le problème persiste veuillez contacer le Web-Master au niveau WhatsApp :+243 982 489 067', 
                     side: "top" 
                 } 
             }
