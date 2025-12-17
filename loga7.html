@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulaire d'adhésion à la COPEMECO/FÉDÉRATION NATIONALE</title>
+    <style>
+        /* --- Styles Généraux et Centrage --- */
+        body {
+            display: flex;
+            flex-direction: column; 
+            justify-content: flex-start;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #ffffff;
+            font-family: Arial, sans-serif;
+        }
+
+        .main-title {
+            color: #343a40;
+            font-size: 1.8em;
+            font-weight: bold;
+            text-align: center; 
+            width: 100%; 
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+
+        /* --- NOUVEAU : Groupe de 3 Boutons --- */
+        .button-group {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .btn-item {
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.3s ease;
+        }
+
+        .btn-item:hover {
+            transform: scale(1.05);
+        }
+
+        /* Boutons Rectangulaires (1 et 2) */
+        .rect-btn {
+            width: 120px;
+            height: 80px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 2px solid #007bff;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        /* Bouton Cercle (Tutoriel - Milieu) */
+        .circle-btn {
+            width: 90px;
+            height: 90px;
+            background-color: #f39c12; /* Couleur orange/or */
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            animation: pulse-orange 1.5s infinite;
+        }
+
+        .circle-btn svg {
+            width: 50px;
+            height: 50px;
+            fill: white;
+        }
+
+        .btn-label {
+            margin-top: 8px;
+            font-size: 0.9em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        @keyframes pulse-orange {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(243, 156, 18, 0.7); }
+            70% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(243, 156, 18, 0); }
+            100% { transform: scale(1); }
+        }
+
+        /* --- Styles des Sections (Adhésion) --- */
+        .section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .section-top { margin-bottom: 30px; }
+        .section-bottom { margin-top: 30px; }
+
+        .icon-link {
+            text-decoration: none;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: color 0.3s ease;
+        }
+
+        .icon-link:hover { color: #007bff; }
+
+        .icon-link svg {
+            width: 60px;
+            height: 60px;
+            fill: none;
+            stroke: #333;
+            stroke-width: 2;
+        }
+
+        .icon-title {
+            margin-top: 10px;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+
+        /* --- Logo Central --- */
+        .logo-container {
+            display: inline-block;
+            cursor: pointer;
+            margin: 20px 0;
+        }
+
+        .logo {
+            width: 200px;
+            height: auto;
+            display: block;
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            15% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .vibrating { animation: heartbeat 1.5s infinite ease-in-out; }
+
+        /* --- Bouton Flottant --- */
+        .floating-btn {
+            position: fixed; 
+            bottom: 30px;
+            right: 30px;
+            background-color: #e74c3c;
+            color: white;
+            width: 50px; 
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            animation: pulse-red 1.5s infinite;
+        }
+
+        @keyframes pulse-red {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7); }
+            70% { transform: scale(1.1); box-shadow: 0 0 0 15px rgba(231, 76, 60, 0); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <h1 class="main-title">
+        ADHÉSION À LA COPEMECO<br>
+        FÉDÉRATION NATIONALE 
+    </h1>
+
+    <div class="button-group">
+        <a href="lien1.html" class="btn-item">
+            <img src="votre-image1.jpg" alt="Illustration 1" class="rect-btn">
+            <span class="btn-label">Service 1</span>
+        </a>
+
+        <a href="tutoriel.html" class="btn-item">
+            <div class="circle-btn">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 16.5l6-4.5-6-4.5v9zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
+                </svg>
+            </div>
+            <span class="btn-label">Tutoriel</span>
+        </a>
+
+        <a href="lien2.html" class="btn-item">
+            <img src="votre-image2.jpg" alt="Illustration 2" class="rect-btn">
+            <span class="btn-label">Service 2</span>
+        </a>
+    </div>
+
+    <div class="logo-container" id="logoContainer">
+        <img src="COP.png" alt="Logo COP" class="logo">
+    </div>
+
+    <div class="section section-top">
+        <a href="adh.html" class="icon-link">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+            </svg>
+            <div class="icon-title"> Cliquez ici 👉 Comment adhérer à la COPEMECO</div>
+        </a>
+    </div>
+
+    <div class="section section-bottom">
+        <a href="entrepreneur.html" class="icon-link">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+            <div class="icon-title">Cliquez ici 👉 Accompagnement Jeunes Entrepreneurs</div>
+        </a>
+    </div>
+
+    <a href="information.html" class="floating-btn" title="Informations">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+        </svg>
+    </a>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const logoContainer = document.getElementById('logoContainer');
+            logoContainer.classList.add('vibrating');
+            logoContainer.addEventListener('click', () => {
+                logoContainer.classList.toggle('vibrating');
+            });
+        });
+    </script>
+</body>
+</html>
