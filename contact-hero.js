@@ -1,9 +1,7 @@
 // contact-hero.js
 (function() {
     const images = [
-        "000.jpg", "AAA.jpg", "BBB.jpg", 
-        "CCC.jpg", "DDD.jpg", "EEE.jpg", "FFF.jpg"
-    ];
+        "000.jpg", "AAA.jpg", "BBB.jpg", "CCC.jpg", "DDD.jpg", "EEE.jpg", "FFF.jpg" ];
 
     const htmlContent = `
         <div class="hero-glass-container">
