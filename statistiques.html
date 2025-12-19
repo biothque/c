@@ -5,9 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>COPEMECO – Plateforme</title>
     <link rel="icon" href="COP.png" type="image/png">
-    <script src="https://cdn.tailwindcss.com"></script>
     <script src="auth.js"></script>
-    
+<script>
+    // VERROUILLAGE IMMÉDIAT
+    // Cette fonction redirige vers login.html si aucune session n'est trouvée
+    const user = checkAuth(); 
+</script>
+    <script src="https://cdn.tailwindcss.com"></script>
+
     <link rel="stylesheet" href="section1.css">
     <link rel="stylesheet" href="section2.css">
     <link rel="stylesheet" href="section3.css">
@@ -90,7 +95,6 @@
     
     <script src="https://api.backendless.com/sdk/js/latest/backendless.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="/js/checkSession.js"></script>
     <script src="section1.js"></script>
     <script src="section2.js"></script>
     <script src="section3.js"></script>
