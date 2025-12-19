@@ -1,0 +1,33 @@
+.s2-container {
+    padding: 60px 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.s2-title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #1a202c;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+/* Soulignement aux couleurs de la RDC pour le titre */
+.s2-title::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(to right, #007FFF, #F7D000, #CE1021);
+    margin: 12px auto 0;
+    border-radius: 10px;
+}
+
+.s2-chart-container {
+    height: 500px; /* Ajusté pour laisser de la place aux noms des secteurs */
+    width: 100%;
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
