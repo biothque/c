@@ -80,8 +80,8 @@
         <div class="max-w-md w-full">
             <div class="border-rdc">
                 <div class="text-center mb-8">
-                    <h2 class="text-2xl font-black text-gray-900 uppercase tracking-tight">Espace Membre</h2>
-                    <p class="text-gray-500 text-sm mt-1">Veuillez vous identifier</p>
+                    <h2 class="text-2xl font-black text-gray-900 uppercase tracking-tight">Vérification Membre</h2>
+                    <p class="text-gray-500 text-sm mt-1">Saisissez votre matricule officiel</p>
                 </div>
 
                 <form id="loginForm" class="space-y-5">
@@ -89,12 +89,12 @@
                         <label class="block text-xs font-bold text-gray-700 uppercase mb-2 ml-1">Numéro de Matricule</label>
                         <input type="text" id="matricule" required 
                                class="block w-full px-4 py-4 border-2 border-gray-100 rounded-xl bg-gray-50 focus:bg-white focus:border-blue-400 focus:ring-0 transition-all text-center text-xl font-mono font-bold" 
-                               placeholder="MAT-0000">
+                               placeholder="Ex: CP-1234">
                     </div>
                     
                     <button type="submit" id="submitBtn" 
                             class="w-full bg-blue-600 hover:bg-blue-700 text-white font-black py-4 rounded-xl transition-all shadow-lg active:scale-95">
-                        SE CONNECTER
+                        VÉRIFIER LE STATUT
                     </button>
                     
                     <div id="loginMessage"></div>
@@ -103,11 +103,11 @@
         </div>
     </main>
 
-    <footer class="bg-gray-900 text-white pt-12 pb-6">
+    <footer class="bg-gray-900 text-white pt-12 pb-6 mt-auto">
         <div class="max-w-7xl mx-auto px-4 grid md:grid-cols-3 gap-8 border-b border-gray-800 pb-8">
             <div>
                 <img class="h-10 mb-4" src="COP.png" alt="Logo">
-                <p class="text-gray-400 text-xs leading-relaxed">Confédération des Petites et Moyennes Entreprises du Congo.</p>
+                <p class="text-gray-400 text-xs leading-relaxed">Confédération des Petites et Moyennes Entreprises du Congo. Ensemble pour la croissance.</p>
             </div>
             <div class="text-sm">
                 <h4 class="font-bold mb-4 border-l-4 border-yellow-500 pl-2">Siège Social</h4>
@@ -115,14 +115,14 @@
                 <p class="text-gray-400 mt-1">contact@copemeco.cd</p>
             </div>
             <div class="text-sm">
-                <h4 class="font-bold mb-4 border-l-4 border-red-500 pl-2">Navigation</h4>
+                <h4 class="font-bold mb-4 border-l-4 border-red-500 pl-2">Informations</h4>
                 <div class="flex flex-col space-y-2 text-gray-400">
                     <a href="index.html" class="hover:text-white">Retour à l'accueil</a>
-                    <a href="#" class="hover:text-white">Aide en ligne</a>
+                    <a href="#" class="hover:text-white">Aide technique</a>
                 </div>
             </div>
         </div>
-        <p class="text-center text-gray-600 text-[10px] mt-6 uppercase tracking-widest">&copy; 2024 COPEMECO - Système de Gestion des Membres</p>
+        <p class="text-center text-gray-600 text-[10px] mt-6 uppercase tracking-widest">&copy; 2025 COPEMECO - Coordination Nationale</p>
     </footer>
 
     <div class="fixed bottom-6 right-6">
@@ -130,9 +130,11 @@
     </div>
 
     <script>
-        // Initialisation du SDK avec vos clés
+        // Configuration
         const APP_ID = "3D3629AB-2B0E-49DE-AA35-4A0EFAB84AE7";
         const API_KEY = "B3C84FA1-67E6-40A2-8CA4-2E77E52E2EB4";
+        const TABLE_NAME = "matricules"; // Table mise à jour
+
         Backendless.initApp(APP_ID, API_KEY);
 
         const $ = (sel) => document.querySelector(sel);
@@ -145,7 +147,7 @@
             messageEl.textContent = text;
         }
 
-        // --- Système Audio ---
+        // --- Audio ---
         let audioCtx;
         function beep({freq=440, duration=200, type="sine", gain=0.05} = {}){
             if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -172,7 +174,7 @@
             if (navigator.vibrate) navigator.vibrate(200);
         }
 
-        // --- Logique de connexion ---
+        // --- Logique ---
         loginForm.addEventListener("submit", async (e) => {
             e.preventDefault();
             const matriculeVal = $("#matricule").value.trim();
@@ -181,22 +183,24 @@
             submitBtn.disabled = true;
 
             try {
-                // Utilisation du SDK Backendless pour la recherche
+                // Requête sur la table 'matricules', colonne 'matricule'
                 const queryBuilder = Backendless.DataQueryBuilder.create().setWhereClause(`matricule = '${matriculeVal}'`);
-                const results = await Backendless.Data.of("utilisateurs").find(queryBuilder);
+                const results = await Backendless.Data.of(TABLE_NAME).find(queryBuilder);
 
                 if (results && results.length > 0) {
+                    // On stocke la session
                     localStorage.setItem("userSession", JSON.stringify({ matricule: results[0].matricule }));
-                    setMessage("Accès Autorisé ✅", "ok");
+                    
+                    setMessage("Matricule valide ✅ Redirection...", "ok");
                     await successJingle();
                     setTimeout(() => { window.location.href = "acces.html"; }, 600);
                 } else {
-                    setMessage("Matricule non reconnu ❌", "err");
+                    setMessage("Matricule non trouvé ❌", "err");
                     errorBuzz();
                 }
             } catch (err) {
                 console.error(err);
-                setMessage("Erreur réseau ou serveur", "err");
+                setMessage("Erreur : Table ou colonne introuvable", "err");
                 errorBuzz();
             } finally {
                 submitBtn.disabled = false;
@@ -204,4 +208,5 @@
         });
     </script>
 </body>
-</html>
+    </html>
+    
