@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="fr-FR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>COPEMECO – Authentification</title>
+    <link rel="icon" href="COP.png" type="image/png">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script src="https://api.backendless.com/sdk/js/latest/backendless.min.js"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f9fb;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Bordure style Drapeau RDC (Triple couche) */
+        .border-rdc {
+            border: 4px solid #007FFF; /* Bleu */
+            position: relative;
+            padding: 2.5rem;
+            border-radius: 1rem;
+            background: white;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        .border-rdc::before {
+            content: "";
+            position: absolute;
+            top: -6px; left: -6px; right: -6px; bottom: -6px;
+            border-radius: 1.1rem;
+            border: 3px solid #FAD02C; /* Jaune */
+            pointer-events: none;
+        }
+        .border-rdc::after {
+            content: "";
+            position: absolute;
+            top: -12px; left: -12px; right: -12px; bottom: -12px;
+            border-radius: 1.3rem;
+            border: 3px solid #CE1021; /* Rouge */
+            pointer-events: none;
+        }
+
+        .nav-subtitle { font-size: 0.75rem; line-height: 1; font-weight: 600; color: #ef4444; }
+        #loginMessage { margin-top: 1.5rem; font-size: 0.9rem; text-align: center; min-height: 1.25rem; }
+        .info { color: #2563eb; }
+        .ok { color: #059669; font-weight: bold; }
+        .err { color: #dc2626; font-weight: bold; }
+
+        .custom-assist-button { background: linear-gradient(135deg, #1d95ad, #fbbf24); }
+        .blinking-assist-button { animation: flash-button 2s infinite ease-in-out; }
+        @keyframes flash-button { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 h-20 flex justify-between items-center">
+            <a href="index.html" class="flex items-center space-x-2">
+                <img class="h-10 w-auto" src="COP.png" alt="Logo">
+                <div class="flex flex-col">
+                    <span class="text-xl font-bold text-gray-800">COPEMECO</span>
+                    <span class="nav-subtitle">Coordination Nationale</span>
+                </div>
+            </a>
+            <nav class="hidden md:flex space-x-6 text-sm font-medium text-gray-600">
+                <a href="index.html" class="hover:text-blue-600">Accueil</a>
+                <a href="contact.html" class="hover:text-blue-600">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="flex-grow flex items-center justify-center px-6 py-12">
+        <div class="max-w-md w-full">
+            <div class="border-rdc">
+                <div class="text-center mb-8">
+                    <h2 class="text-2xl font-black text-gray-900 uppercase tracking-tight">Espace Membre</h2>
+                    <p class="text-gray-500 text-sm mt-1">Veuillez vous identifier</p>
+                </div>
+
+                <form id="loginForm" class="space-y-5">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-2 ml-1">Numéro de Matricule</label>
+                        <input type="text" id="matricule" required 
+                               class="block w-full px-4 py-4 border-2 border-gray-100 rounded-xl bg-gray-50 focus:bg-white focus:border-blue-400 focus:ring-0 transition-all text-center text-xl font-mono font-bold" 
+                               placeholder="MAT-0000">
+                    </div>
+                    
+                    <button type="submit" id="submitBtn" 
+                            class="w-full bg-blue-600 hover:bg-blue-700 text-white font-black py-4 rounded-xl transition-all shadow-lg active:scale-95">
+                        SE CONNECTER
+                    </button>
+                    
+                    <div id="loginMessage"></div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-900 text-white pt-12 pb-6">
+        <div class="max-w-7xl mx-auto px-4 grid md:grid-cols-3 gap-8 border-b border-gray-800 pb-8">
+            <div>
+                <img class="h-10 mb-4" src="COP.png" alt="Logo">
+                <p class="text-gray-400 text-xs leading-relaxed">Confédération des Petites et Moyennes Entreprises du Congo.</p>
+            </div>
+            <div class="text-sm">
+                <h4 class="font-bold mb-4 border-l-4 border-yellow-500 pl-2">Siège Social</h4>
+                <p class="text-gray-400">Kinshasa, Gombe, Avenue de l'Équateur n°12</p>
+                <p class="text-gray-400 mt-1">contact@copemeco.cd</p>
+            </div>
+            <div class="text-sm">
+                <h4 class="font-bold mb-4 border-l-4 border-red-500 pl-2">Navigation</h4>
+                <div class="flex flex-col space-y-2 text-gray-400">
+                    <a href="index.html" class="hover:text-white">Retour à l'accueil</a>
+                    <a href="#" class="hover:text-white">Aide en ligne</a>
+                </div>
+            </div>
+        </div>
+        <p class="text-center text-gray-600 text-[10px] mt-6 uppercase tracking-widest">&copy; 2024 COPEMECO - Système de Gestion des Membres</p>
+    </footer>
+
+    <div class="fixed bottom-6 right-6">
+        <button class="custom-assist-button blinking-assist-button w-14 h-14 rounded-full text-white shadow-2xl text-xl font-bold">?</button>
+    </div>
+
+    <script>
+        // Initialisation du SDK avec vos clés
+        const APP_ID = "3D3629AB-2B0E-49DE-AA35-4A0EFAB84AE7";
+        const API_KEY = "B3C84FA1-67E6-40A2-8CA4-2E77E52E2EB4";
+        Backendless.initApp(APP_ID, API_KEY);
+
+        const $ = (sel) => document.querySelector(sel);
+        const loginForm = $("#loginForm");
+        const submitBtn = $("#submitBtn");
+        const messageEl = $("#loginMessage");
+
+        function setMessage(text, cls="info"){
+            messageEl.className = cls;
+            messageEl.textContent = text;
+        }
+
+        // --- Système Audio ---
+        let audioCtx;
+        function beep({freq=440, duration=200, type="sine", gain=0.05} = {}){
+            if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const osc = audioCtx.createOscillator();
+            const g = audioCtx.createGain();
+            osc.type = type;
+            osc.frequency.value = freq;
+            g.gain.value = gain;
+            osc.connect(g).connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + duration/1000);
+        }
+
+        async function successJingle(){
+            const notes = [261.63, 329.63, 392.00];
+            for (let n of notes){
+                beep({freq: n, duration: 150, type:"triangle"});
+                await new Promise(r => setTimeout(r, 130));
+            }
+        }
+
+        function errorBuzz(){
+            beep({freq: 110, duration: 300, type:"square", gain:0.04});
+            if (navigator.vibrate) navigator.vibrate(200);
+        }
+
+        // --- Logique de connexion ---
+        loginForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const matriculeVal = $("#matricule").value.trim();
+
+            setMessage("Vérification en cours...", "info");
+            submitBtn.disabled = true;
+
+            try {
+                // Utilisation du SDK Backendless pour la recherche
+                const queryBuilder = Backendless.DataQueryBuilder.create().setWhereClause(`matricule = '${matriculeVal}'`);
+                const results = await Backendless.Data.of("utilisateurs").find(queryBuilder);
+
+                if (results && results.length > 0) {
+                    localStorage.setItem("userSession", JSON.stringify({ matricule: results[0].matricule }));
+                    setMessage("Accès Autorisé ✅", "ok");
+                    await successJingle();
+                    setTimeout(() => { window.location.href = "acces.html"; }, 600);
+                } else {
+                    setMessage("Matricule non reconnu ❌", "err");
+                    errorBuzz();
+                }
+            } catch (err) {
+                console.error(err);
+                setMessage("Erreur réseau ou serveur", "err");
+                errorBuzz();
+            } finally {
+                submitBtn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>
