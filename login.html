@@ -80,8 +80,8 @@
         <div class="max-w-md w-full">
             <div class="border-rdc">
                 <div class="text-center mb-8">
-                    <h2 class="text-2xl font-black text-gray-900 uppercase tracking-tight">Vérification Membre</h2>
-                    <p class="text-gray-500 text-sm mt-1">Saisissez votre matricule officiel</p>
+                    <h2 class="text-2xl font-black text-gray-900 uppercase tracking-tight">Tableau de Statistiques</h2>
+                    <p class="text-gray-500 text-sm mt-1">Saisissez le matricule, l'espace est réservé au Coordonnateur National de Jeunes Entrepreneurs de la COPEMECO</p>
                 </div>
 
                 <form id="loginForm" class="space-y-5">
@@ -107,18 +107,18 @@
         <div class="max-w-7xl mx-auto px-4 grid md:grid-cols-3 gap-8 border-b border-gray-800 pb-8">
             <div>
                 <img class="h-10 mb-4" src="COP.png" alt="Logo">
-                <p class="text-gray-400 text-xs leading-relaxed">Confédération des Petites et Moyennes Entreprises du Congo. Ensemble pour la croissance.</p>
+                <p class="text-gray-400 text-xs leading-relaxed">Confédération des Petites et Moyennes Entreprises du Congo. La Coordination Nationale de Jeunes Entrepreneurs</p>
             </div>
             <div class="text-sm">
                 <h4 class="font-bold mb-4 border-l-4 border-yellow-500 pl-2">Siège Social</h4>
                 <p class="text-gray-400">Kinshasa, Gombe, Avenue de l'Équateur n°12</p>
-                <p class="text-gray-400 mt-1">contact@copemeco.cd</p>
+                <p class="text-gray-400 mt-1">brbukasa@gmail.com</p>
             </div>
             <div class="text-sm">
                 <h4 class="font-bold mb-4 border-l-4 border-red-500 pl-2">Informations</h4>
                 <div class="flex flex-col space-y-2 text-gray-400">
                     <a href="index.html" class="hover:text-white">Retour à l'accueil</a>
-                    <a href="#" class="hover:text-white">Aide technique</a>
+                    <a href="contact.html" class="hover:text-white">Aide technique</a>
                 </div>
             </div>
         </div>
@@ -193,9 +193,9 @@
                     
                     setMessage("Matricule valide ✅ Redirection...", "ok");
                     await successJingle();
-                    setTimeout(() => { window.location.href = "acces.html"; }, 600);
+                    setTimeout(() => { window.location.href = "statistiques.html"; }, 600);
                 } else {
-                    setMessage("Matricule non trouvé ❌", "err");
+                    setMessage("Matricule incorrect ❌", "err");
                     errorBuzz();
                 }
             } catch (err) {
