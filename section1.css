@@ -1,0 +1,89 @@
+/* Container principal de la section */
+.s1-container {
+    padding: 60px 20px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.s1-title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #1a202c;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+/* Mise en page flexible : Graphique à gauche, Légende à droite */
+.s1-content {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+}
+
+.s1-chart-box {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    height: 400px;
+}
+
+/* Style de la légende */
+.s1-legend {
+    flex: 1;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.s1-legend-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    background: #ffffff;
+    border: 1px solid #edf2f7;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    transition: all 0.3s ease;
+}
+
+.s1-legend-item:hover {
+    transform: translateX(8px);
+    border-color: #cbd5e0;
+}
+
+.s1-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.s1-prov-name {
+    font-weight: 600;
+    color: #4a5568;
+    flex-grow: 1;
+}
+
+.s1-prov-count {
+    font-weight: 700;
+    color: #2d3748;
+    background: #f7fafc;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+}
+
+.loading-text {
+    text-align: center;
+    color: #a0aec0;
+    font-style: italic;
+}
+
+/* Responsive pour mobiles */
+@media (max-width: 768px) {
+    .s1-content { flex-direction: column; }
+    .s1-chart-box { height: 300px; }
+}
