@@ -109,15 +109,26 @@
         .anim-text-reveal { animation: fadeUp 1s ease-out forwards; }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Contenu principal masqué au début */
-        #main-content {
-            opacity: 0; 
-            transition: opacity 1.5s ease-in;
-        }
-        
-        .visible {
-            opacity: 1 !important;
-        }
+        /* Modifiez cette partie dans votre fichier */
+#main-content {
+    opacity: 0;
+    visibility: hidden; /* Ajouté pour être sûr que c'est caché au début */
+    transition: opacity 1.5s ease-in;
+}
+
+/* On utilise !important pour être sûr que le PC obéit */
+#main-content.visible {
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: block !important; 
+}
+
+/* Sécurité pour l'écran d'intro */
+#intro-screen.fade-out {
+    opacity: 0;
+    pointer-events: none; /* Permet de cliquer à travers même si c'est encore là */
+    transition: opacity 1s ease-out;
+}
 
         /* ------------------------------------------------ */
         /* --- Styles de loga.html (Page d'accueil) --- */
@@ -1153,6 +1164,7 @@ C’est parti pour une semaine de savoir, de pratique et d’innovation au servi
     <script src="script-intro.js"></script>
 </body>
 </html>
+
 
 
 
