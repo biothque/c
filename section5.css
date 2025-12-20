@@ -1,0 +1,61 @@
+.s5-container {
+    padding: 40px 20px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.s5-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.s5-card {
+    display: flex;
+    align-items: center;
+    padding: 30px;
+    border-radius: 20px;
+    color: white;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.s5-card:hover {
+    transform: scale(1.03);
+}
+
+/* Couleur pour le total général (Bleu RDC) */
+.s5-card.total {
+    background: linear-gradient(135deg, #007FFF, #005bb5);
+}
+
+/* Couleur pour le hebdo (Vert croissance) */
+.s5-card.weekly {
+    background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.s5-icon {
+    font-size: 3rem;
+    margin-right: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    width: 70px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+}
+
+.s5-label {
+    display: block;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 500;
+}
+
+.s5-info h2 {
+    font-size: 2.5rem;
+    font-weight: 900;
+    margin: 0;
+}
