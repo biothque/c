@@ -1,0 +1,67 @@
+.s8-container {
+    padding: 50px 20px;
+    background: #f1f5f9;
+}
+
+.s8-toolbar {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.s8-group {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+/* Bouton Déconnexion */
+.btn-logout {
+    background: #ef4444;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.btn-logout:hover { background: #b91c1c; }
+
+/* Sélecteur de page */
+.nav-select {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    color: #334155;
+    outline: none;
+}
+
+/* Bouton Capture PDF */
+.btn-capture {
+    background: #1e293b;
+    color: white;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    transition: 0.3s;
+}
+
+.btn-capture:hover {
+    background: #007FFF;
+    transform: translateY(-2px);
+}
+
+/* Optimisation pour l'impression PDF */
+@media print {
+    .s8-container, #floating-help-button { display: none; }
+}
