@@ -284,208 +284,147 @@
     </div>
     
         <script src="media-actualites.js"></script>
-    
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-
-            // --- VOS DONNÉES D'ACTUALITÉ (CONSERVÉES) ---
-            const actualitesData = [
-                // Note: Correction de l'image de l'article 3 pour correspondre à votre exemple HTML
-                { id: 1, title: "Soyons prêts", date: "2025-12-06", category: "Économie", snippet: "Un message de la direction concernant la préparation des PME aux défis de l'année à venir.", image: "W.jpg" },
-                { id: 2, title: "Découvrez Lowa", date: "2025-12-06", category: "Économie", snippet: "Découvrez LOWA, la pâte à tartiner au cacao qui transforme chaque moment en instant de plaisir. Créée pour les amoureux du goût, elle allie douceur, onctuosité et richesse en cacao pour offrir une expérience unique, irrésistible et mémorable. C'est le produit phare de nos PME en pleine croissance.", image: "C.jpg" },
-                { id: 3, title: "La journée de l'entrepreneuriat agricole", date: "2025-12-06", category: "Social", snippet: "Organiser une journée de l’entrepreneuriat agricole sous l’égide de la COPEMECO — destinée aux jeunes — permet de promouvoir l’agriculture comme véritable opportunité d’emploi et d’auto-entrepreneuriat, d’inciter les jeunes (18–35 ans), y compris les femmes, à se lancer dans la production, la transformation, le maraîchage et l’agro-business, d’offrir un cadre de formation, d’accompagnement, de financement, de mentorat et de formalisation pour structurer un secteur durable et productif, et de mettre en lumière les produits agricoles locaux afin de renforcer l’agriculture urbaine et péri-urbaine, contribuant ainsi à la sécurité alimentaire, à l’emploi et au développement économique local.", image: "X.jpg" },
-                { id: 4, title: "La formation entrepreneuriale", date: "2025-12-05", category: "Vie de la COPEMECO", snippet: "La Coordination Nationale des Jeunes de la COPEMECO a tenu, ce week-end, une importante réunion de briefing consacrée au lancement officiel de la session de formation intensive qui se déroulera sur le site de DAIPN pendant 7 jours, à partir de ce lundi. Cette rencontre avait pour objectif de présenter l’organisation pratique de la formation ainsi que les modules techniques qui seront abordés, notamment : les techniques modernes de culture, la compréhension scientifique des engrais, l’introduction aux machines agricoles, et les pratiques innovantes pour un rendement optimal. La Coordination rappelle que seuls les candidats retenus sont autorisés à participer à cette session. Ceux-ci sont donc priés de respecter leur engagement, d’être ponctuels et de se munir du matériel nécessaire, car les places ont été strictement limitées. 📌 Horaires : 08h00 – 13h00, chaque jour. 📌 Lieu : Site DAIPN. Cette formation représente une opportunité majeure pour renforcer les compétences techniques des jeunes entrepreneurs et agri-preneurs congolais. C’est parti pour une semaine de savoir, de pratique et d’innovation au service de l’agriculture !", image: "T.jpg" },
-                { id: 5, title: "Lancement de la Formation Intensive pour les Jeunes Agri-preneurs", date: "2025-12-08", category: "Vie de la COPEMECO", snippet: "🚀 JOUR J : Lancement de la Formation Intensive pour les Jeunes Agri-preneurs !C’est aujourd'hui que tout commence ! 🇨🇩🤝🇨🇳 La Coordination Nationale des Jeunes Entrepreneurs de la COPEMECO, en partenariat avec le Ministère du Commerce de la République Populaire de Chine, est fière de donner le coup d'envoi de la session de formation intensive dédiée à l'excellence agricole. 📅 Au programme de cette semaine (08 au 14 décembre) :Pour transformer l'agriculture congolaise, nos participants vont s'immerger dans 4 modules stratégiques : 🥬 Techniques modernes de culture des légumes. 🧪 Maîtrise scientifique et utilisation optimale des engrais. 🚜 Mécanisation : Introduction aux machines agricoles. 🌱 Culture du soja : Stratégies pour un rendement élevé. Investir dans vos compétences, c'est investir dans l'avenir de l'agriculture congolaise. Nous souhaitons une excellente session à tous les jeunes entrepreneurs et agri-preneurs sélectionnés. Ensemble, passons d'une agriculture de subsistance à une exploitation rentable et moderne ! 📞 Besoin d'infos ? Contactez-nous au : +243 994 884 690 #COPEMECO #AgriPreneur #JeunesEntrepreneurs #RDC #AgricultureModerne #FormationAgricole #PartenariatChineRDC.", image: "ZZZ.jpg" },
-                { id: 6, title: "Nouveau bureau provincial à Lubumbashi", date: "2025-10-25", category: "Vie de la COPEMECO", snippet: "La COPEMECO étend sa couverture pour mieux servir les entrepreneurs du Haut-Katanga avec des services de proximité. Rendez-vous dans nos nouveaux locaux !", image: "histoire.mp4", type: "video"},
-                { id: 7, title: "Visite Ministérielle dans les Kivu", date: "2025-10-10", category: "Politique", snippet: "Le Ministre de l'Économie a rencontré les PME locales pour discuter des défis et des opportunités d'investissement dans la région, promettant un soutien accru.", image: "https://placehold.co/400x250/f97316/ffffff?text=Visite" },
-                { id: 8, title: "Atelier de Formation sur l'Exportation", date: "2025-09-05", category: "Économie", snippet: "Des sessions intensives pour préparer les PME à conquérir les marchés régionaux et internationaux, avec des experts en logistique et douane.", image: "https://placehold.co/400x250/a855f7/ffffff?text=Formation" },
-            ];
-
-            const newsContainer = document.getElementById('news-container');
-            const filterButtonsContainer = document.getElementById('filter-buttons');
-            let currentFilter = 'Tous'; 
-            const characterLimit = 150; // Limite de caractères pour la troncation
-
-            /**
-             * Formate une date YYYY-MM-DD en DD/MM/YYYY
-             */
-            const formatDate = (dateString) => {
-                // S'assurer que le format est valide, même en cas de '0' manquant
-                const parts = dateString.split('-');
-                if (parts.length === 3) {
-                    return `${parts[2]}/${parts[1]}/${parts[0]}`;
-                }
-                return dateString;
-            };
-
-            /**
-             * Génère une carte d'actualité HTML avec le bouton "Lire la suite"
-             */
-            const createNewsCard = (newsItem) => {
-                const formattedDate = formatDate(newsItem.date);
-                const tagClass = `tag-${newsItem.category.replace(/ /g, '-')}`; 
+    // 1. TES DONNÉES (Ajoute tes nouveaux articles ici)
+    const actualitesData = [
+        { 
+            id: 6, 
+            title: "Nouveau bureau provincial à Lubumbashi", 
+            date: "2025-10-25", 
+            category: "Vie de la COPEMECO", 
+            snippet: "La COPEMECO étend sa couverture pour mieux servir les entrepreneurs du Haut-Katanga. Rendez-vous dans nos nouveaux locaux !", 
+            image: "histoire.mp4", 
+            type: "video" 
+        },
+        { 
+            id: 1, 
+            title: "Soyons prêts", 
+            date: "2025-12-06", 
+            category: "Économie", 
+            snippet: "Analyse des enjeux économiques actuels pour les PME en RDC.", 
+            image: "W.jpg", 
+            type: "image" 
+        },
+        {
+            id: 2,
+            title: "Découvrez Lowa",
+            date: "2025-12-06", 
+            category: "Économie", 
+            snippet: "Découvrez LOWA, la pâte à tartiner au cacao qui transforme chaque moment en instant de plaisir. Créée pour les amoureux du goût, elle allie douceur, onctuosité et richesse en cacao pour offrir une expérience unique, irrésistible et mémorable. C'est le produit phare de nos PME en pleine croissance.", 
+            image: "C.jpg" 
+        },
                 
-                // On utilise le snippet comme full-text pour cette implémentation
-                const fullText = newsItem.snippet; 
-                
-                // Par défaut, le contenu affiché est le snippet complet
-                let initialContent = fullText;
-                let isExpandable = fullText.length > characterLimit;
+        {
+            id: 3, 
+            title: "La journée de l'entrepreneuriat agricole", 
+            date: "2025-12-06", 
+            category: "Social", 
+            snippet: "Organiser une journée de l’entrepreneuriat agricole sous l’égide de la COPEMECO — destinée aux jeunes — permet de promouvoir l’agriculture comme véritable opportunité d’emploi et d’auto-entrepreneuriat, d’inciter les jeunes (18–35 ans), y compris les femmes, à se lancer dans la production, la transformation, le maraîchage et l’agro-business, d’offrir un cadre de formation, d’accompagnement, de financement, de mentorat et de formalisation pour structurer un secteur durable et productif, et de mettre en lumière les produits agricoles locaux afin de renforcer l’agriculture urbaine et péri-urbaine, contribuant ainsi à la sécurité alimentaire, à l’emploi et au développement économique local.", 
+            image: "X.jpg" 
+        },
+        { 
+            id: 4, 
+            title: "La formation entrepreneuriale", 
+            date: "2025-12-05", 
+            category: "Vie de la COPEMECO", 
+            snippet: "La Coordination Nationale des Jeunes de la COPEMECO a tenu, ce week-end, une importante réunion de briefing consacrée au lancement officiel de la session de formation intensive qui se déroulera sur le site de DAIPN pendant 7 jours, à partir de ce lundi. Cette rencontre avait pour objectif de présenter l’organisation pratique de la formation ainsi que les modules techniques qui seront abordés, notamment : les techniques modernes de culture, la compréhension scientifique des engrais, l’introduction aux machines agricoles, et les pratiques innovantes pour un rendement optimal. La Coordination rappelle que seuls les candidats retenus sont autorisés à participer à cette session. Ceux-ci sont donc priés de respecter leur engagement, d’être ponctuels et de se munir du matériel nécessaire, car les places ont été strictement limitées. 📌 Horaires : 08h00 – 13h00, chaque jour. 📌 Lieu : Site DAIPN. Cette formation représente une opportunité majeure pour renforcer les compétences techniques des jeunes entrepreneurs et agri-preneurs congolais. C’est parti pour une semaine de savoir, de pratique et d’innovation au service de l’agriculture !", 
+            image: "T.jpg" 
+        },
+        { 
+            id: 5, 
+            title: "Lancement de la Formation Intensive pour les Jeunes Agri-preneurs", date: "2025-12-08",
+            category: "Vie de la COPEMECO", 
+            snippet: "🚀 JOUR J : Lancement de la Formation Intensive pour les Jeunes Agri-preneurs !C’est aujourd'hui que tout commence ! 🇨🇩🤝🇨🇳 La Coordination Nationale des Jeunes Entrepreneurs de la COPEMECO, en partenariat avec le Ministère du Commerce de la République Populaire de Chine, est fière de donner le coup d'envoi de la session de formation intensive dédiée à l'excellence agricole. 📅 Au programme de cette semaine (08 au 14 décembre) :Pour transformer l'agriculture congolaise, nos participants vont s'immerger dans 4 modules stratégiques : 🥬 Techniques modernes de culture des légumes. 🧪 Maîtrise scientifique et utilisation optimale des engrais. 🚜 Mécanisation : Introduction aux machines agricoles. 🌱 Culture du soja : Stratégies pour un rendement élevé. Investir dans vos compétences, c'est investir dans l'avenir de l'agriculture congolaise. Nous souhaitons une excellente session à tous les jeunes entrepreneurs et agri-preneurs sélectionnés. Ensemble, passons d'une agriculture de subsistance à une exploitation rentable et moderne ! 📞 Besoin d'infos ? Contactez-nous au : +243 994 884 690 #COPEMECO #AgriPreneur #JeunesEntrepreneurs #RDC #AgricultureModerne #FormationAgricole #PartenariatChineRDC.",
+            image: "ZZZ.jpg" 
+        }
+               
+        // Rajoute tes autres articles ici avec type: "image"
+    ];
 
-                // Si c'est trop long, on tronque et on prépare le bouton
-                if (isExpandable) {
-                    initialContent = fullText.substring(0, characterLimit) + '...';
-                }
+    const characterLimit = 150;
+    const newsGrid = document.getElementById('news-grid');
+    const filterButtonsContainer = document.getElementById('filter-buttons');
 
-                return `
-                    <div id="actu-${newsItem.id}" class="news-card">
-                        <img class="news-image" src="${newsItem.image}" alt="Image pour ${newsItem.title}">
-                        <div class="p-6">
-                            <span class="category-tag ${tagClass}">${newsItem.category}</span>
-                            <h3 class="text-xl font-bold text-gray-900 mt-2 mb-2">${newsItem.title}</h3>
-                            <p class="text-sm text-gray-500 mb-4 flex items-center">
-                                <svg class="w-4 h-4 mr-1 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                                Publié le ${formattedDate}
-                            </p>
-                            
-                            <p class="text-gray-700 mb-4 news-content" data-full-text="${fullText.replace(/"/g, '&quot;')}" style="max-height: ${isExpandable ? '4.5rem' : 'none'}; overflow: hidden;">
-                                ${initialContent}
-                            </p>
+    // 2. FONCTION DE DATE (Indispensable pour le tri)
+    const formatDate = (dateString) => {
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        return new Date(dateString).toLocaleDateString('fr-FR', options);
+    };
 
-                            ${isExpandable ? `
-                                <button class="mt-2 text-blue-600 font-semibold hover:text-blue-800 transition duration-150 read-more-btn" data-target="actu-${newsItem.id}">
-                                    Lire la suite
-                                </button>
-                            ` : ''}
-                        </div>
-                    </div>
-                `;
-            };
+    // 3. LA NOUVELLE FONCTION DE CARTE (Gère Vidéo + Image)
+    const createNewsCard = (newsItem) => {
+        const formattedDate = formatDate(newsItem.date);
+        const tagClass = `tag-${newsItem.category.replace(/ /g, '-')}`;
+        const fullText = newsItem.snippet;
+        let initialContent = fullText.length > characterLimit ? fullText.substring(0, characterLimit) + '...' : fullText;
 
-            /**
-             * Fonction principale pour trier et afficher les actualités.
-             */
-            const renderActualites = (filterCategory = 'Tous') => {
-                currentFilter = filterCategory;
-                newsContainer.innerHTML = '';
-                
-                // 1. TRIER : Par date (du plus récent au plus ancien)
-                const sortedNews = [...actualitesData].sort((a, b) => new Date(b.date) - new Date(a.date));
+        // Choix du média
+        let mediaHtml = '';
+        if (newsItem.type === 'video') {
+            mediaHtml = `
+                <video class="news-image" controls muted style="width:100%; height:200px; object-fit:cover; background:#000; display:block;">
+                    <source src="${newsItem.image}" type="video/mp4">
+                </video>`;
+        } else {
+            mediaHtml = `<img class="news-image" src="${newsItem.image}" alt="${newsItem.title}" style="width:100%; height:200px; object-fit:cover;">`;
+        }
 
-                // 2. FILTRER
-                const filteredNews = sortedNews.filter(item => 
-                    filterCategory === 'Tous' || item.category === filterCategory
-                );
+        return `
+            <div id="actu-${newsItem.id}" class="news-card bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100 transition-all hover:shadow-md">
+                ${mediaHtml}
+                <div class="p-6">
+                    <span class="category-tag ${tagClass} px-3 py-1 rounded-full text-xs font-semibold">${newsItem.category}</span>
+                    <h3 class="text-xl font-bold text-gray-900 mt-2 mb-2">${newsItem.title}</h3>
+                    <p class="text-sm text-gray-500 mb-4 flex items-center">Publié le ${formattedDate}</p>
+                    <p class="text-gray-700 mb-4 news-content">${initialContent}</p>
+                    ${fullText.length > characterLimit ? `<button class="text-blue-600 font-semibold read-more-btn" data-target="actu-${newsItem.id}">Lire la suite</button>` : ''}
+                </div>
+            </div>`;
+    };
 
-                // 3. AFFICHAGE
-                if (filteredNews.length === 0) {
-                    newsContainer.innerHTML = '<p class="text-center col-span-full text-xl text-gray-500 p-10">Aucune actualité trouvée pour cette catégorie.</p>';
-                } else {
-                    filteredNews.forEach(item => {
-                        newsContainer.innerHTML += createNewsCard(item);
-                    });
-                }
-                
-                // ******************************************************
-                // 4. Lancement de la logique "Lire la suite" après le rendu
-                // ******************************************************
-                setupReadMoreLogic();
+    // 4. LOGIQUE DES FILTRES ET DU RENDU (Tes scripts d'origine)
+    const renderActualites = (categoryFilter = 'Tous') => {
+        newsGrid.innerHTML = '';
+        const filteredData = categoryFilter === 'Tous' 
+            ? [...actualitesData].sort((a, b) => new Date(b.date) - new Date(a.date))
+            : actualitesData.filter(item => item.category === categoryFilter);
 
-
-                // Mettre à jour l'état des boutons de filtre
-                document.querySelectorAll('.filter-button').forEach(btn => {
-                    btn.classList.remove('active', 'bg-blue-700');
-                    btn.classList.add('bg-blue-50', 'text-blue-600', 'hover:bg-blue-100');
-                    if (btn.textContent === filterCategory) {
-                        btn.classList.add('active', 'bg-blue-700');
-                        btn.classList.remove('bg-blue-50', 'text-blue-600', 'hover:bg-blue-100');
-                    }
-                });
-            };
-
-            /**
-             * Contient votre logique de "Lire la suite" et "Réduire".
-             * Cette fonction doit être appelée APRÈS que les cartes sont chargées.
-             */
-            const setupReadMoreLogic = () => {
-                
-                // 4.2 Gestion du clic sur "Lire la suite" / "Réduire"
-                document.querySelectorAll('.read-more-btn').forEach(button => {
-                    // Supprimer les anciens écouteurs d'événements pour éviter la duplication
-                    button.onclick = null; 
-                    
-                    button.addEventListener('click', (e) => {
-                        const targetId = e.target.getAttribute('data-target');
-                        const card = document.getElementById(targetId);
-                        const contentP = card.querySelector('.news-content');
-                        
-                        // Récupérer l'état actuel (si le contenu est déployé)
-                        const isExpanded = contentP.classList.contains('expanded');
-                        const fullText = contentP.getAttribute('data-full-text');
-
-                        if (isExpanded) {
-                            // Rétracter
-                            contentP.textContent = fullText.substring(0, characterLimit) + '...';
-                            contentP.classList.remove('expanded');
-                            // Rétablit la hauteur tronquée (vous pouvez ajuster '4.5rem')
-                            contentP.style.maxHeight = '4.5rem'; 
-                            e.target.textContent = 'Lire la suite';
-                        } else {
-                            // Développer
-                            contentP.textContent = fullText;
-                            contentP.classList.add('expanded');
-                            // Définir la hauteur max sur la hauteur réelle du contenu pour la transition fluide
-                            contentP.style.maxHeight = contentP.scrollHeight + 'px'; 
-                            e.target.textContent = 'Réduire';
-                        }
-                    });
-                });
-            };
-
-            /**
-             * Génère les boutons de filtre dynamiquement.
-             */
-            const setupFilterButtons = () => {
-                // Récupère toutes les catégories uniques
-                const categories = ['Tous', ...new Set(actualitesData.map(item => item.category))]; 
-
-                categories.forEach(category => {
-                    const button = document.createElement('button');
-                    button.textContent = category;
-                    button.className = 'filter-button px-4 py-2 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 transition duration-200';
-                    button.addEventListener('click', () => {
-                        renderActualites(category);
-                    });
-                    filterButtonsContainer.appendChild(button);
-                });
-            };
-
-            // Lancement initial
-            setupFilterButtons();
-            renderActualites('Tous'); // Affiche toutes les actualités triées par date récente au chargement
-
-            // Logique du Menu Mobile (CONSERVÉE)
-            const menuButton = document.getElementById('menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            const menuIconOpen = document.getElementById('menu-icon-open');
-            const menuIconClose = document.getElementById('menu-icon-close');
-
-            if (menuButton) {
-                menuButton.addEventListener('click', () => {
-                    const isMenuOpen = mobileMenu.classList.toggle('hidden');
-                    menuIconOpen.classList.toggle('hidden', !isMenuOpen);
-                    menuIconClose.classList.toggle('hidden', isMenuOpen);
-                });
-                
-                mobileMenu.querySelectorAll('a').forEach(link => {
-                     link.addEventListener('click', () => {
-                        mobileMenu.classList.add('hidden');
-                        menuIconOpen.classList.remove('hidden');
-                        menuIconClose.classList.add('hidden');
-                    });
-                });
-            }
+        filteredData.forEach(item => {
+            newsGrid.insertAdjacentHTML('beforeend', createNewsCard(item));
         });
+    };
+
+    const setupFilterButtons = () => {
+        const categories = ['Tous', ...new Set(actualitesData.map(item => item.category))];
+        filterButtonsContainer.innerHTML = '';
+        categories.forEach(category => {
+            const button = document.createElement('button');
+            button.className = `filter-btn px-4 py-2 rounded-full text-sm font-medium transition-colors ${category === 'Tous' ? 'bg-blue-600 text-white' : 'bg-white text-gray-600 hover:bg-gray-100'}`;
+            button.textContent = category;
+            button.onclick = () => {
+                document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('bg-blue-600', 'text-white'));
+                button.classList.add('bg-blue-600', 'text-white');
+                renderActualites(category);
+            };
+            filterButtonsContainer.appendChild(button);
+        });
+    };
+
+    // 5. LOGIQUE DU MENU MOBILE (Conservée)
+    const menuButton = document.getElementById('menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    if (menuButton) {
+        menuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    }
+
+    // LANCEMENT
+    setupFilterButtons();
+    renderActualites('Tous');
+});              
     </script>
     <script src="actualites-hero.js"></script>
 </body>
