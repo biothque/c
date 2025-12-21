@@ -56,10 +56,10 @@
     // 2. Données des documents (Liens Google Drive)
     // Note : Remplace les '#' par tes liens "Embed" de Google Drive
     const documents = [
-        { id: 1, nom: "Rapport Annuel COPEMECO", lien: "#" },
-        { id: 2, nom: "Statuts de la Coordination", lien: "#" },
-        { id: 3, nom: "Guide de l'Entrepreneur", lien: "#" },
-        { id: 4, nom: "Décret PME RDC", lien: "#" }
+        { id: 1, nom: "Rapport Annuel COPEMECO", lien: "1.pdf" },
+        { id: 2, nom: "Statuts de la Coordination", lien: "2.pdf" },
+        { id: 3, nom: "Guide de l'Entrepreneur", lien: "3.pdf" },
+        { id: 4, nom: "Décret PME RDC", lien: "4.pdf" }
     ];
 
     // 3. Construction du HTML
