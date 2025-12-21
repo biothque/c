@@ -78,3 +78,45 @@ body { background: #525659; margin: 0; font-family: 'Segoe UI', Arial, sans-seri
     .actions-bar { display: none; }
     .a4-page { box-shadow: none; margin: 0; }
 }
+
+
+/* ... (gardez le reste du CSS précédent) ... */
+
+.download-box {
+    background: #e7f3ff;
+    border: 2px dashed #0056b3;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: center;
+    border-radius: 8px;
+    animation: fadeIn 0.5s;
+}
+
+.download-link {
+    display: inline-block;
+    background: #007bff;
+    color: white;
+    padding: 15px 25px;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.download-link:hover { background: #0056b3; }
+
+.btn-new {
+    display: block;
+    margin: 0 auto;
+    background: #6c757d;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
