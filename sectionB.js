@@ -82,7 +82,7 @@
             id: 2,
             titre: "Formation Entrepreneuriale d'un partenariat avec la République Populaire de la Chine et certifications",
             date: "16 Décembre 2025",
-            embedUrl: "histoire2.mp4",
+            embedUrl: "histoire 2.mp4",
             texte: "Dans le cadre de partenariat de L'AMBASSADE DE CHINE et COPEMECO, les jeunes entrepreneurs agricoles pendant une durée d'une semaine du lundi 08 décembre au lundi 15 décembre ont bénéficié d'une formation en technique agricole à DAIPN/NSELE.."
         },
         {
