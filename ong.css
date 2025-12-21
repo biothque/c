@@ -1,61 +1,54 @@
-:root { --page-width: 210mm; --page-height: 297mm; }
-body { background: #ccc; padding: 20px; font-family: Arial, sans-serif; margin: 0; }
+:root { --p-width: 210mm; --p-height: 297mm; }
+body { background: #555; padding: 20px; font-family: Arial, sans-serif; }
 
 .a4 {
-  width: var(--page-width);
-  min-height: var(--page-height);
+  width: var(--p-width);
+  min-height: var(--p-height);
   background: white;
   margin: auto;
   padding: 15mm;
   position: relative;
   box-sizing: border-box;
-  box-shadow: 0 0 10px rgba(0,0,0,0.3);
 }
 
-/* Filigrane identique au formulaire */
+/* Votre Filigrane d'origine */
 .a4::before {
-  content: ""; position: absolute; top: 50%; left: 50%; width: 120mm; height: 120mm;
-  background: url('COP.png') no-repeat center/contain;
-  transform: translate(-50%, -50%); opacity: 0.08; pointer-events: none;
+  content: ""; position: absolute; inset: 0;
+  background: url('COP.png') center/120mm no-repeat;
+  opacity: 0.08; pointer-events: none;
 }
 
-.header { display: flex; align-items: center; gap: 10mm; margin-bottom: 5mm; }
+.header { display: flex; align-items: center; gap: 5mm; margin-bottom: 5mm; }
 .logo { width: 25mm; }
 .org-name { font-weight: bold; font-size: 14pt; }
-.rainbow-blink { animation: rainbow 3s infinite; font-weight: bold; }
+.rainbow-blink { animation: rainbow 3s infinite; }
 @keyframes rainbow {
   0% { color: red; } 33% { color: blue; } 66% { color: green; } 100% { color: red; }
 }
 .abbr { font-size: 22pt; font-weight: 900; color: #0056b3; }
 
-.title { text-align: center; text-decoration: underline; font-size: 16pt; margin: 10mm 0; }
-.section-title { background: #f2f2f2; padding: 5px; font-size: 12pt; border-left: 5px solid #0056b3; }
+.title { text-align: center; text-decoration: underline; font-size: 16pt; margin: 8mm 0; }
+.section-title { background: #f2f2f2; padding: 5px; font-size: 11pt; border-left: 4px solid #0056b3; }
 
-.field { margin-bottom: 5mm; }
-.row { display: flex; gap: 10mm; margin-bottom: 5mm; }
-.small-field { flex: 1; }
-.label-text { display: block; font-size: 10pt; font-weight: bold; margin-bottom: 2px; }
+.field { display: block; margin-bottom: 4mm; }
+.row { display: flex; gap: 5mm; margin-bottom: 4mm; flex-wrap: wrap; }
+.small-field { flex: 1; min-width: 45mm; }
 
-/* Styles des entrées pour la capture */
 .line-input, .short-input {
-  width: 100%; border: none; border-bottom: 1px dotted #333; 
-  background: transparent; padding: 3px; font-size: 11pt;
+  width: 100%; border: none; border-bottom: 1px dotted #000; background: transparent; padding: 2px;
 }
 
-.sign-block { display: flex; justify-content: space-between; margin-top: 20mm; align-items: flex-end; }
-.sig-box { width: 35%; text-align: center; font-size: 10pt; }
-.sign-line { border-top: 1px solid #000; margin-top: 15mm; padding-top: 5px; min-height: 15mm; }
+.sign-block { display: flex; justify-content: space-between; margin-top: 15mm; align-items: flex-end; }
+.sig-box { width: 33%; text-align: center; font-size: 10pt; }
+.sign-line { border-top: 1px solid #000; margin-top: 10mm; padding-top: 5px; min-height: 12mm; }
+.qr-box canvas { width: 30mm; height: 30mm; }
 
-.qr-container { text-align: center; }
-#qr-code { width: 30mm; height: 30mm; }
+.footer { position: absolute; bottom: 10mm; left: 0; width: 100%; text-align: center; font-size: 9pt; }
 
-.footer { position: absolute; bottom: 10mm; left: 0; width: 100%; text-align: center; font-size: 9pt; color: #555; }
+.form-actions { text-align: center; margin-top: 20px; color: white; }
+#submitBtn { padding: 15px 30px; background: #28a745; color: white; border: none; font-weight: bold; cursor: pointer; border-radius: 5px; }
 
-.form-actions { text-align: center; margin-top: 20px; }
-#submitBtn { padding: 15px 30px; background: #28a745; color: white; border: none; cursor: pointer; font-weight: bold; border-radius: 5px; }
-
-/* Responsive Mobile */
 @media screen and (max-width: 210mm) {
-  .a4 { width: 100%; height: auto; padding: 5mm; }
-  .row { flex-direction: column; gap: 5mm; }
-            }
+  .a4 { width: 100%; padding: 5mm; }
+  .row { flex-direction: column; }
+}
