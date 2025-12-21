@@ -247,7 +247,7 @@ async function generatePDFExact(formData){
 
     pdf.text('Pour la COPEMECO', 120, sigY - 5);
     pdf.line(120, sigY, 195, sigY);
-    pdf.text('Nom et Qualité', 120, sigY + 5);
+    pdf.text('Ruben BUKASA et Coordonnateur National', 120, sigY + 5);
     pdf.line(120, sigY + 15, 195, sigY + 15);
 
     const today = new Date();
@@ -376,4 +376,5 @@ resetBtn.addEventListener('click', () => {
     vibrate();
     document.querySelectorAll('input, textarea, select').forEach(el => el.value = "");
 });
+
 
