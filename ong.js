@@ -5,51 +5,66 @@ Backendless.initApp(APP_ID, API_KEY);
 
 document.getElementById('submitBtn').addEventListener('click', async () => {
     const btn = document.getElementById('submitBtn');
+    const resultArea = document.getElementById('resultArea');
+    
     btn.disabled = true;
-    btn.textContent = "Envoi en cours...";
+    btn.textContent = "Génération du fichier en cours...";
 
     const form = document.getElementById('ongForm');
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
 
-    // Génération d'un ID unique
-    data.ref_id = "OG-" + Math.random().toString(36).substr(2, 9).toUpperCase();
+    // Numéro d'enregistrement unique pour le QR Code
+    const ref_id = "ONG-" + Date.now().toString().slice(-6);
+    data.numero_enregistrement = ref_id;
 
     try {
-        // 1. Sauvegarde dans Backendless (Table 'og')
-        const savedObject = await Backendless.Data.of("og").save(data);
-        
-        // 2. Génération du PDF
+        // 1. Génération du PDF avec QR Code en mémoire
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
-        doc.setFontSize(18);
-        doc.text("FICHE D'IDENTIFICATION OG", 105, 20, { align: "center" });
-        doc.setFontSize(12);
-        doc.text(`Référence: ${data.ref_id}`, 20, 40);
-        doc.text(`Organisation: ${data.nom}`, 20, 50);
-        doc.text(`Dirigeant: ${data.nom_dirigeant}`, 20, 60);
         
+        doc.setFontSize(16);
+        doc.text("FICHE D'IDENTIFICATION ONG", 105, 20, { align: "center" });
+        doc.setFontSize(10);
+        doc.text(`Réf: ${ref_id}`, 20, 35);
+        doc.text(`Organisation: ${data.nom}`, 20, 45);
+        doc.text(`Dirigeant: ${data.nom_dirigeant}`, 20, 55);
+        doc.text(`Province: ${data.province}`, 20, 65);
+
         // QR Code
         const qrCanvas = document.createElement('canvas');
-        new QRious({ element: qrCanvas, value: data.ref_id, size: 100 });
+        new QRious({ element: qrCanvas, value: ref_id, size: 150 });
         doc.addImage(qrCanvas.toDataURL(), 'PNG', 150, 30, 40, 40);
 
-        // 3. Upload du PDF
+        // 2. Upload vers Backendless
         const pdfBlob = doc.output('blob');
-        const upload = await Backendless.Files.upload(pdfBlob, `fiches_og/${data.ref_id}.pdf`, true);
+        const upload = await Backendless.Files.upload(pdfBlob, `fiches_og/${ref_id}.pdf`, true);
         
-        // Mise à jour avec le lien PDF
-        savedObject.lien_pdf = upload.fileURL;
-        await Backendless.Data.of("og").save(savedObject);
+        data.lien_pdf = upload.fileURL;
 
-        alert("Succès ! Formulaire enregistré.");
-        window.open(upload.fileURL, '_blank');
-        location.reload();
+        // 3. Sauvegarde dans la table 'og'
+        await Backendless.Data.of("og").save(data);
+
+        // 4. AFFICHAGE DU LIEN DE TELECHARGEMENT AU BAS
+        resultArea.innerHTML = `
+            <div class="download-box">
+                <p>✅ Enregistrement réussi !</p>
+                <a href="${upload.fileURL}" target="_blank" class="download-link">
+                   📥 CLIQUEZ ICI POUR TÉLÉCHARGER VOTRE PDF (AVEC QR CODE)
+                </a>
+                <button onclick="location.reload()" class="btn-new">Faire un nouvel envoi</button>
+            </div>
+        `;
+        
+        btn.style.display = "none"; // On cache le bouton d'envoi initial
+        
+        // Scroll automatique vers le lien
+        resultArea.scrollIntoView({ behavior: 'smooth' });
 
     } catch (err) {
         console.error(err);
-        alert("Erreur lors de l'enregistrement.");
+        alert("Erreur lors de l'envoi. Vérifiez votre connexion.");
         btn.disabled = false;
-        btn.textContent = "Réessayer";
+        btn.textContent = "Réessayer l'envoi";
     }
 });
