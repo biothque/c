@@ -1,68 +1,73 @@
-const APP_ID = "3D3629AB-2B0E-49DE-AA35-4A0EFAB84AE7";
-const API_KEY = "B3C84FA1-67E6-40A2-8CA4-2E77E52E2EB4";
+const APP_ID = "3D3629AB-2B0E-49DE-AA35-4A0EFAB84AE7"; 
+const API_KEY = "B3C84FA1-67E6-40A2-8CA4-2E77E52E2EB4"; 
 Backendless.serverURL = "https://api.backendless.com";
 Backendless.initApp(APP_ID, API_KEY);
 
 const submitBtn = document.getElementById('submitBtn');
-const loader = document.getElementById('loader');
+const statusMsg = document.getElementById('status-msg');
 
 submitBtn.addEventListener('click', async () => {
-    submitBtn.style.display = 'none';
-    loader.style.display = 'block';
+    statusMsg.innerHTML = "Traitement en cours... Merci de patienter.";
+    submitBtn.disabled = true;
 
-    // 1. Générer la référence et le QR Code sur la page avant la capture
-    const refId = "OG-" + Math.floor(100000 + Math.random() * 900000);
-    const qrRef = document.getElementById('qr-ref');
-    qrRef.innerText = refId;
+    const refId = "OG-" + Math.random().toString(36).substr(2, 7).toUpperCase();
     
+    // 1. Générer le QR Code sur le formulaire avant la capture
     new QRious({
-        element: document.getElementById('qr-code'),
+        element: document.getElementById('canvas-qr'),
         value: refId,
-        size: 150
+        size: 200
     });
 
-    // 2. Capturer le formulaire (Identité visuelle totale)
-    const element = document.getElementById('fiche-ong');
-    
     try {
-        const canvas = await html2canvas(element, { scale: 2, useCORS: true });
-        const imgData = canvas.toDataURL('image/png');
+        // 2. Capture de l'intégralité de la div .a4
+        const element = document.getElementById('fiche-complete');
+        const canvas = await html2canvas(element, { 
+            scale: 2, 
+            useCORS: true,
+            logging: false,
+            windowWidth: element.scrollWidth,
+            windowHeight: element.scrollHeight
+        });
         
+        const imgData = canvas.toDataURL('image/png');
         const { jsPDF } = window.jspdf;
         const pdf = new jsPDF('p', 'mm', 'a4');
-        const imgProps = pdf.getImageProperties(imgData);
         const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-        
+        const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
         pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
         const pdfBlob = pdf.output('blob');
 
-        // 3. Envoyer le PDF vers Backendless
+        // 3. Envoi vers Backendless Files
         const upload = await Backendless.Files.upload(pdfBlob, `fiches_og/${refId}.pdf`, true);
 
-        // 4. Sauvegarder les données dans la table 'og'
-        const fields = document.querySelectorAll('input, select, textarea');
-        const data = { numero_enregistrement: refId, lien_pdf: upload.fileURL };
-        fields.forEach(f => { if(f.name) data[f.name] = f.value; });
+        // 4. Envoi des données vers la table 'og'
+        const form = document.getElementById('form-og');
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
+        data.numero_enregistrement = refId;
+        data.lien_telechargement_pdf = upload.fileURL;
 
         await Backendless.Data.of("og").save(data);
 
-        // 5. Afficher le lien de téléchargement au bas de la page
-        document.querySelector('.form-actions').innerHTML = `
-            <div style="background:white; padding:20px; border:2px solid green; margin-top:20px;">
-                <p style="color:green; font-weight:bold;">✅ COPIE CONFORME GÉNÉRÉE AVEC SUCCÈS !</p>
-                <a href="${upload.fileURL}" target="_blank" style="display:inline-block; padding:15px; background:blue; color:white; text-decoration:none; border-radius:5px;">
-                    📥 TÉLÉCHARGER LE FORMULAIRE (PDF)
+        // 5. Affichage du lien final au bas de la page
+        statusMsg.innerHTML = `
+            <div style="background:white; color:black; padding:20px; border-radius:10px; margin-top:20px;">
+                <h3 style="color:green;">✅ Enregistrement réussi !</h3>
+                <p>Référence : ${refId}</p>
+                <a href="${upload.fileURL}" target="_blank" style="display:inline-block; background:blue; color:white; padding:15px; text-decoration:none; border-radius:5px; font-weight:bold;">
+                    📥 TÉLÉCHARGER LE PDF (Copie Conforme)
                 </a>
                 <br><br>
-                <button onclick="location.reload()">Nouveau formulaire</button>
+                <button onclick="location.reload()" style="background:#666; color:white; border:none; padding:10px; cursor:pointer;">Nouveau formulaire</button>
             </div>
         `;
+        submitBtn.style.display = 'none';
 
     } catch (error) {
         console.error(error);
-        alert("Erreur lors de la capture : " + error.message);
-        submitBtn.style.display = 'block';
-        loader.style.display = 'none';
+        statusMsg.innerHTML = "Erreur : " + error.message;
+        submitBtn.disabled = false;
     }
 });
