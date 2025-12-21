@@ -1,66 +1,80 @@
-:root {
-  --page-width: 210mm;
-  --page-height: 297mm;
+* { box-sizing: border-box; }
+body { background: #525659; margin: 0; font-family: 'Segoe UI', Arial, sans-serif; }
+
+/* Conteneur principal flexible */
+.a4-container {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
 }
 
-body {
-  font-family: 'Arial', sans-serif;
-  background: #eee;
-  padding: 20px;
+/* Style de la page (Format A4 sur PC, Fluide sur Mobile) */
+.a4-page {
+    background: white;
+    width: 210mm;
+    min-height: 297mm;
+    padding: 15mm;
+    position: relative;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
 
-.a4 {
-  position: relative;
-  width: var(--page-width);
-  min-height: var(--page-height);
-  background: #fff;
-  margin: 10px auto;
-  padding: 15mm;
-  box-shadow: 0 0 5px rgba(0,0,0,0.2);
-  box-sizing: border-box;
-  overflow: hidden;
+/* Filigrane discret */
+.a4-page::before {
+    content: ""; position: absolute; top: 25%; left: 15%; width: 70%; height: 50%;
+    background: url('COP.png') no-repeat center; background-size: contain;
+    opacity: 0.05; pointer-events: none;
 }
 
-/* Filigrane (Watermark) */
-.a4::before {
-  content: "";
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  width: 120mm; height: 120mm;
-  background: url('COP.png') no-repeat center/contain;
-  opacity: 0.07;
-  pointer-events: none;
+/* Header */
+.header { display: flex; align-items: center; border-bottom: 2px solid #0056b3; padding-bottom: 10px; margin-bottom: 20px; }
+.logo { width: 80px; height: auto; }
+.org-info { margin-left: 20px; }
+.org-name { font-size: 16px; font-weight: bold; }
+.abbr { font-size: 24px; color: #0056b3; }
+
+/* Grilles Responsives */
+.grid-2, .grid-3 { display: grid; gap: 15px; }
+.grid-2 { grid-template-columns: 1fr 1fr; }
+.grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+
+/* Champs de saisie style "Ligne" */
+.input-group { margin-bottom: 15px; display: flex; flex-direction: column; }
+.input-group label { font-size: 12px; font-weight: bold; margin-bottom: 5px; color: #333; }
+.input-group input, .input-group select, .input-group textarea {
+    border: none; border-bottom: 1px solid #999; padding: 5px; outline: none; background: transparent;
+}
+.input-group input:focus { border-bottom: 2px solid #0056b3; }
+
+/* Titres */
+.main-title { text-align: center; font-size: 20px; text-decoration: underline; color: #222; }
+.section-title { font-size: 14px; background: #eee; padding: 5px; margin-top: 20px; }
+
+/* Signatures */
+.signature-area { display: flex; justify-content: space-between; margin-top: 40px; }
+.sig-box { width: 45%; text-align: center; }
+.sig-line { margin-top: 30px; border-top: 1px solid #000; padding-top: 5px; font-size: 12px; min-height: 50px;}
+
+/* Boutons */
+.actions-bar { margin-top: 30px; display: flex; gap: 10px; justify-content: center; }
+#submitBtn { background: #28a745; color: white; border: none; padding: 10px 20px; cursor: pointer; border-radius: 4px; font-weight: bold;}
+#resetBtn { background: #dc3545; color: white; border: none; padding: 10px 20px; cursor: pointer; border-radius: 4px;}
+
+/* Footer fixe en bas du A4 */
+.footer-info { position: absolute; bottom: 10mm; left: 0; width: 100%; text-align: center; font-size: 10px; color: #666; }
+
+/* --- RESPONSIVE MOBILE --- */
+@media screen and (max-width: 210mm) {
+    .a4-page { width: 95%; height: auto; padding: 10px; margin: 10px auto; }
+    .grid-2, .grid-3 { grid-template-columns: 1fr; } /* On empile tout sur mobile */
+    .header { flex-direction: column; text-align: center; }
+    .org-info { margin-left: 0; margin-top: 10px; }
+    .signature-area { flex-direction: column; gap: 30px; }
+    .sig-box { width: 100%; }
 }
 
-.header { display: flex; align-items: center; gap: 5mm; margin-bottom: 10mm; }
-.logo { width: 25mm; }
-.org-name { font-weight: bold; font-size: 14pt; }
-.abbr { font-weight: 800; font-size: 18pt; }
-
-.rainbow-blink { animation: rainbow 3s infinite; }
-@keyframes rainbow {
-  0% { color: red; } 25% { color: blue; } 50% { color: green; } 100% { color: red; }
-}
-
-.title { text-align: center; font-size: 16pt; text-decoration: underline; margin-bottom: 8mm; }
-.section h2 { font-size: 12pt; background: #f0f0f0; padding: 2mm; border-left: 5px solid #333; }
-
-.field { display: block; margin-bottom: 4mm; }
-.line-input, .short-input {
-  border: none; border-bottom: 1px dotted #000; padding: 1mm; width: 100%; outline: none;
-}
-
-.row { display: flex; gap: 5mm; margin-bottom: 4mm; }
-.small-field { flex: 1; display: flex; flex-direction: column; }
-
-.sign-block { display: flex; justify-content: space-between; margin-top: 15mm; }
-.sign-line { border-bottom: 1px solid #000; min-height: 10mm; margin-top: 5mm; font-size: 9pt; }
-
-.footer { position: absolute; bottom: 10mm; width: 100%; font-size: 8pt; text-align: center; }
-.form-actions { margin-top: 10mm; display: flex; gap: 5mm; }
-
-@media screen and (max-width: 900px) {
-  .a4 { width: 100%; height: auto; padding: 10mm; }
-  .row { flex-direction: column; }
+/* --- PRINT --- */
+@media print {
+    body { background: white; }
+    .actions-bar { display: none; }
+    .a4-page { box-shadow: none; margin: 0; }
 }
