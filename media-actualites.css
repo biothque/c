@@ -1,0 +1,9 @@
+/* Garde le même format que tes photos actuelles */
+.news-media-container {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    background-color: #000;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+}
