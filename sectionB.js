@@ -80,16 +80,16 @@
         },
         {
             id: 2,
-            titre: "Rapport de Terrain",
-            date: "18 Décembre 2024",
-            embedUrl: "https://www.youtube.com/embed/votre_id_2?enablejsapi=1",
-            texte: "Une immersion totale dans les zones agricoles où la COPEMECO intervient pour soutenir les agri-preneurs. Un témoignage poignant sur la force de travail de nos membres et l'impact direct des nouvelles réformes industrielles sur leur quotidien."
+            titre: "Formation Entrepreneuriale d'un partenariat avec la République Populaire de la Chine et certifications",
+            date: "16 Décembre 2025",
+            embedUrl: "histoire2.mp4",
+            texte: "Dans le cadre de partenariat de L'AMBASSADE DE CHINE et COPEMECO, les jeunes entrepreneurs agricoles pendant une durée d'une semaine du lundi 08 décembre au lundi 15 décembre ont bénéficié d'une formation en technique agricole à DAIPN/NSELE.."
         },
         {
             id: 3,
-            titre: "Forum Entrepreneuriat",
-            date: "15 Décembre 2024",
-            embedUrl: "https://www.youtube.com/embed/votre_id_3?enablejsapi=1",
+            titre: "Histoire et missions de la COPEMECO",
+            date: "01 Septembre 2025",
+            embedUrl: "histoire.mp4",
             texte: "Retrouvez l'intégralité des échanges lors du dernier forum national. Des panels riches en enseignements sur la digitalisation des services et la formalisation des entreprises informelles pour une meilleure intégration au marché national."
         },
         {
@@ -120,7 +120,7 @@
                     <span class="btn-toggle" onclick="deplierTexte(${i})" id="btn-${i}">Lire la suite</span>
                 </div>
                 <div class="v-socials">
-                    <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="FB"></a>
+                    <a href="https://www.facebook.com/profile.php?id=61580111395454"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="FB"></a>
                     <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YT"></a>
                     <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" alt="TK"></a>
                     <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WA"></a>
