@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Fiche d'Inscription Organisation - COPEMECO</title>
+    <title>Fiche d'Inscription Organisation</title>
     <link rel="stylesheet" href="ong.css">
 </head>
 <body>
@@ -18,17 +18,17 @@
 
         <h1 class="title">FICHE D'INSCRIPTION ORGANISATION</h1>
         
-        <section class="section">
+        <section class="section" id="identification_organisation">
             <h2>1. IDENTIFICATION DE L'ORGANISATION</h2>
 
             <label class="field">
                 <span class="label-text">Nom de l'Organisation</span>
-                <input type="text" name="nom_organisation" class="line-input" placeholder="Dénomination officielle">
+                <input type="text" name="nom_org" class="line-input" placeholder="Nom officiel de l'organisation">
             </label>
 
             <label class="field">
                 <span class="label-text">Siège Social</span>
-                <input type="text" name="siege_social" class="line-input" placeholder="Adresse complète du siège">
+                <input type="text" name="siege_social" class="line-input" placeholder="Adresse complète">
             </label>
 
             <div class="row">
@@ -38,45 +38,20 @@
                 </label>
                 <label class="small-field">
                     <span class="label-text">Province</span>
-                    <select name="province_organisation" class="short-input">
+                    <select name="province_org" class="short-input">
                         <option value="">--Choisir--</option>
-                        <option>Kinshasa</option>
-                        <option>Kongo Central</option>
-                        <option>Kwilu</option>
-                        <option>Kwango</option>
-                        <option>Mai-Ndombe</option>
-                        <option>Equateur</option>
-                        <option>Mongala</option>
-                        <option>Nord-Ubangi</option>
-                        <option>Sud-Ubangi</option>
-                        <option>Tshuapa</option>
-                        <option>Tshopo</option>
-                        <option>Bas-Uele</option>
-                        <option>Haut-Uele</option>
-                        <option>Ituri</option>
-                        <option>Lomami</option>
-                        <option>Kasaï</option>
-                        <option>Kasaï Central</option>
-                        <option>Kasaï Oriental</option>
-                        <option>Sankuru</option>
-                        <option>Haut-Lomami</option>
-                        <option>Lualaba</option>
-                        <option>Haut-Katanga</option>
-                        <option>Tanganyika</option>
-                        <option>Maniema</option>
-                        <option>Nord-Kivu</option>
-                        <option>Sud-Kivu</option>
+                        <option>Kinshasa</option><option>Kongo Central</option><option>Kwilu</option><option>Kwango</option><option>Mai-Ndombe</option><option>Equateur</option><option>Mongala</option><option>Nord-Ubangi</option><option>Sud-Ubangi</option><option>Tshuapa</option><option>Tshopo</option><option>Bas-Uele</option><option>Haut-Uele</option><option>Ituri</option><option>Lomami</option><option>Kasaï</option><option>Kasaï Central</option><option>Kasaï Oriental</option><option>Sankuru</option><option>Haut-Lomami</option><option>Lualaba</option><option>Haut-Katanga</option><option>Tanganyika</option><option>Maniema</option><option>Nord-Kivu</option><option>Sud-Kivu</option>
                     </select>
                 </label>
             </div>
 
             <label class="field">
-                <span class="label-text">Documents Juridiques (RCM, Id. Nat, etc.)</span>
-                <input type="text" name="docs_juridiques" class="line-input" placeholder="Numéros de référence des documents">
+                <span class="label-text">Documents juridiques</span>
+                <input type="text" name="docs_juridiques" class="line-input" placeholder="RCM, Id. Nat, Statuts...">
             </label>
         </section>
 
-        <section class="section">
+        <section class="section" id="activites">
             <h2>2. IDENTIFICATION DES ACTIVITÉS</h2>
             <div class="field">
                 <span class="label-text">Activité principale</span>
@@ -88,7 +63,7 @@
             </div>
             <label class="field">
                 <span class="label-text">Nombre de membres</span>
-                <input type="number" name="nb_membres" class="short-input" placeholder="Ex: 50">
+                <input type="number" name="nb_membres" class="short-input">
             </label>
         </section>
 
@@ -96,7 +71,7 @@
     </div>
 
     <div class="a4" id="page2">
-        <section class="section">
+        <section class="section" id="dirigeant">
             <h2>3. IDENTIFICATION DU DIRIGEANT</h2>
             <label class="field">
                 <span class="label-text">Noms du dirigeant</span>
@@ -115,9 +90,9 @@
                     <span class="label-text">Tranche d'âge</span>
                     <select name="tranche_age" class="short-input">
                         <option value="">--Choisir--</option>
-                        <option>18 à 25 ans</option>
-                        <option>26 à 35 ans</option>
-                        <option>35 ans et +</option>
+                        <option>Jeune (18 à 25 ans)</option>
+                        <option>Adulte (26 à 35 ans)</option>
+                        <option>Senior (35 ans et +)</option>
                     </select>
                 </label>
             </div>
@@ -133,15 +108,14 @@
             </div>
         </section>
 
-        <section class="section">
+        <section class="section" id="adhesion">
             <h2>4. INFORMATIONS COMPLÉMENTAIRES</h2>
             <label class="field">
                 <span class="label-text">Forfait de l'adhésion</span>
                 <select name="forfait_adhesion" class="line-input">
-                    <option value="">--Choisir le forfait--</option>
-                    <option value="1-5 membres (70$)">De 1 à 5 membres : 70$</option>
-                    <option value="5-20 membres (350$)">De 5 à 20 membres : 350$</option>
-                    <option value="Plus de 20 membres (Sur mesure)">Plus de 20 membres : Sur mesure</option>
+                    <option value="">--Choisir--</option>
+                    <option>1 à 5 membres : 70$</option>
+                    <option>5 à 20 membres : 350$</option>
                 </select>
             </label>
         </section>
@@ -149,12 +123,12 @@
         <div class="sign-block">
             <div>
                 <div>Pour l'Organisation</div>
-                <div class="sign-line">Nom :</div>
+                <div class="sign-line">Nom</div>
                 <div class="sign-line">Signature</div>
             </div>
             <div>
                 <div>Pour la COPEMECO</div>
-                <div class="sign-line">Coordonateur National</div>
+                <div class="sign-line">BUKASA KANUNDEYI RUBENS</div>
                 <div class="sign-line">Signature</div>
             </div>
         </div>
