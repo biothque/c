@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fiche d'enregistrement - ONG (Table OG)</title>
+  <link rel="stylesheet" href="ong.css">
+</head>
+<body>
+  <div class="a4" id="page1">
+    <header class="header">
+      <img src="COP.png" alt="Logo COPEMECO" class="logo">
+      <div class="org">
+        <div class="org-name rainbow-blink">Confédération des Petites et Moyennes Entreprises Congolaises</div>
+        <div class="abbr">COPEMECO</div>
+      </div>
+    </header>
+
+    <h1 class="title">FICHE D'IDENTIFICATION ORGANISATION</h1>
+
+    <section class="section">
+      <h2>IDENTIFICATION DE L'ORGANISATION</h2>
+      <label class="field">
+        <span class="label-text">Nom de l'organisation</span>
+        <input type="text" name="nom" class="line-input" required>
+      </label>
+
+      <div class="row">
+        <label class="small-field">
+          <span class="label-text">Forme juridique</span>
+          <input type="text" name="forme_juridique" class="short-input" required>
+        </label>
+        <label class="small-field">
+          <span class="label-text">Date de création</span>
+          <input type="date" name="date_creation" class="short-input" required>
+        </label>
+      </div>
+
+      <label class="field">
+        <span class="label-text">Siège Social</span>
+        <input type="text" name="siege_social" class="line-input" required>
+      </label>
+
+      <div class="row">
+        <label class="small-field">
+          <span class="label-text">Province</span>
+          <select name="province" class="line-input" required>
+            <option value="">--Choisir--</option>
+            <option>Kinshasa</option><option>Kongo Central</option><option>Kwilu</option>
+            <option>Kwango</option><option>Mai-Ndombe</option><option>Equateur</option>
+            <option>Mongala</option><option>Nord-Ubangi</option><option>Sud-Ubangi</option>
+            <option>Tshuapa</option><option>Tshopo</option><option>Bas-Uele</option>
+            <option>Haut-Uele</option><option>Ituri</option><option>Lomami</option>
+            <option>Kasaï</option><option>Kasaï Central</option><option>Kasaï Oriental</option>
+            <option>Sankuru</option><option>Haut-Lomami</option><option>Lualaba</option>
+            <option>Haut-Katanga</option><option>Tanganyika</option><option>Maniema</option>
+            <option>Nord-Kivu</option><option>Sud-Kivu</option>
+          </select>
+        </label>
+        <label class="small-field">
+          <span class="label-text">Document juridique</span>
+          <input type="text" name="document_juridique" class="short-input" required>
+        </label>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>IDENTIFICATION DE L'ACTIVITÉ</h2>
+      <div class="row">
+        <label class="small-field">
+          <span class="label-text">Nombre de personnes au sein de l'ONG</span>
+          <input type="number" name="nb_personnes" class="short-input" required>
+        </label>
+        <label class="small-field">
+          <span class="label-text">Activité principale</span>
+          <input type="text" name="activite_principale" class="short-input" required>
+        </label>
+      </div>
+      <label class="field">
+        <span class="label-text">Énumérer les autres sites de l'organisation</span>
+        <textarea name="autres_sites" rows="3"></textarea>
+      </label>
+    </section>
+
+    <section class="section">
+      <h2>IDENTITÉ DU DIRIGEANT</h2>
+      <div class="row">
+        <label class="small-field">
+          <span class="label-text">Noms du dirigeant</span>
+          <input type="text" name="nom_dirigeant" class="short-input" required>
+        </label>
+        <label class="small-field">
+          <span class="label-text">Genre</span>
+          <select name="genre" class="short-input" required>
+            <option value="">--Choisir--</option>
+            <option>Masculin</option>
+            <option>Féminin</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="row">
+        <label class="small-field">
+          <span class="label-text">Tranche d'âge</span>
+          <select name="tranche_age" class="short-input" required>
+            <option value="">--Choisir--</option>
+            <option>18-25 ans</option>
+            <option>26-35 ans</option>
+            <option>35 ans et +</option>
+          </select>
+        </label>
+        <label class="small-field">
+          <span class="label-text">Email</span>
+          <input type="email" name="email" class="short-input" required>
+        </label>
+        <label class="small-field">
+          <span class="label-text">Téléphone</span>
+          <input type="tel" name="telephone" class="short-input" required>
+        </label>
+      </div>
+    </section>
+
+    <div class="sign-block">
+      <div>
+        <div>Pour l'Organisation</div>
+        <div class="sign-line">Nom</div>
+        <div class="sign-line">Signature</div>
+      </div>
+      <div>
+        <div>Pour la COPEMECO</div>
+        <div class="sign-line">BUKASA KANUNDEYI RUBENS et Coordonnateur National</div>
+        <div class="sign-line">Signature</div>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button id="submitBtn">Soumettre</button>
+      <button id="resetBtn" type="button">Réinitialiser</button>
+    </div>
+    
+    <footer class="footer">Adresse : Av. Colonel Ebeya, n°195 Immeuble la référence 3ème étage/ local 311. C. Gombe / Kinshasa</footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+  <script src="https://api.backendless.com/sdk/js/latest/backendless.min.js"></script>
+  <script src="ong.js"></script>
+</body>
+</html>
