@@ -3,145 +3,145 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Fiche ONG - COPEMECO</title>
+  <title>Fiche d'identification ONG</title>
   <link rel="stylesheet" href="ong.css">
 </head>
 <body>
-  <div class="a4-container">
-    <div class="a4-page" id="form-content">
-      <header class="header">
-        <img src="COP.png" alt="Logo" class="logo">
-        <div class="org-info">
-          <div class="org-name rainbow-text">Confédération des Petites et Moyennes Entreprises Congolaises</div>
-          <div class="abbr">COPEMECO</div>
+  <div class="a4" id="fiche-ong">
+    <header class="header">
+      <img src="COP.png" alt="Logo COPEMECO" class="logo">
+      <div class="org">
+        <div class="org-name rainbow-blink">Confédération des Petites et Moyennes Entreprises Congolaises</div>
+        <div class="abbr">COPEMECO</div>
+      </div>
+    </header>
+
+    <h1 class="title">FICHE D'IDENTIFICATION ORGANISATION</h1>
+
+    <section class="section">
+      <h2 class="section-title">I. IDENTIFICATION DE L'ORGANISATION</h2>
+      <div class="field">
+        <span class="label-text">Nom de l'organisation</span>
+        <input type="text" name="nom" class="line-input" id="pdf_nom">
+      </div>
+
+      <div class="row">
+        <div class="small-field">
+          <span class="label-text">Forme juridique</span>
+          <input type="text" name="forme_juridique" class="short-input">
         </div>
-      </header>
-
-      <h1 class="main-title">FICHE D'IDENTIFICATION ORGANISATION</h1>
-
-      <form id="ongForm">
-        <section class="form-section">
-          <h2 class="section-title">I. IDENTIFICATION DE L'ORGANISATION</h2>
-          <div class="input-group">
-            <label>Nom de l'organisation :</label>
-            <input type="text" name="nom" required>
-          </div>
-          <div class="grid-2">
-            <div class="input-group">
-              <label>Forme juridique :</label>
-              <input type="text" name="forme_juridique" required>
-            </div>
-            <div class="input-group">
-              <label>Date de création :</label>
-              <input type="date" name="date_creation" required>
-            </div>
-          </div>
-          <div class="input-group">
-            <label>Siège Social :</label>
-            <input type="text" name="siege_social" required>
-          </div>
-          <div class="grid-2">
-            <div class="input-group">
-              <label>Province :</label>
-              <select name="province" required>
-                <option value="">Sélectionner</option>
-                <option>Kinshasa</option><option>Kongo Central</option><option>Kwilu</option>
-                <option>Kwango</option><option>Mai-Ndombe</option><option>Equateur</option>
-                <option>Mongala</option><option>Nord-Ubangi</option><option>Sud-Ubangi</option>
-                <option>Tshuapa</option><option>Tshopo</option><option>Bas-Uele</option>
-                <option>Haut-Uele</option><option>Ituri</option><option>Lomami</option>
-                <option>Kasaï</option><option>Kasaï Central</option><option>Kasaï Oriental</option>
-                <option>Sankuru</option><option>Haut-Lomami</option><option>Lualaba</option>
-                <option>Haut-Katanga</option><option>Tanganyika</option><option>Maniema</option>
-                <option>Nord-Kivu</option><option>Sud-Kivu</option>
-              </select>
-            </div>
-            <div class="input-group">
-              <label>Document juridique :</label>
-              <input type="text" name="document_juridique" required>
-            </div>
-          </div>
-        </section>
-
-        <section class="form-section">
-          <h2 class="section-title">II. IDENTIFICATION DE L'ACTIVITÉ</h2>
-          <div class="grid-2">
-            <div class="input-group">
-              <label>Nombre de personnes :</label>
-              <input type="number" name="nb_personnes" required>
-            </div>
-            <div class="input-group">
-              <label>Activité principale :</label>
-              <input type="text" name="activite_principale" required>
-            </div>
-          </div>
-          <div class="input-group">
-            <label>Énumérer les autres sites :</label>
-            <textarea name="autres_sites" rows="2"></textarea>
-          </div>
-        </section>
-
-        <section class="form-section">
-          <h2 class="section-title">III. IDENTITÉ DU DIRIGEANT</h2>
-          <div class="grid-2">
-            <div class="input-group">
-              <label>Noms du dirigeant :</label>
-              <input type="text" name="nom_dirigeant" required>
-            </div>
-            <div class="input-group">
-              <label>Genre :</label>
-              <select name="genre" required>
-                <option value="">Choisir</option>
-                <option>Masculin</option><option>Féminin</option>
-              </select>
-            </div>
-          </div>
-          <div class="grid-3">
-            <div class="input-group">
-              <label>Tranche d'âge :</label>
-              <select name="tranche_age" required>
-                <option>18-25 ans</option><option>26-35 ans</option><option>35 ans et +</option>
-              </select>
-            </div>
-            <div class="input-group">
-              <label>Email :</label>
-              <input type="email" name="email" required>
-            </div>
-            <div class="input-group">
-              <label>Téléphone :</label>
-              <input type="tel" name="telephone" required>
-            </div>
-          </div>
-        </section>
-
-        <div class="signature-area">
-          <div class="sig-box">
-            <p>Pour l'Organisation</p>
-            <div class="sig-line">Nom & Signature</div>
-          </div>
-          <div class="sig-box">
-            <p>Pour la COPEMECO</p>
-            <div class="sig-line"><strong>BUKASA KANUNDEYI RUBENS</strong><br>Coordonnateur National</div>
-          </div>
+        <div class="small-field">
+          <span class="label-text">Date de création</span>
+          <input type="date" name="date_creation" class="short-input">
         </div>
-        
-        <div id="resultArea"></div>
+      </div>
 
-        <div class="actions-bar">
-          <button type="button" id="submitBtn">Enregistrer et Obtenir le PDF</button>
+      <div class="field">
+        <span class="label-text">Siège Social</span>
+        <input type="text" name="siege_social" class="line-input">
+      </div>
+
+      <div class="row">
+        <div class="small-field">
+          <span class="label-text">Province</span>
+          <select name="province" class="line-input">
+            <option value="">--Choisir--</option>
+            <option>Kinshasa</option><option>Kongo Central</option><option>Kwilu</option>
+            <option>Kwango</option><option>Mai-Ndombe</option><option>Equateur</option>
+            <option>Mongala</option><option>Nord-Ubangi</option><option>Sud-Ubangi</option>
+            <option>Tshuapa</option><option>Tshopo</option><option>Bas-Uele</option>
+            <option>Haut-Uele</option><option>Ituri</option><option>Lomami</option>
+            <option>Kasaï</option><option>Kasaï Central</option><option>Kasaï Oriental</option>
+            <option>Sankuru</option><option>Haut-Lomami</option><option>Lualaba</option>
+            <option>Haut-Katanga</option><option>Tanganyika</option><option>Maniema</option>
+            <option>Nord-Kivu</option><option>Sud-Kivu</option>
+          </select>
         </div>
-      </form>
+        <div class="small-field">
+          <span class="label-text">Document juridique</span>
+          <input type="text" name="document_juridique" class="short-input">
+        </div>
+      </div>
+    </section>
 
-      <footer class="footer-info">
-        Adresse : Av. Colonel Ebeya, n°195 Immeuble la référence 3ème étage. Gombe / Kinshasa
-      </footer>
+    <section class="section">
+      <h2 class="section-title">II. IDENTIFICATION DE L'ACTIVITÉ</h2>
+      <div class="row">
+        <div class="small-field">
+          <span class="label-text">Nombre de personnes</span>
+          <input type="number" name="nb_personnes" class="short-input">
+        </div>
+        <div class="small-field">
+          <span class="label-text">Activité principale</span>
+          <input type="text" name="activite_principale" class="short-input">
+        </div>
+      </div>
+      <div class="field">
+        <span class="label-text">Autres sites de l'organisation</span>
+        <textarea name="autres_sites" rows="2" class="line-input"></textarea>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">III. IDENTITÉ DU DIRIGEANT</h2>
+      <div class="row">
+        <div class="small-field">
+          <span class="label-text">Noms du dirigeant</span>
+          <input type="text" name="nom_dirigeant" class="short-input">
+        </div>
+        <div class="small-field">
+          <span class="label-text">Genre</span>
+          <select name="genre" class="short-input">
+            <option>Masculin</option>
+            <option>Féminin</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="small-field">
+          <span class="label-text">Tranche d'âge</span>
+          <select name="tranche_age" class="short-input">
+            <option>18-25 ans</option>
+            <option>26-35 ans</option>
+            <option>35 ans et +</option>
+          </select>
+        </div>
+        <div class="small-field">
+          <span class="label-text">Email / Téléphone</span>
+          <input type="text" name="contact" class="short-input" placeholder="Email - Tél">
+        </div>
+      </div>
+    </section>
+
+    <div class="sign-block">
+      <div class="sig-box">
+        <div>Pour l'Organisation</div>
+        <div class="sign-line">Nom & Signature</div>
+      </div>
+      <div class="qr-container">
+          <canvas id="qr-code"></canvas>
+          <div style="font-size: 8pt; margin-top: 5px;" id="qr-ref"></div>
+      </div>
+      <div class="sig-box">
+        <div>Pour la COPEMECO</div>
+        <div class="sign-line"><strong>BUKASA K. RUBENS</strong><br>Coordonnateur National</div>
+      </div>
     </div>
+
+    <footer class="footer">
+      Adresse : Av. Colonel Ebeya, n°195 Immeuble la référence 3ème étage. Gombe / Kinshasa
+    </footer>
   </div>
 
+  <div class="form-actions">
+    <button id="submitBtn">ENREGISTRER ET GÉNÉRER LA COPIE CONFORME</button>
+    <div id="loader" style="display:none;">Traitement en cours...</div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
   <script src="https://api.backendless.com/sdk/js/latest/backendless.min.js"></script>
   <script src="ong.js"></script>
 </body>
-                </html>
-                
+</html>
