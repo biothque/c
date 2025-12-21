@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Fiche d'identification ONG</title>
+  <title>Fiche d'identification - OG</title>
   <link rel="stylesheet" href="ong.css">
 </head>
 <body>
-  <div class="a4" id="fiche-ong">
+  <div class="a4" id="fiche-complete">
     <header class="header">
       <img src="COP.png" alt="Logo COPEMECO" class="logo">
       <div class="org">
@@ -18,115 +18,117 @@
 
     <h1 class="title">FICHE D'IDENTIFICATION ORGANISATION</h1>
 
-    <section class="section">
-      <h2 class="section-title">I. IDENTIFICATION DE L'ORGANISATION</h2>
-      <div class="field">
-        <span class="label-text">Nom de l'organisation</span>
-        <input type="text" name="nom" class="line-input" id="pdf_nom">
-      </div>
+    <form id="form-og">
+      <section class="section">
+        <h2 class="section-title">IDENTIFICATION DE L'ORGANISATION</h2>
+        <label class="field">
+          <span class="label-text">Nom de l'organisation</span>
+          <input type="text" name="nom" class="line-input" required>
+        </label>
 
-      <div class="row">
-        <div class="small-field">
-          <span class="label-text">Forme juridique</span>
-          <input type="text" name="forme_juridique" class="short-input">
+        <div class="row">
+          <label class="small-field">
+            <span class="label-text">Forme juridique</span>
+            <input type="text" name="forme_juridique" class="short-input" required>
+          </label>
+          <label class="small-field">
+            <span class="label-text">Date de création</span>
+            <input type="date" name="date_creation" class="short-input" required>
+          </label>
         </div>
-        <div class="small-field">
-          <span class="label-text">Date de création</span>
-          <input type="date" name="date_creation" class="short-input">
-        </div>
-      </div>
 
-      <div class="field">
-        <span class="label-text">Siège Social</span>
-        <input type="text" name="siege_social" class="line-input">
-      </div>
+        <label class="field">
+          <span class="label-text">Siège Social</span>
+          <input type="text" name="siege_social" class="line-input" required>
+        </label>
 
-      <div class="row">
-        <div class="small-field">
-          <span class="label-text">Province</span>
-          <select name="province" class="line-input">
-            <option value="">--Choisir--</option>
-            <option>Kinshasa</option><option>Kongo Central</option><option>Kwilu</option>
-            <option>Kwango</option><option>Mai-Ndombe</option><option>Equateur</option>
-            <option>Mongala</option><option>Nord-Ubangi</option><option>Sud-Ubangi</option>
-            <option>Tshuapa</option><option>Tshopo</option><option>Bas-Uele</option>
-            <option>Haut-Uele</option><option>Ituri</option><option>Lomami</option>
-            <option>Kasaï</option><option>Kasaï Central</option><option>Kasaï Oriental</option>
-            <option>Sankuru</option><option>Haut-Lomami</option><option>Lualaba</option>
-            <option>Haut-Katanga</option><option>Tanganyika</option><option>Maniema</option>
-            <option>Nord-Kivu</option><option>Sud-Kivu</option>
-          </select>
+        <div class="row">
+          <label class="small-field">
+            <span class="label-text">Province</span>
+            <select name="province" class="line-input" required>
+              <option value="">--Choisir--</option>
+              <option>Kinshasa</option><option>Kongo Central</option><option>Kwilu</option>
+              <option>Kwango</option><option>Mai-Ndombe</option><option>Equateur</option>
+              <option>Mongala</option><option>Nord-Ubangi</option><option>Sud-Ubangi</option>
+              <option>Tshuapa</option><option>Tshopo</option><option>Bas-Uele</option>
+              <option>Haut-Uele</option><option>Ituri</option><option>Lomami</option>
+              <option>Kasaï</option><option>Kasaï Central</option><option>Kasaï Oriental</option>
+              <option>Sankuru</option><option>Haut-Lomami</option><option>Lualaba</option>
+              <option>Haut-Katanga</option><option>Tanganyika</option><option>Maniema</option>
+              <option>Nord-Kivu</option><option>Sud-Kivu</option>
+            </select>
+          </label>
+          <label class="small-field">
+            <span class="label-text">Document juridique</span>
+            <input type="text" name="document_juridique" class="short-input" required>
+          </label>
         </div>
-        <div class="small-field">
-          <span class="label-text">Document juridique</span>
-          <input type="text" name="document_juridique" class="short-input">
-        </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="section">
-      <h2 class="section-title">II. IDENTIFICATION DE L'ACTIVITÉ</h2>
-      <div class="row">
-        <div class="small-field">
-          <span class="label-text">Nombre de personnes</span>
-          <input type="number" name="nb_personnes" class="short-input">
+      <section class="section">
+        <h2 class="section-title">IDENTIFICATION DE L'ACTIVITÉ</h2>
+        <div class="row">
+          <label class="small-field">
+            <span class="label-text">Nombre de personnes</span>
+            <input type="number" name="nb_personnes" class="short-input" required>
+          </label>
+          <label class="small-field">
+            <span class="label-text">Activité principale</span>
+            <input type="text" name="activite_principale" class="short-input" required>
+          </label>
         </div>
-        <div class="small-field">
-          <span class="label-text">Activité principale</span>
-          <input type="text" name="activite_principale" class="short-input">
-        </div>
-      </div>
-      <div class="field">
-        <span class="label-text">Autres sites de l'organisation</span>
-        <textarea name="autres_sites" rows="2" class="line-input"></textarea>
-      </div>
-    </section>
+        <label class="field">
+          <span class="label-text">Énumérer les autres sites de l'organisation</span>
+          <textarea name="autres_sites" rows="2" class="line-input"></textarea>
+        </label>
+      </section>
 
-    <section class="section">
-      <h2 class="section-title">III. IDENTITÉ DU DIRIGEANT</h2>
-      <div class="row">
-        <div class="small-field">
-          <span class="label-text">Noms du dirigeant</span>
-          <input type="text" name="nom_dirigeant" class="short-input">
+      <section class="section">
+        <h2 class="section-title">IDENTITÉ DU DIRIGEANT</h2>
+        <div class="row">
+          <label class="small-field">
+            <span class="label-text">Noms du dirigeant</span>
+            <input type="text" name="nom_dirigeant" class="short-input" required>
+          </label>
+          <label class="small-field">
+            <span class="label-text">Genre</span>
+            <select name="genre" class="short-input" required>
+              <option>Masculin</option><option>Féminin</option>
+            </select>
+          </label>
         </div>
-        <div class="small-field">
-          <span class="label-text">Genre</span>
-          <select name="genre" class="short-input">
-            <option>Masculin</option>
-            <option>Féminin</option>
-          </select>
+        <div class="row">
+          <label class="small-field">
+            <span class="label-text">Tranche d'âge</span>
+            <select name="tranche_age" class="short-input" required>
+              <option>18-25 ans</option><option>26-35 ans</option><option>35 ans et +</option>
+            </select>
+          </label>
+          <label class="small-field">
+            <span class="label-text">Email</span>
+            <input type="email" name="email" class="short-input" required>
+          </label>
+          <label class="small-field">
+            <span class="label-text">Téléphone</span>
+            <input type="tel" name="telephone" class="short-input" required>
+          </label>
         </div>
-      </div>
-      <div class="row">
-        <div class="small-field">
-          <span class="label-text">Tranche d'âge</span>
-          <select name="tranche_age" class="short-input">
-            <option>18-25 ans</option>
-            <option>26-35 ans</option>
-            <option>35 ans et +</option>
-          </select>
-        </div>
-        <div class="small-field">
-          <span class="label-text">Email / Téléphone</span>
-          <input type="text" name="contact" class="short-input" placeholder="Email - Tél">
-        </div>
-      </div>
-    </section>
+      </section>
 
-    <div class="sign-block">
-      <div class="sig-box">
-        <div>Pour l'Organisation</div>
-        <div class="sign-line">Nom & Signature</div>
+      <div class="sign-block">
+        <div class="sig-box">
+          <div>Pour l'Organisation</div>
+          <div class="sign-line">Nom & Signature</div>
+        </div>
+        <div class="qr-box">
+           <canvas id="canvas-qr"></canvas>
+        </div>
+        <div class="sig-box">
+          <div>Pour la COPEMECO</div>
+          <div class="sign-line"><strong>BUKASA KANUNDEYI RUBENS</strong><br>Coordonnateur National</div>
+        </div>
       </div>
-      <div class="qr-container">
-          <canvas id="qr-code"></canvas>
-          <div style="font-size: 8pt; margin-top: 5px;" id="qr-ref"></div>
-      </div>
-      <div class="sig-box">
-        <div>Pour la COPEMECO</div>
-        <div class="sign-line"><strong>BUKASA K. RUBENS</strong><br>Coordonnateur National</div>
-      </div>
-    </div>
+    </form>
 
     <footer class="footer">
       Adresse : Av. Colonel Ebeya, n°195 Immeuble la référence 3ème étage. Gombe / Kinshasa
@@ -134,8 +136,8 @@
   </div>
 
   <div class="form-actions">
-    <button id="submitBtn">ENREGISTRER ET GÉNÉRER LA COPIE CONFORME</button>
-    <div id="loader" style="display:none;">Traitement en cours...</div>
+    <button type="button" id="submitBtn">ENREGISTRER ET GÉNÉRER LE PDF INTÉGRAL</button>
+    <div id="status-msg"></div>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
