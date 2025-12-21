@@ -28,19 +28,21 @@
 
     async function loadEntrepreneurs() {
         try {
-            // On récupère TOUTES les colonnes pour être sûr de ne rien rater
-            const query = Backendless.DataQueryBuilder.create().setPageSize(100);
+            // Requête vers Backendless en demandant explicitement vos colonnes
+            const query = Backendless.DataQueryBuilder.create()
+                .setProperties("denomination", "nom_proprietaire", "tel", "province", "lien_telechargement_pdf")
+                .setPageSize(100);
+            
             entrepreneurs = await Backendless.Data.of("adhesions").find(query);
-
-            console.log("Données reçues de Backendless :", entrepreneurs[0]); // Pour vérifier les noms des colonnes dans la console
 
             if (entrepreneurs && entrepreneurs.length > 0) {
                 updateCard();
             } else {
-                document.getElementById('entrepreneur-card').innerHTML = "Aucune donnée trouvée.";
+                document.getElementById('entrepreneur-card').innerHTML = "Aucun adhérent trouvé dans la base.";
             }
         } catch (e) {
-            console.error("Erreur Section 6:", e);
+            console.error("Erreur de chargement Section 6:", e);
+            document.getElementById('entrepreneur-card').innerHTML = "Erreur de connexion aux données.";
         }
     }
 
@@ -48,38 +50,41 @@
         const card = document.getElementById('entrepreneur-card');
         const counter = document.getElementById('card-counter');
         const downloadBtn = document.getElementById('downloadBtn');
+        
         const data = entrepreneurs[currentIndex];
 
-        // Vérification et fallback si les colonnes ont des noms légèrement différents
-        const denomination = data.denomination || data.Denomination || "N/A";
-        const proprietaire = data.nom_proprietaire || data.proprietaire || "Non défini";
-        const telephone = data.tel || data.telephone || "Aucun numéro";
-        const province = data.province || "Non définie";
-        const pdfLink = data.lien_telechargement_pdf || data.formulaire_pdf || data.lien_pdf;
+        // --- VERIFICATION DES COLONNES ---
+        const denomination = data.denomination || "Dénomination non renseignée";
+        const proprietaire = data.nom_proprietaire || "Propriétaire non défini";
+        const telephone = data.tel || "Téléphone non disponible";
+        const province = data.province || "Province non définie";
+        const pdfLink = data.lien_telechargement_pdf;
 
         card.innerHTML = `
             <div class="card-content">
                 <span class="prov-tag">${province}</span>
                 <h3 class="ent-name">${denomination}</h3>
-                <p class="owner-name"><strong>Propriétaire:</strong> ${proprietaire}</p>
-                <p class="phone-num"><strong>📞 Tél:</strong> ${telephone}</p>
+                <div class="s6-details">
+                    <p><strong>👤 Propriétaire :</strong> ${proprietaire}</p>
+                    <p><strong>📞 Contact :</strong> ${telephone}</p>
+                </div>
             </div>
         `;
 
         counter.innerText = `${currentIndex + 1} / ${entrepreneurs.length}`;
         
-        // Gestion du bouton de téléchargement
+        // --- LOGIQUE DU BOUTON DE TÉLÉCHARGEMENT ---
         if (pdfLink && pdfLink.trim() !== "") {
             downloadBtn.href = pdfLink;
-            downloadBtn.style.visibility = "visible";
             downloadBtn.style.display = "inline-block";
+            downloadBtn.innerText = `📥 Télécharger le PDF de ${denomination}`;
         } else {
-            // Si pas de lien, on cache le bouton proprement
-            downloadBtn.style.visibility = "hidden";
+            // On cache le bouton si le lien est vide dans Backendless
+            downloadBtn.style.display = "none";
         }
     }
 
-    // Événements
+    // Navigation
     document.getElementById('nextBtn').addEventListener('click', () => {
         if (currentIndex < entrepreneurs.length - 1) {
             currentIndex++;
@@ -96,4 +101,3 @@
 
     loadEntrepreneurs();
 })();
-            
