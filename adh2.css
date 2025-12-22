@@ -1,0 +1,49 @@
+:root { --page-width: 210mm; --page-height: 297mm; }
+body { font-family: 'Arial', sans-serif; background: #eee; padding: 20px; margin: 0; }
+
+.a4 {
+  width: var(--page-width);
+  min-height: var(--page-height);
+  background: #fff;
+  margin: 10px auto;
+  padding: 15mm;
+  position: relative;
+  box-sizing: border-box;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
+/* Filigrane discret */
+.a4::before {
+  content: ""; position: absolute; inset: 0;
+  background: url('COP.png') center/120mm no-repeat;
+  opacity: 0.08; pointer-events: none;
+}
+
+.header { display: flex; align-items: center; gap: 8mm; margin-bottom: 5mm; }
+.logo { width: 30mm; height: auto; }
+.org-name { font-weight: 700; font-size: 14pt; }
+.abbr { font-size: 20pt; font-weight: 800; color: #0056b3; }
+
+.rainbow-blink { animation: rainbow 2s infinite; }
+@keyframes rainbow {
+  0% { color: red; } 25% { color: blue; } 50% { color: green; } 75% { color: purple; } 100% { color: red; }
+}
+
+.title { text-align: center; margin: 10mm 0; font-size: 16pt; font-weight: bold; text-decoration: underline; }
+.section h2 { background: #f0f0f0; padding: 5px; font-size: 12pt; border-left: 5px solid #0056b3; }
+
+.field { display: block; margin-bottom: 4mm; }
+.label-text { display: block; font-size: 10pt; font-weight: bold; margin-bottom: 1mm; }
+.line-input { width: 100%; border: none; border-bottom: 1px dotted #333; outline: none; padding: 2px; }
+.short-input { width: 100%; border: none; border-bottom: 1px dotted #333; }
+.row { display: flex; gap: 5mm; margin-bottom: 4mm; }
+.small-field { flex: 1; }
+
+textarea { width: 100%; border: 1px solid #ccc; padding: 5px; }
+.footer { position: absolute; bottom: 10mm; left: 0; width: 100%; text-align: center; font-size: 9pt; }
+.sign-block { display: flex; justify-content: space-between; margin-top: 15mm; }
+.sign-line { min-height: 15mm; border-bottom: 1px solid #000; width: 60mm; margin-top: 5mm; }
+
+.form-actions { text-align: center; padding: 20px; background: #fff; width: var(--page-width); margin: auto; }
+button { padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 5px; border: 1px solid #333; }
+#submitBtn { background: #28a745; color: white; }
