@@ -1,0 +1,71 @@
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial Black', sans-serif; }
+
+/* Vidéo de fond */
+.video-container {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: -1;
+}
+#bg-video { width: 100%; height: 100%; object-fit: cover; }
+.overlay {
+    position: absolute; top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+}
+
+.content {
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    min-height: 100vh; text-align: center;
+}
+
+.logo-hero { width: 100px; margin-bottom: 20px; }
+
+/* Titre Tricolore */
+.tricolor-title { font-size: 3.5rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
+.blue { color: #00acec; }   /* Bleu RDC */
+.yellow { color: #f7d618; } /* Jaune RDC */
+.red { color: #ef3340; }    /* Rouge RDC */
+
+/* Conteneur des Flèches */
+.arrow-container {
+    display: flex; flex-direction: column;
+    gap: 30px; width: 85%; max-width: 650px; margin-top: 50px;
+}
+
+.arrow-btn {
+    text-decoration: none;
+    position: relative;
+    padding: 25px 50px;
+    font-size: 1.3rem;
+    color: white;
+    transition: all 0.3s ease;
+    /* Forme de flèche */
+    clip-path: polygon(0% 0%, 85% 0%, 100% 50%, 85% 100%, 0% 100%);
+}
+
+.btn-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 40px; /* Espace pour la pointe de la flèche */
+}
+
+.icon-right { font-size: 1.8rem; }
+
+/* Couleurs des flèches */
+.pme { background: #0056b3; border-left: 10px solid #00acec; }
+.ong { background: #1e7e34; border-left: 10px solid #28a745; }
+.statut { background: #d39e00; border-left: 10px solid #f7d618; color: #000; }
+
+.arrow-btn:hover {
+    transform: translateX(15px) scale(1.02);
+    filter: brightness(1.2);
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .tricolor-title { font-size: 2rem; }
+    .arrow-btn { font-size: 1rem; padding: 20px 30px; }
+}
