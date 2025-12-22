@@ -247,7 +247,7 @@ async function generatePDFExact(formData){
 
     pdf.text('Pour la COPEMECO', 120, sigY - 5);
     pdf.line(120, sigY, 195, sigY);
-    pdf.text('Coordonnation National', 120, sigY + 5);
+    pdf.text('Coordination Nationale', 120, sigY + 5);
     pdf.line(120, sigY + 15, 195, sigY + 15);
 
     const today = new Date();
@@ -376,6 +376,7 @@ resetBtn.addEventListener('click', () => {
     vibrate();
     document.querySelectorAll('input, textarea, select').forEach(el => el.value = "");
 });
+
 
 
 
