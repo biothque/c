@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fiche d'adhésion COPEMECO</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="a4" id="page1">
+    <header class="header">
+      <img src="COP.png" alt="Logo COPEMECO" class="logo">
+      <div class="org">
+        <div class="org-name rainbow-blink">Confédération des Petites et Moyennes Entreprises Congolaises</div>
+        <div class="abbr">COPEMECO</div>
+      </div>
+    </header>
+
+    <h1 class="title">FICHE DE RENSEIGNEMENTS POUR ADHESION</h1>
+
+    <form id="formAdhesion">
+      <section class="section" id="identification">
+        <h2>I. IDENTIFICATION</h2>
+        <label class="field">
+          <span class="label-text">Dénomination / Raison sociale</span>
+          <input type="text" name="denomination" class="line-input" required>
+        </label>
+        <div class="row">
+          <label class="small-field"><span class="label-text">N° RCCM</span><input type="text" name="rccm" class="short-input" required></label>
+          <label class="small-field"><span class="label-text">N° ID NAT</span><input type="text" name="idnat" class="short-input" required></label>
+          <label class="small-field"><span class="label-text">N° Impôt</span><input type="text" name="impot" class="short-input" required></label>
+        </div>
+        <label class="field"><span class="label-text">Siège Social (Adresse complète)</span><input type="text" name="siege" class="line-input" required></label>
+        <div class="row">
+          <label class="small-field"><span class="label-text">Tél</span><input type="tel" name="tel" class="short-input" required></label>
+          <label class="small-field"><span class="label-text">Email</span><input type="email" name="email" class="short-input" required></label>
+          <label class="small-field"><span class="label-text">Nationalité de PME</span><input type="text" name="nationalite" class="short-input" required></label>
+        </div>
+        <label class="field"><span class="label-text">Siège d’exploitation</span><input type="text" name="siege_exploitation" class="line-input" required></label>
+        <label class="field"><span class="label-text">Province</span><select name="province" class="line-input" required>
+            <option value="">--Choisir--</option><option>Kinshasa</option><option>Kongo Central</option><option>Kwilu</option><option>Kwango</option><option>Mai-Ndombe</option><option>Equateur</option><option>Mongala</option><option>Nord-Ubangi</option><option>Sud-Ubangi</option><option>Tshuapa</option><option>Tshopo</option><option>Bas-Uele</option><option>Haut-Uele</option><option>Ituri</option><option>Lomami</option><option>Kasaï</option><option>Kasaï Central</option><option>Kasaï Oriental</option><option>Sankuru</option><option>Haut-Lomami</option><option>Lualaba</option><option>Haut-Katanga</option><option>Tanganyika</option><option>Maniema</option><option>Nord-Kivu</option><option>Sud-Kivu</option>
+        </select></label>
+      </section>
+
+      <section class="section">
+        <h2>II. SITUATION JURIDIQUE</h2>
+        <div class="row">
+          <label class="small-field"><span class="label-text">Forme juridique</span><input type="text" name="forme_juridique" class="short-input" required></label>
+          <label class="small-field"><span class="label-text">Date de création</span><input type="text" name="date_creation" class="short-input" placeholder="JJ/MM/AAAA" required></label>
+          <label class="small-field"><span class="label-text">Nombre d’associés</span><input type="number" name="nb_associés" class="short-input" required></label>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>III. ACTIVITES ECONOMIQUES</h2>
+        <label class="field"><span class="label-text">Objectif Social</span><input type="text" name="objectif_social" class="line-input" required></label>
+        <div class="row">
+          <label class="small-field"><span class="label-text">Activité Principale</span><input type="text" name="act_principale" class="short-input" required></label>
+          <label class="small-field"><span class="label-text">Filière</span><input type="text" name="act_secondaire" class="short-input" required></label>
+        </div>
+        <div class="row">
+          <label class="small-field"><span class="label-text">Capital social ($)</span><input type="number" name="capital" class="short-input" required></label>
+          <label class="small-field"><span class="label-text">Nombre d’agents</span><input type="number" name="nb_agents" class="short-input" required></label>
+        </div>
+      </section>
+    </form>
+    <footer class="footer">Adresse : Av. Colonel Ebeya, n°195 Immeuble la référence 3ème étage. Gombe / Kinshasa</footer>
+  </div>
+
+  <div class="a4" id="page2">
+    <section class="section">
+      <h2>IV. IDENTIFICATION DU RESPONSABLE</h2>
+      <div class="row">
+        <label class="small-field"><span class="label-text">Nom du Propriétaire</span><input type="text" name="nom_proprietaire" class="short-input" form="formAdhesion" required></label>
+        <label class="small-field"><span class="label-text">Adresse</span><input type="text" name="adresse_responsable" class="short-input" form="formAdhesion" required></label>
+      </div>
+      <div class="field">
+        <span class="label-text">Attentes de la PME (COPEMECO)</span>
+        <textarea name="attentes" rows="3" form="formAdhesion" required></textarea>
+      </div>
+    </section>
+
+    <div class="sign-block">
+      <div><div>Pour la PME</div><div class="sign-line">Nom & Signature</div></div>
+      <div><div>Pour la COPEMECO</div><div class="sign-line">Coordonnateur National</div></div>
+    </div>
+
+    <div class="form-actions">
+      <button id="submitBtn">Soumettre et Générer PDF</button>
+      <button id="resetBtn" type="button">Réinitialiser</button>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+  <script src="https://api.backendless.com/sdk/js/latest/backendless.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
