@@ -247,7 +247,7 @@ async function generatePDFExact(formData){
 
     pdf.text('Pour la COPEMECO', 120, sigY - 5);
     pdf.line(120, sigY, 195, sigY);
-    pdf.text('Ruben BUKASA et Coordonnateur National', 120, sigY + 5);
+    pdf.text('Coordonnation National', 120, sigY + 5);
     pdf.line(120, sigY + 15, 195, sigY + 15);
 
     const today = new Date();
@@ -318,7 +318,7 @@ submitBtn.addEventListener('click', async (event) => {
             <h3 style="color: green;">✅ Succès de l'enregistrement !</h3>
             <p>Vos informations ont été enregistrées sous le numéro: <strong>${formData.numero_adhesion}</strong>.</p>
              <p>Le lien permanent pour vous et la COPEMECO est: <strong>${permanentFileUrl}</strong></p>
-            <p>Veuillez télécharger votre fiche d'adhésion :</p>
+            <p>Veuillez télécharger votre fiche d'adhésion:</p>
             <a id="downloadLink" href="${permanentFileUrl}" download="${pdfFileName}" style="
                 padding: 10px 20px; 
                 background-color: #007BFF; 
@@ -376,5 +376,6 @@ resetBtn.addEventListener('click', () => {
     vibrate();
     document.querySelectorAll('input, textarea, select').forEach(el => el.value = "");
 });
+
 
 
