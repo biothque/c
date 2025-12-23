@@ -151,18 +151,17 @@ y = headerY + 12;
     y += 3;
 
     pdf.setFont('helvetica','bold');
-    pdf.text('IDENTIFICATION', 15, y); y += 6;
+    pdf.text('IDENTIFICATION', 15, y); y += 7;
     pdf.setFont('helvetica','normal');
     drawLineField('Dénomination / Raison sociale', 'denomination');
     drawLineField('N° RCCM', 'rccm');
     drawLineField('N° ID NAT', 'idnat');
     drawLineField('N° Impôt', 'impot');
     drawLineField('Siège Social (Adresse complète)', 'siege');
-    drawLineField('Tél', 'tel', 15, 30);
-    drawLineField('Email', 'email', 70, 95);
-    drawLineField('Nationalité de PME', 'nationalite', 130, 165);
-    y -= 14; 
-    
+    drawLineField('Tél', 'tel');
+    drawLineField('Email', 'email');
+    drawLineField('Nationalité de PME', 'nationalite');
+    
     drawLineField('Province', 'province');
     y += 4;
 
@@ -365,6 +364,7 @@ resetBtn.addEventListener('click', () => {
     vibrate();
     document.querySelectorAll('input, textarea, select').forEach(el => el.value = "");
 });
+
 
 
 
