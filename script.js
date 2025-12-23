@@ -68,6 +68,7 @@ const { jsPDF } = window.jspdf;
 async function generatePDFExact(formData){
     const pdf = new jsPDF({ unit: 'mm', format: 'a4' });
     const pageWidth = 210, pageHeight = 297;
+    let y = 0; // On initialise y ici pour qu'il soit accessible partout
 
     // Fonction d'aide pour obtenir la valeur, ou "Non précisé" si vide
     const getValue = (key) => formData[key] && formData[key].trim() !== 'Non précisé' ? formData[key] : 'Non précisé';
@@ -102,42 +103,36 @@ async function generatePDFExact(formData){
             pdf.addImage(wmData, 'PNG', (pageWidth - wmSizeMm) / 2, 40, wmSizeMm, wmSizeMm);
         }catch(e){ console.warn('Erreur filigrane pdf:', e); }
     }
-
-   // --- EN-TÊTE PAGE 1 ---
+// --- EN-TÊTE PAGE 1 ---
 const marginX = 15;
-let headerY = 15;
+let headerY = 15; // Position de départ verticale
 
-// 1. Insertion du LOGO à gauche (si chargé)
+// 1. Insertion du LOGO à gauche
 if (logoImg) {
-    // On place le logo à gauche (x=15), taille 25x25mm environ
     pdf.addImage(logoImg, 'PNG', marginX, headerY, 25, 25);
 }
 
-// 2. Texte de l'organisation décalé à droite du logo
+// 2. Texte de l'organisation à côté du logo
 pdf.setFont('helvetica', 'bold');
 pdf.setFontSize(11);
-// On commence le texte à x=45 pour laisser la place au logo
 pdf.text('Confédération des Petites et Moyennes Entreprises Congolaises', 45, headerY + 8);
 
 pdf.setFontSize(22);
-pdf.setTextColor(0, 51, 102); // Optionnel: une couleur bleu foncé pour le nom
 pdf.text('COPEMECO', 45, headerY + 18);
-pdf.setTextColor(0, 0, 0); // Reset noir
 
-// 3. Titre du formulaire BIEN CENTRÉ en dessous de l'en-tête
-headerY = 50; // On descend pour ne pas chevaucher le logo
+// 3. Titre du formulaire CENTRÉ
+headerY = 50; 
 pdf.setFontSize(16);
 pdf.setFont('helvetica', 'bold');
-// Ligne horizontale pour séparer l'en-tête du titre
+// Ligne de séparation
 pdf.line(marginX, headerY - 5, pageWidth - marginX, headerY - 5); 
 
 pdf.text('FICHE DE RENSEIGNEMENTS POUR ADHESION', pageWidth / 2, headerY, { align: 'center' });
 
-// On ajuste la variable 'y' pour la suite du document
-y = headerY + 12;
+// 4. IMPORTANT : On donne à 'y' sa valeur pour la suite du document
+y = headerY + 12; 
 
-    pdf.setFontSize(10);
-    let y = 50;
+// À partir d'ici, tes fonctions drawLineField('...', '...') fonctionneront sans erreur
 
     function drawLineField(label, value, xLabel=15, xValue=80){
         pdf.setFontSize(10);
@@ -371,6 +366,7 @@ resetBtn.addEventListener('click', () => {
     vibrate();
     document.querySelectorAll('input, textarea, select').forEach(el => el.value = "");
 });
+
 
 
 
