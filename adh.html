@@ -122,10 +122,6 @@
           <span class="label-text">Date et année de création</span>
           <input type="text" name="date_creation" class="short-input" placeholder="JJ/MM/AAAA" required>
         </label>
-        <label class="small-field">
-          <span class="label-text">Nombre d’associés</span>
-          <input type="number" name="nb_associés" class="short-input" required>
-        </label>
       </div>
     </section>
 
@@ -169,39 +165,6 @@
         <input type="text" name="produits" class="line-input" required>
       </label>
 
-      <div class="row">
-        <label class="small-field">
-          <span class="label-text">Capital social</span>
-          <input type="number" name="capital" class="short-input" required>
-        </label>
-        <label class="small-field">
-          <span class="label-text">Nombre d’agents</span>
-          <input type="number" name="nb_agents" class="short-input" required>
-        </label>
-      </div>
-
-      <div class="row">
-        <label class="small-field">
-          <span class="label-text">Chiffre d’affaires mensuel (en $)</span>
-          <input type="number" name="ca_mensuel" class="short-input" required>
-        </label>
-        <label class="small-field">
-          <span class="label-text">Masse salariale payée mensuellement (en $)</span>
-          <input type="number" name="masse_salariale" class="short-input" required>
-        </label>
-      </div>
-
-      <div class="row">
-        <label class="small-field">
-          <span class="label-text">Volume de l’IPR payé mensuellement (en $)</span>
-          <input type="number" name="ipr" class="short-input" required>
-        </label>
-        <label class="small-field">
-          <span class="label-text">Volume d’Impôts (en $)</span>
-          <input type="number" name="impots" class="short-input" required>
-        </label>
-      </div>
-
     </section>
 
     <footer class="footer">Adresse : Av. Colonel Ebeya, n°195 Immeuble la référence 3ème étage/ local 311. C. Gombe / Kinshasa</footer>
@@ -238,23 +201,11 @@
         <span class="label-text">Faculté / Domaine d'études</span>
         <input type="text" name="faculte_etudes" class="short-input" placeholder="Ex: Droit, Économie, Agronomie..." required>
       </label>
-          <label class="small-field">
-        <span class="label-text">Nom du Gérant</span>
-        <input type="text" name="nom_gerant" class="short-input" required>
-      </label>
-      <label class="small-field">
-        <span class="label-text">Nationalité du Gérant</span>
-        <input type="text" name="nat_gerant" class="short-input" required>
-      </label>
     </div>
 
     <div class="row">
       <label class="small-field">
-        <span class="label-text">Tél du Gérant</span>
-        <input type="number" name="contact_gerant" class="short-input" required>
-      </label>
-      <label class="small-field">
-        <span class="label-text">Genre du Gérant</span>
+        <span class="label-text">Genre</span>
         <select name="genre_gerant" class="short-input" required>
             <option value="">--Choisir--</option>
             <option>Masculin</option>
@@ -262,55 +213,15 @@
         </select>
       </label>
               <label class="small-field">
-        <span class="label-text">Tranche d'âge du Gérant</span>
+        <span class="label-text">Tranche d'âge</span>
         <select name="tranche_age_gerant" class="short-input" required>
           <option value="">--Choisir--</option>
-          <option>Homme (18-25 ans)</option>
-          <option>Femme (18-25 ans)</option>
-          <option>Homme (26-35 ans)</option>
-          <option>Femme (26-35 ans)</option>
-          <option>Homme (35 ans et +)</option>
-          <option>Femme (35 ans et +)</option>
+          <option>(18-25 ans)</option>
+          <option>(26-35 ans)</option>
+          <option>(35 ans et +)</option>
         </select>
       </label>
             </div>
-
-    <label class="field">
-        <span class="label-text">Nationalité des associés</span>
-        <input type="text" name="nat_associes" class="line-input" required>
-    </label>
-    
-    <div class="field">
-      <span class="label-text">Noms et Adresses de fournisseurs (Une par ligne)</span>
-      <textarea name="fournisseurs" rows="3" placeholder="1. Nom / Adresse" required></textarea>
-    </div>
-
-    <div class="field">
-      <span class="label-text">Noms et Adresses de clients (Un par ligne)</span>
-      <textarea name="clients" rows="3" placeholder="1. Nom / Adresse" required></textarea>
-    </div>
-
-    <div class="row">
-      <label class="small-field">
-        <span class="label-text">Avez-vous une comptabilité ?</span>
-        <select name="comptabilite" class="short-input" required><option value="">--Choisir--</option><option>Oui</option><option>Non</option></select>
-      </label>
-      <label class="small-field">
-        <span class="label-text">Si oui, est-elle régulièrement tenue ?</span>
-        <select name="compta_reguliere" class="short-input" required><option value="">--Choisir--</option><option>Oui</option><option>Non</option></select>
-      </label>
-    </div>
-
-    <div class="row">
-      <label class="small-field">
-        <span class="label-text">Date de la dernière déclaration du bilan</span>
-        <input type="text" name="date_declaration" class="short-input" placeholder="JJ/MM/AAAA" required>
-      </label>
-      <label class="small-field">
-        <span class="label-text">Exercice concerné</span>
-        <input type="text" name="exercice" class="short-input" placeholder="Ex: 2024" required>
-      </label>
-    </div>
 
     <div class="field">
       <span class="label-text">Qu’est-ce que la PME attend de la COPEMECO ? (Max 50 lettres)</span>
@@ -345,6 +256,7 @@
 </body>
 
 </html>
+
 
 
 
