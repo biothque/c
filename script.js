@@ -178,7 +178,6 @@ y = headerY + 12;
     pdf.setFont('helvetica','normal');
     drawLineField('Forme juridique de la PME', 'forme_juridique');
     drawLineField('Date et année de création', 'date_creation');
-    drawLineField('Nombre d’associés', 'nb_associés');
     y += 4;
 
     pdf.setFont('helvetica','bold');
@@ -189,12 +188,6 @@ y = headerY + 12;
     drawLineField('Activité Principale', 'act_principale');
     drawLineField('Activité Secondaire', 'act_secondaire');
     drawLineField('Produit(s) / Services', 'produits');
-    drawLineField('Capital social', 'capital');
-    drawLineField('Nombre d’agents', 'nb_agents');
-    drawLineField("Chiffre d'affaires mensuel (en $)", 'ca_mensuel');
-    drawLineField('Masse salariale payée mensuellement (en $)', 'masse_salariale');
-    drawLineField("Volume de l'IPR payé mensuellement (en $)", 'ipr');
-    drawLineField("Volume d'Impôts & taxes payés mensuellement (en $)", 'impots');
 
     pdf.setFontSize(9);
     pdf.text('Adresse : Av. Colonel Ebeya, n°195 Immeuble la référence 3ème étage/ local 311. C. Gombe / Kinshasa', 15, 287);
@@ -226,34 +219,12 @@ y = headerY + 12;
     drawLineField('Nom du Propriétaire', 'nom_proprietaire');
     drawLineField('Adresse du Propriétaire', 'adresse_responsable');
     drawLineField('Niveau d’études', 'niveau_etudes');
-    drawLineField('Faculté / Domaine d\'études', 'faculte_etudes'); 
-    drawLineField('Nom du Gérant', 'nom_gerant');
-    drawLineField('Nationalité du Gérant', 'nat_gerant');
-    drawLineField('Tél / Email du Gérant', 'contact_gerant');
-    drawLineField('Genre du Gérant', 'genre_gerant'); 
-    drawLineField('Tranche d\'âge du Gérant', 'tranche_age_gerant'); 
-    drawLineField('Nationalité des associés', 'nat_associes');
+    drawLineField('Faculté / Domaine d\'études', 'faculte_etudes');
+    drawLineField('Genre', 'genre_gerant'); 
+    drawLineField('Tranche d\'âge', 'tranche_age_gerant');
     y += 4;
 
-    pdf.setFont('helvetica','bold');
-    pdf.text('Noms et Adresses de fournisseurs :', 15, y); y += 6;
-    pdf.setFont('helvetica','normal');
-    const fournisseursText = getValue('fournisseurs') ? String(getValue('fournisseurs')).split('\n').map(l => l.trim()).filter(l => l.length > 0).join(' / ') : 'Non précisé';
-    pdf.text(fournisseursText, 15, y, { maxWidth: 180 });
-    y += (Math.ceil(pdf.getStringUnitWidth(fournisseursText) * pdf.internal.getFontSize() / pageWidth * 180 / 180) * 5) + 5; 
-
-    pdf.setFont('helvetica','bold');
-    pdf.text('Noms et Adresses de clients :', 15, y); y += 6;
-    pdf.setFont('helvetica','normal');
-    const clientsText = getValue('clients') ? String(getValue('clients')).split('\n').map(l => l.trim()).filter(l => l.length > 0).join(' / ') : 'Non précisé';
-    pdf.text(clientsText, 15, y, { maxWidth: 180 });
-    y += (Math.ceil(pdf.getStringUnitWidth(clientsText) * pdf.internal.getFontSize() / pageWidth * 180 / 180) * 5) + 5;
-
-    drawLineField('Avez-vous une comptabilité', 'comptabilite');
-    drawLineField('Si oui, est-elle régulièrement tenue', 'compta_reguliere');
-    drawLineField('Date de la dernière déclaration du bilan', 'date_declaration');
-    drawLineField('Exercice concerné', 'exercice');
-
+  
     y += 8;
     pdf.setFont('helvetica','bold');
     pdf.text('Qu’est-ce que la PME attend de la COPEMECO ?', 15, y); y += 6;
@@ -400,6 +371,7 @@ resetBtn.addEventListener('click', () => {
     vibrate();
     document.querySelectorAll('input, textarea, select').forEach(el => el.value = "");
 });
+
 
 
 
