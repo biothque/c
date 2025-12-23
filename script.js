@@ -3,7 +3,7 @@
 // ==============================================
 const APP_ID = "3D3629AB-2B0E-49DE-AA35-4A0EFAB84AE7"; 
 const API_KEY = "B3C84FA1-67E6-40A2-8CA4-2E77E52E2EB4"; // JavaScript API Key
-const TABLE = "adhesions"; // Nom de la table
+const TABLE = "adh"; // Nom de la table
 
 // Initialisation Backendless
 if (typeof Backendless !== 'undefined') {
@@ -371,6 +371,7 @@ resetBtn.addEventListener('click', () => {
     vibrate();
     document.querySelectorAll('input, textarea, select').forEach(el => el.value = "");
 });
+
 
 
 
