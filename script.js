@@ -163,7 +163,6 @@ y = headerY + 12;
     drawLineField('Nationalité de PME', 'nationalite', 130, 165);
     y -= 14; 
     
-    drawLineField('Siège d’exploitation', 'siege_exploitation');
     drawLineField('Province', 'province');
     y += 4;
 
@@ -366,6 +365,7 @@ resetBtn.addEventListener('click', () => {
     vibrate();
     document.querySelectorAll('input, textarea, select').forEach(el => el.value = "");
 });
+
 
 
 
