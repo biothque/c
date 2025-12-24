@@ -211,8 +211,6 @@ y = headerY + 12;
 
     drawLineField('Nom du Propriétaire', 'nom_proprietaire');
     drawLineField('Adresse du Propriétaire', 'adresse_responsable');
-    drawLineField('Niveau d’études', 'niveau_etudes');
-    drawLineField('Faculté / Domaine d\'études', 'faculte_etudes');
     drawLineField('Genre', 'genre_gerant'); 
     drawLineField('Tranche d\'âge', 'tranche_age_gerant');
     y += 4;
@@ -230,7 +228,7 @@ y = headerY + 12;
 
     pdf.text('Pour la PME', 20, sigY - 5);
     pdf.line(20, sigY, 90, sigY);
-    pdf.text('Nom et Qualité', 20, sigY + 5);
+    pdf.text('Nom QR', 20, sigY + 5);
     pdf.line(20, sigY + 15, 90, sigY + 15);
 
     pdf.text('Pour la COPEMECO', 120, sigY - 5);
@@ -364,6 +362,7 @@ resetBtn.addEventListener('click', () => {
     vibrate();
     document.querySelectorAll('input, textarea, select').forEach(el => el.value = "");
 });
+
 
 
 
